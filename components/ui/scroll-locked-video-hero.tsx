@@ -9,9 +9,11 @@ export interface MetroHeroProps {
   style?: React.CSSProperties;
 }
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const DEFAULT_FRAMES = Array.from(
   { length: 103 },
-  (_, i) => `/novo-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`
+  (_, i) => `${BASE_PATH}/novo-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`
 );
 
 const COL_PINK = "#fc6998";
@@ -85,9 +87,17 @@ function drawCoverImage(
     drawWidth = height * imgRatio * scale;
   }
 
-  const offsetX = (width - drawWidth) / 2;
-  const offsetY = (height - drawHeight) / 2;
+  // On portrait/mobile screens, center the crop on the nails & pink polish bottle (~28% from left).
+  // On landscape/desktop screens, keep standard horizontal centering (50%).
+  const isPortrait = canvasRatio < 1;
+  const focalX = isPortrait ? 0.28 : 0.5;
+  const focalY = isPortrait ? 0.46 : 0.5;
 
+  const offsetX = (width - drawWidth) * focalX;
+  const offsetY = (height - drawHeight) * focalY;
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.clearRect(0, 0, width, height);
   ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 }
@@ -126,7 +136,6 @@ export default function MetroHero({
   const [ready, setReady] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Fixed navbar transition matching mosa-ai-v1.21st.app (scrollY > 30)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     onScroll();
@@ -154,10 +163,11 @@ export default function MetroHero({
     let lastScale = -1;
 
     const renderCanvasFrame = (progress: number) => {
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Up to 3x Retina DPR for crisp mobile & desktop rendering
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const rect = stage.getBoundingClientRect();
       const targetW = Math.max(1, Math.floor(rect.width * dpr));
       const targetH = Math.max(1, Math.floor(rect.height * dpr));
@@ -295,7 +305,6 @@ export default function MetroHero({
 
   return (
     <>
-      {/* Fixed Navbar matching mosa-ai-v1.21st.app scroll transition */}
       <nav
         aria-label="Navegação do site"
         className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
@@ -304,19 +313,19 @@ export default function MetroHero({
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12">
-          <a href="#inicio" className="flex items-center gap-2.5 text-ink">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 md:px-10">
+          <a href="#inicio" className="flex items-center gap-2 text-ink">
             <span
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: COL_PINK }}
               aria-hidden="true"
             />
-            <span className="font-serif text-2xl font-semibold tracking-tight">
+            <span className="font-serif text-xl font-semibold tracking-tight sm:text-2xl">
               Atelier Rosé
             </span>
           </a>
 
-          <div className="flex items-center gap-5 text-xs font-semibold tracking-wide text-ink sm:gap-8 sm:text-sm">
+          <div className="flex items-center gap-4 text-xs font-semibold tracking-wide text-ink sm:gap-7 sm:text-sm">
             <button
               type="button"
               onClick={() => scrollToSection("unhas-em-gel")}
@@ -334,7 +343,7 @@ export default function MetroHero({
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-[#e65283]"
+              className="cursor-pointer rounded-full bg-[#fc6998] px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#e65283] sm:px-4 sm:py-2"
             >
               Agendar
             </button>
@@ -342,7 +351,6 @@ export default function MetroHero({
         </div>
       </nav>
 
-      {/* Tall sticky scroll wrapper so the page scrolls 1:1 naturally into the sections below */}
       <section
         ref={wrapperRef}
         id="inicio"
@@ -373,20 +381,27 @@ export default function MetroHero({
             }}
           />
 
-          {/* Right-side light scrim for text legibility */}
+          {/* Mobile: bottom scrim so nails & polish stay 100% clear in the upper/center area */}
           <div
+            className="pointer-events-none absolute inset-0 md:hidden"
             style={{
-              position: "absolute",
-              inset: 0,
               background:
-                "linear-gradient(90deg, rgba(255,255,255,0) 34%, rgba(255,255,255,0.74) 68%, rgba(255,255,255,0.94) 100%)",
-              pointerEvents: "none",
+                "linear-gradient(0deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.78) 32%, rgba(255,255,255,0) 62%)",
             }}
           />
 
-          {/* Bottom gradient blend into the white sections below (like mosa-ai-v1.21st.app) */}
+          {/* Desktop: right-side scrim */}
           <div
-            className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-32 bg-gradient-to-t from-white via-white/60 to-transparent"
+            className="pointer-events-none absolute inset-0 hidden md:block"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255,255,255,0) 34%, rgba(255,255,255,0.74) 68%, rgba(255,255,255,0.94) 100%)",
+            }}
+          />
+
+          {/* Bottom gradient blend into sections below */}
+          <div
+            className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-28 bg-gradient-to-t from-white via-white/60 to-transparent"
             aria-hidden="true"
           />
 
@@ -398,18 +413,18 @@ export default function MetroHero({
                 ref={(el) => {
                   chapterRefs.current[idx] = el;
                 }}
-                className="absolute inset-0 flex items-center justify-end px-6 md:px-14 lg:px-24"
+                className="absolute inset-0 flex items-end justify-center px-6 pb-20 text-center md:items-center md:justify-end md:px-14 md:pb-0 md:text-right lg:px-24"
                 style={{
                   opacity: idx === 0 ? 1 : 0,
                   willChange: "transform, opacity, filter",
                 }}
               >
-                <div className="max-w-md text-right">
+                <div className="max-w-sm md:max-w-md">
                   <span
-                    className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-[11px] font-semibold tracking-[0.22em] uppercase"
+                    className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase md:mb-4 md:px-3.5 md:text-[11px]"
                     style={{
                       borderColor: COL_GOLD,
-                      backgroundColor: "rgba(255,255,255,0.92)",
+                      backgroundColor: "rgba(255,255,255,0.94)",
                       color: COL_INK,
                     }}
                   >
@@ -421,32 +436,32 @@ export default function MetroHero({
                   </span>
 
                   <h1
-                    className="font-serif text-4xl font-medium leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl"
+                    className="font-serif text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl lg:text-6xl"
                     style={{ color: COL_INK }}
                   >
                     {ch.title}
                   </h1>
 
                   <p
-                    className="mt-4 text-sm font-medium leading-relaxed sm:text-base"
+                    className="mt-3 text-xs font-medium leading-relaxed sm:text-sm md:mt-4 md:text-base"
                     style={{ color: "#4d3d43" }}
                   >
                     {ch.subtitle}
                   </p>
 
                   {ch.isFinal && (
-                    <div className="mt-7 flex flex-wrap justify-end gap-3">
+                    <div className="mt-5 flex flex-wrap justify-center gap-2.5 md:mt-7 md:justify-end md:gap-3">
                       <button
                         type="button"
                         onClick={() => scrollToSection("unhas-em-gel")}
-                        className="cursor-pointer rounded-full bg-[#fc6998] px-5 py-2.5 text-xs font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283]"
+                        className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:px-5 md:py-2.5"
                       >
                         Ver Unhas em Gel
                       </button>
                       <button
                         type="button"
                         onClick={() => scrollToSection("cursos")}
-                        className="cursor-pointer rounded-full border border-[#efb810] bg-white/95 px-5 py-2.5 text-xs font-semibold tracking-wide text-ink transition hover:bg-[#fef9e7]"
+                        className="cursor-pointer rounded-full border border-[#efb810] bg-white/95 px-4 py-2 text-xs font-semibold tracking-wide text-ink transition hover:bg-[#fef9e7] md:px-5 md:py-2.5"
                       >
                         Conhecer Cursos
                       </button>
@@ -459,7 +474,7 @@ export default function MetroHero({
 
           {/* Chapter Dots Indicator */}
           <div
-            className="pointer-events-none absolute right-6 bottom-6 z-20 flex items-center gap-2 md:right-12"
+            className="pointer-events-none absolute right-6 bottom-6 z-20 hidden items-center gap-2 md:right-12 md:flex"
             aria-hidden="true"
           >
             {CHAPTERS.map((ch, idx) => (
@@ -480,9 +495,9 @@ export default function MetroHero({
           {/* Scroll Hint */}
           <div
             ref={hintRef}
-            className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 transition-opacity duration-300"
+            className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-8"
           >
-            <span className="rounded-full bg-white/90 px-4 py-1.5 text-[11px] font-semibold tracking-[0.24em] text-ink uppercase shadow-xs backdrop-blur-sm">
+            <span className="rounded-full bg-white/90 px-3.5 py-1 text-[10px] font-semibold tracking-[0.22em] text-ink uppercase shadow-xs backdrop-blur-sm md:px-4 md:py-1.5 md:text-[11px]">
               Role a página
             </span>
             <ChevronDown
