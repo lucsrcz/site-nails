@@ -209,23 +209,50 @@ export default function MetroHero({
 
     syncCanvasSize(true);
 
-    let firstLoaded = false;
-    frames.forEach((src, idx) => {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = src;
-      img.onload = () => {
-        if (!firstLoaded && idx === 0) {
-          firstLoaded = true;
-          setReady(true);
-          renderCanvasFrame(currentProgress);
-        } else if (reduceMotion && idx === frames.length - 1) {
-          setReady(true);
-          renderCanvasFrame(1);
+    // Priority keyframe-first loading: load frame 0, final frame, and every 8th frame first
+    // so scrubbing is responsive immediately, then fill in-between frames in small batches.
+    const keyIndices: number[] = [];
+    const restIndices: number[] = [];
+    for (let i = 0; i < frames.length; i++) {
+      if (i === 0 || i === frames.length - 1 || i % 8 === 0) {
+        keyIndices.push(i);
+      } else {
+        restIndices.push(i);
+      }
+    }
+
+    let cancelled = false;
+    const loadFrame = (idx: number, highPriority = false): Promise<void> =>
+      new Promise((resolve) => {
+        if (cancelled) return resolve();
+        const img = new Image();
+        img.decoding = "async";
+        if (highPriority && "fetchPriority" in img) {
+          (img as HTMLImageElement & { fetchPriority: string }).fetchPriority = "high";
         }
-      };
-      loadedImages[idx] = img;
-    });
+        img.onload = () => {
+          if (!cancelled) {
+            if (idx === 0 || (reduceMotion && idx === frames.length - 1)) {
+              setReady(true);
+              renderCanvasFrame(currentProgress);
+            }
+          }
+          resolve();
+        };
+        img.onerror = () => resolve();
+        img.src = frames[idx];
+        loadedImages[idx] = img;
+      });
+
+    (async () => {
+      await Promise.all(keyIndices.map((idx) => loadFrame(idx, true)));
+      const BATCH_SIZE = 8;
+      for (let i = 0; i < restIndices.length; i += BATCH_SIZE) {
+        if (cancelled) break;
+        const batch = restIndices.slice(i, i + BATCH_SIZE);
+        await Promise.all(batch.map((idx) => loadFrame(idx, false)));
+      }
+    })();
 
     const updateTargetFromScroll = () => {
       if (reduceMotion) {
@@ -297,6 +324,7 @@ export default function MetroHero({
     }
 
     return () => {
+      cancelled = true;
       window.removeEventListener("scroll", updateTargetFromScroll);
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(rafId);
@@ -312,7 +340,7 @@ export default function MetroHero({
     <>
       {/* Fixed Header revealed after Hero scroll finishes */}
       <header
-        className={`fixed top-0 right-0 left-0 z-50 border-b border-black/8 bg-white/92 backdrop-blur-md transition-all duration-300 ${
+        className={`fixed top-0 right-0 left-0 z-50 border-b border-[#efb810]/35 bg-white/95 backdrop-blur-md transition-all duration-300 ${
           showHeader
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-full opacity-0"
@@ -322,14 +350,17 @@ export default function MetroHero({
           <a
             href="#inicio"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 text-ink"
+            className="flex items-center gap-2"
           >
             <span
               className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: COL_PINK }}
+              style={{ backgroundColor: COL_GOLD }}
               aria-hidden="true"
             />
-            <span className="font-serif text-xl font-semibold tracking-wider">
+            <span
+              className="font-serif text-xl font-semibold tracking-wider"
+              style={{ color: COL_PINK }}
+            >
               LOREN NAILS
             </span>
           </a>
@@ -337,38 +368,38 @@ export default function MetroHero({
           {/* Desktop links */}
           <nav
             aria-label="Menu principal"
-            className="hidden items-center gap-7 text-xs font-semibold tracking-wide text-ink md:flex"
+            className="hidden items-center gap-7 text-xs font-semibold tracking-wide md:flex"
           >
             <button
               type="button"
               onClick={() => scrollToSection("unhas-em-gel")}
-              className="cursor-pointer transition hover:text-[#fc6998]"
+              className="cursor-pointer text-[#1c1417] transition hover:text-[#fc6998]"
             >
               Unhas em Gel
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("cursos")}
-              className="cursor-pointer transition hover:text-[#fc6998]"
+              className="cursor-pointer text-[#1c1417] transition hover:text-[#efb810]"
             >
               Cursos
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
+              className="cursor-pointer rounded-full border border-[#efb810] bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
             >
               Agendar
             </button>
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button with Gold Border */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={mobileMenuOpen}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-ink transition hover:border-[#fc6998] md:hidden"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-[#efb810] bg-white text-[#fc6998] transition hover:bg-[#fef9e7] md:hidden"
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -378,27 +409,27 @@ export default function MetroHero({
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
-            className="border-t border-black/5 bg-white px-5 py-4 md:hidden"
+            className="border-t border-[#efb810]/30 bg-white px-5 py-4 md:hidden"
           >
             <div className="flex flex-col gap-2">
               <button
                 type="button"
                 onClick={() => scrollToSection("unhas-em-gel")}
-                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-[#fff4f7] hover:text-[#fc6998]"
+                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-[#1c1417] transition hover:bg-[#fff4f7] hover:text-[#fc6998]"
               >
-                Serviços — Unhas em Gel
+                Serviços — <span className="text-[#fc6998]">Unhas em Gel</span>
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("cursos")}
-                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-[#fef9e7] hover:text-ink"
+                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-[#1c1417] transition hover:bg-[#fef9e7]"
               >
                 Cursos Profissionais
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
-                className="mt-1 cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
+                className="mt-1 cursor-pointer rounded-full border border-[#efb810] bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
               >
                 Agendar Horário
               </button>
@@ -480,11 +511,7 @@ export default function MetroHero({
                 }}
               >
                 <div
-                  className={
-                    ch.isFinal
-                      ? "max-w-lg rounded-3xl bg-white/82 px-6 py-7 shadow-sm backdrop-blur-md sm:px-10 sm:py-9"
-                      : "max-w-sm md:max-w-md"
-                  }
+                  className={ch.isFinal ? "max-w-lg" : "max-w-sm md:max-w-md"}
                 >
                   <span
                     className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase md:mb-4 md:px-3.5 md:text-[11px]"
@@ -507,14 +534,24 @@ export default function MetroHero({
                         ? "font-serif text-4xl font-semibold tracking-wider sm:text-5xl lg:text-6xl"
                         : "font-serif text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl lg:text-6xl"
                     }
-                    style={{ color: COL_INK }}
+                    style={{
+                      color: ch.isFinal ? COL_PINK : COL_INK,
+                      textShadow: ch.isFinal
+                        ? "0 2px 24px rgba(255,255,255,0.95), 0 1px 8px rgba(255,255,255,0.85)"
+                        : undefined,
+                    }}
                   >
                     {ch.title}
                   </h1>
 
                   <p
                     className="mt-3 text-xs font-medium leading-relaxed sm:text-sm md:mt-4 md:text-base"
-                    style={{ color: "#4d3d43" }}
+                    style={{
+                      color: "#4d3d43",
+                      textShadow: ch.isFinal
+                        ? "0 1px 14px rgba(255,255,255,0.95)"
+                        : undefined,
+                    }}
                   >
                     {ch.subtitle}
                   </p>
