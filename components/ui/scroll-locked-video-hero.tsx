@@ -153,21 +153,17 @@ export default function MetroHero({
 
     const loadedImages: HTMLImageElement[] = [];
     let lastDrawnIndex = -1;
-    let lockedWidth = 0;
-    let lockedHeight = 0;
 
-    const syncCanvasSize = (force = false) => {
+    const syncCanvasSize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const rect = stage.getBoundingClientRect();
-      // Prevent mobile address-bar collapse/expand from resizing & zooming the canvas during scroll
-      const widthChanged = Math.abs(rect.width - lockedWidth) > 2;
-      const heightChangedSignificantly = Math.abs(rect.height - lockedHeight) > 140;
+      const targetW = Math.max(1, Math.round(rect.width * dpr));
+      const targetH = Math.max(1, Math.round(rect.height * dpr));
 
-      if (force || lockedWidth === 0 || widthChanged || heightChangedSignificantly) {
-        lockedWidth = rect.width;
-        lockedHeight = rect.height;
-        canvas.width = Math.max(1, Math.floor(lockedWidth * dpr));
-        canvas.height = Math.max(1, Math.floor(lockedHeight * dpr));
+      // Always keep canvas backing buffer 1:1 with its CSS aspect ratio (zero stretching)
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
         lastDrawnIndex = -1;
       }
     };
@@ -176,9 +172,7 @@ export default function MetroHero({
       const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
 
-      if (canvas.width === 0 || canvas.height === 0) {
-        syncCanvasSize(true);
-      }
+      syncCanvasSize();
 
       const index = clamp(
         Math.round(progress * (frames.length - 1)),
@@ -208,7 +202,7 @@ export default function MetroHero({
       }
     };
 
-    syncCanvasSize(true);
+    syncCanvasSize();
 
     // Priority keyframe-first loading: load frame 0, final frame, and every 8th frame first
     // so scrubbing is responsive immediately, then fill in-between frames in small batches.
@@ -273,7 +267,7 @@ export default function MetroHero({
     };
 
     const onResize = () => {
-      syncCanvasSize(false);
+      syncCanvasSize();
       renderCanvasFrame(currentProgress);
       updateTargetFromScroll();
     };
@@ -459,8 +453,8 @@ export default function MetroHero({
           ref={stageRef}
           className={
             pinMode === "fixed"
-              ? "fixed inset-0 z-10 overflow-hidden bg-white"
-              : "absolute right-0 bottom-0 left-0 z-10 h-screen overflow-hidden bg-white"
+              ? "fixed top-0 right-0 left-0 z-10 h-[100lvh] overflow-hidden bg-white"
+              : "absolute right-0 bottom-0 left-0 z-10 h-[100lvh] overflow-hidden bg-white"
           }
         >
           <canvas
