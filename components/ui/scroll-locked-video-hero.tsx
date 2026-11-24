@@ -134,6 +134,7 @@ export default function MetroHero({
   const [ready, setReady] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [pinMode, setPinMode] = useState<"fixed" | "bottom">("fixed");
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -257,6 +258,7 @@ export default function MetroHero({
     const updateTargetFromScroll = () => {
       if (reduceMotion) {
         setShowHeader(true);
+        setPinMode("bottom");
         return;
       }
       const rect = wrapper.getBoundingClientRect();
@@ -264,6 +266,8 @@ export default function MetroHero({
       const next = clamp(-rect.top / scrollable, 0, 1);
       targetProgress = next;
       if (next > 0.004) hasStartedScrolling = true;
+      // Keep the Hero stage fixed to the viewport while scrubbing; release to bottom at end
+      setPinMode(rect.bottom <= window.innerHeight ? "bottom" : "fixed");
       // Show top navigation bar once the hero frame scroll finishes
       setShowHeader(next >= 0.92);
     };
@@ -453,7 +457,11 @@ export default function MetroHero({
       >
         <div
           ref={stageRef}
-          className="sticky top-0 h-[100svh] w-full overflow-hidden bg-white"
+          className={
+            pinMode === "fixed"
+              ? "fixed inset-0 z-10 overflow-hidden bg-white"
+              : "absolute right-0 bottom-0 left-0 z-10 h-screen overflow-hidden bg-white"
+          }
         >
           <canvas
             ref={canvasRef}
