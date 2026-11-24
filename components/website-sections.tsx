@@ -166,7 +166,7 @@ export default function WebsiteSections() {
                 Educação &amp; Carreira
               </p>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Cursos Atelier Rosé
+                Cursos LOREN NAILS
               </h2>
             </div>
             <p className="max-w-sm text-xs leading-relaxed text-ink-muted sm:text-sm">
@@ -380,8 +380,8 @@ export default function WebsiteSections() {
       <footer className="border-t border-black/5 bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
-            <p className="font-serif text-lg font-semibold text-ink">
-              Atelier Rosé
+            <p className="font-serif text-lg font-semibold tracking-wider text-ink">
+              LOREN NAILS
             </p>
             <p className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-muted">
               <MapPin
@@ -408,9 +408,9 @@ export default function WebsiteSections() {
                 className="h-3.5 w-3.5 text-[#fc6998]"
                 aria-hidden="true"
               />
-              @atelierrose.nails
+              @lorennails
             </a>
-            <span>© {new Date().getFullYear()} Atelier Rosé</span>
+            <span>© {new Date().getFullYear()} LOREN NAILS</span>
           </div>
         </div>
       </footer>

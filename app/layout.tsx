@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Atelier Rosé — Nail Studio Minimalista",
+  title: "LOREN NAILS — Unhas em Gel & Cursos",
   description:
-    "Nail studio minimalista especializado em esmaltação em gel, alongamento natural e nail art autoral.",
+    "LOREN NAILS: unhas em gel de alta precisão e cursos profissionais para nail designers.",
 };
 
 export default function RootLayout({

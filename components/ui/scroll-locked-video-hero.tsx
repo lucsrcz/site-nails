@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 export interface MetroHeroProps {
   frames?: string[];
@@ -31,7 +31,7 @@ interface Chapter {
 
 const CHAPTERS: Chapter[] = [
   {
-    eyebrow: "Atelier Rosé • Nail Studio",
+    eyebrow: "Nail Studio",
     title: "Suas mãos contam a sua história.",
     subtitle: "Role suavemente e acompanhe cada detalhe da transformação.",
     start: 0.0,
@@ -52,9 +52,9 @@ const CHAPTERS: Chapter[] = [
     end: 0.76,
   },
   {
-    eyebrow: "Sua Melhor Versão",
-    title: "Brilhe com leveza, presença e autenticidade.",
-    subtitle: "Continue rolando para conhecer nossos serviços em gel e cursos.",
+    eyebrow: "Beleza & Formação",
+    title: "LOREN NAILS",
+    subtitle: "Brilhe com leveza, presença e autenticidade. Unhas em gel e cursos.",
     start: 0.78,
     end: 1.0,
     isFinal: true,
@@ -69,8 +69,7 @@ function drawCoverImage(
   ctx: CanvasRenderingContext2D,
   img: HTMLImageElement,
   width: number,
-  height: number,
-  scale = 1
+  height: number
 ) {
   if (!img.naturalWidth || !img.naturalHeight) return;
   const imgRatio = img.naturalWidth / img.naturalHeight;
@@ -80,15 +79,14 @@ function drawCoverImage(
   let drawHeight = height;
 
   if (canvasRatio > imgRatio) {
-    drawWidth = width * scale;
-    drawHeight = (width / imgRatio) * scale;
+    drawWidth = width;
+    drawHeight = width / imgRatio;
   } else {
-    drawHeight = height * scale;
-    drawWidth = height * imgRatio * scale;
+    drawHeight = height;
+    drawWidth = height * imgRatio;
   }
 
   // On portrait/mobile screens, center the crop on the nails & pink polish bottle (~28% from left).
-  // On landscape/desktop screens, keep standard horizontal centering (50%).
   const isPortrait = canvasRatio < 1;
   const focalX = isPortrait ? 0.28 : 0.5;
   const focalY = isPortrait ? 0.46 : 0.5;
@@ -134,6 +132,8 @@ export default function MetroHero({
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const [ready, setReady] = useState(false);
+  const [showHeader, setShowHeader] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -152,22 +152,31 @@ export default function MetroHero({
 
     const loadedImages: HTMLImageElement[] = [];
     let lastDrawnIndex = -1;
-    let lastScale = -1;
+    let lockedWidth = 0;
+    let lockedHeight = 0;
+
+    const syncCanvasSize = (force = false) => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      const rect = stage.getBoundingClientRect();
+      // Prevent mobile address-bar collapse/expand from resizing & zooming the canvas during scroll
+      const widthChanged = Math.abs(rect.width - lockedWidth) > 2;
+      const heightChangedSignificantly = Math.abs(rect.height - lockedHeight) > 140;
+
+      if (force || lockedWidth === 0 || widthChanged || heightChangedSignificantly) {
+        lockedWidth = rect.width;
+        lockedHeight = rect.height;
+        canvas.width = Math.max(1, Math.floor(lockedWidth * dpr));
+        canvas.height = Math.max(1, Math.floor(lockedHeight * dpr));
+        lastDrawnIndex = -1;
+      }
+    };
 
     const renderCanvasFrame = (progress: number) => {
       const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
 
-      // Up to 3x Retina DPR for crisp mobile & desktop rendering
-      const dpr = Math.min(window.devicePixelRatio || 1, 3);
-      const rect = stage.getBoundingClientRect();
-      const targetW = Math.max(1, Math.floor(rect.width * dpr));
-      const targetH = Math.max(1, Math.floor(rect.height * dpr));
-
-      if (canvas.width !== targetW || canvas.height !== targetH) {
-        canvas.width = targetW;
-        canvas.height = targetH;
-        lastDrawnIndex = -1;
+      if (canvas.width === 0 || canvas.height === 0) {
+        syncCanvasSize(true);
       }
 
       const index = clamp(
@@ -175,7 +184,6 @@ export default function MetroHero({
         0,
         frames.length - 1
       );
-      const scale = 1 + progress * 0.045;
 
       let img = loadedImages[index];
       if (!img || !img.complete || img.naturalWidth === 0) {
@@ -193,14 +201,13 @@ export default function MetroHero({
         }
       }
 
-      if (img && img.complete && img.naturalWidth > 0) {
-        if (index !== lastDrawnIndex || Math.abs(scale - lastScale) > 0.0005) {
-          drawCoverImage(ctx, img, targetW, targetH, scale);
-          lastDrawnIndex = index;
-          lastScale = scale;
-        }
+      if (img && img.complete && img.naturalWidth > 0 && index !== lastDrawnIndex) {
+        drawCoverImage(ctx, img, canvas.width, canvas.height);
+        lastDrawnIndex = index;
       }
     };
+
+    syncCanvasSize(true);
 
     let firstLoaded = false;
     frames.forEach((src, idx) => {
@@ -221,16 +228,21 @@ export default function MetroHero({
     });
 
     const updateTargetFromScroll = () => {
-      if (reduceMotion) return;
+      if (reduceMotion) {
+        setShowHeader(true);
+        return;
+      }
       const rect = wrapper.getBoundingClientRect();
       const scrollable = Math.max(1, rect.height - window.innerHeight);
       const next = clamp(-rect.top / scrollable, 0, 1);
       targetProgress = next;
       if (next > 0.004) hasStartedScrolling = true;
+      // Show top navigation bar once the hero frame scroll finishes
+      setShowHeader(next >= 0.92);
     };
 
     const onResize = () => {
-      lastDrawnIndex = -1;
+      syncCanvasSize(false);
       renderCanvasFrame(currentProgress);
       updateTargetFromScroll();
     };
@@ -248,8 +260,8 @@ export default function MetroHero({
         if (!el) return;
         const vis = getChapterVisibility(currentProgress, ch);
         el.style.opacity = String(vis);
-        el.style.transform = `translateY(${(1 - vis) * 18}px) scale(${0.97 + vis * 0.03})`;
-        el.style.filter = `blur(${(1 - vis) * 8}px)`;
+        el.style.transform = `translateY(${(1 - vis) * 16}px)`;
+        el.style.filter = `blur(${(1 - vis) * 6}px)`;
         el.style.pointerEvents = vis > 0.35 ? "auto" : "none";
 
         const dot = dotRefs.current[idx];
@@ -292,15 +304,113 @@ export default function MetroHero({
   }, [frames]);
 
   const scrollToSection = (id: string) => {
+    setMobileMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <>
+      {/* Fixed Header revealed after Hero scroll finishes */}
+      <header
+        className={`fixed top-0 right-0 left-0 z-50 border-b border-black/8 bg-white/92 backdrop-blur-md transition-all duration-300 ${
+          showHeader
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-full opacity-0"
+        }`}
+      >
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
+          <a
+            href="#inicio"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-2 text-ink"
+          >
+            <span
+              className="h-2.5 w-2.5 rounded-full"
+              style={{ backgroundColor: COL_PINK }}
+              aria-hidden="true"
+            />
+            <span className="font-serif text-xl font-semibold tracking-wider">
+              LOREN NAILS
+            </span>
+          </a>
+
+          {/* Desktop links */}
+          <nav
+            aria-label="Menu principal"
+            className="hidden items-center gap-7 text-xs font-semibold tracking-wide text-ink md:flex"
+          >
+            <button
+              type="button"
+              onClick={() => scrollToSection("unhas-em-gel")}
+              className="cursor-pointer transition hover:text-[#fc6998]"
+            >
+              Unhas em Gel
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("cursos")}
+              className="cursor-pointer transition hover:text-[#fc6998]"
+            >
+              Cursos
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("agendar")}
+              className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
+            >
+              Agendar
+            </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={mobileMenuOpen}
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-ink transition hover:border-[#fc6998] md:hidden"
+          >
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <nav
+            aria-label="Menu mobile"
+            className="border-t border-black/5 bg-white px-5 py-4 md:hidden"
+          >
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => scrollToSection("unhas-em-gel")}
+                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-[#fff4f7] hover:text-[#fc6998]"
+              >
+                Serviços — Unhas em Gel
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection("cursos")}
+                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-[#fef9e7] hover:text-ink"
+              >
+                Cursos Profissionais
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection("agendar")}
+                className="mt-1 cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
+              >
+                Agendar Horário
+              </button>
+            </div>
+          </nav>
+        )}
+      </header>
+
       <section
         ref={wrapperRef}
         id="inicio"
-        aria-label="Atelier Rosé — Apresentação"
+        aria-label="LOREN NAILS — Apresentação"
         className={className}
         style={{
           position: "relative",
@@ -312,7 +422,7 @@ export default function MetroHero({
       >
         <div
           ref={stageRef}
-          className="sticky top-0 h-[100dvh] w-full overflow-hidden bg-white"
+          className="sticky top-0 h-[100svh] w-full overflow-hidden bg-white"
         >
           <canvas
             ref={canvasRef}
@@ -359,18 +469,28 @@ export default function MetroHero({
                 ref={(el) => {
                   chapterRefs.current[idx] = el;
                 }}
-                className="absolute inset-0 flex items-end justify-center px-6 pb-20 text-center md:items-center md:justify-end md:px-14 md:pb-0 md:text-right lg:px-24"
+                className={
+                  ch.isFinal
+                    ? "absolute inset-0 flex items-center justify-center px-6 text-center"
+                    : "absolute inset-0 flex items-end justify-center px-6 pb-20 text-center md:items-center md:justify-end md:px-14 md:pb-0 md:text-right lg:px-24"
+                }
                 style={{
                   opacity: idx === 0 ? 1 : 0,
                   willChange: "transform, opacity, filter",
                 }}
               >
-                <div className="max-w-sm md:max-w-md">
+                <div
+                  className={
+                    ch.isFinal
+                      ? "max-w-lg rounded-3xl bg-white/82 px-6 py-7 shadow-sm backdrop-blur-md sm:px-10 sm:py-9"
+                      : "max-w-sm md:max-w-md"
+                  }
+                >
                   <span
                     className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase md:mb-4 md:px-3.5 md:text-[11px]"
                     style={{
                       borderColor: COL_GOLD,
-                      backgroundColor: "rgba(255,255,255,0.94)",
+                      backgroundColor: "rgba(255,255,255,0.95)",
                       color: COL_INK,
                     }}
                   >
@@ -382,7 +502,11 @@ export default function MetroHero({
                   </span>
 
                   <h1
-                    className="font-serif text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl lg:text-6xl"
+                    className={
+                      ch.isFinal
+                        ? "font-serif text-4xl font-semibold tracking-wider sm:text-5xl lg:text-6xl"
+                        : "font-serif text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl lg:text-6xl"
+                    }
                     style={{ color: COL_INK }}
                   >
                     {ch.title}
@@ -396,18 +520,18 @@ export default function MetroHero({
                   </p>
 
                   {ch.isFinal && (
-                    <div className="mt-5 flex flex-wrap justify-center gap-2.5 md:mt-7 md:justify-end md:gap-3">
+                    <div className="mt-6 flex flex-wrap justify-center gap-3">
                       <button
                         type="button"
                         onClick={() => scrollToSection("unhas-em-gel")}
-                        className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:px-5 md:py-2.5"
+                        className="cursor-pointer rounded-full bg-[#fc6998] px-5 py-2.5 text-xs font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283]"
                       >
                         Ver Unhas em Gel
                       </button>
                       <button
                         type="button"
                         onClick={() => scrollToSection("cursos")}
-                        className="cursor-pointer rounded-full border border-[#efb810] bg-white/95 px-4 py-2 text-xs font-semibold tracking-wide text-ink transition hover:bg-[#fef9e7] md:px-5 md:py-2.5"
+                        className="cursor-pointer rounded-full border border-[#efb810] bg-white px-5 py-2.5 text-xs font-semibold tracking-wide text-ink transition hover:bg-[#fef9e7]"
                       >
                         Conhecer Cursos
                       </button>
