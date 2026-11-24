@@ -340,7 +340,7 @@ export default function MetroHero({
     <>
       {/* Fixed Header revealed after Hero scroll finishes */}
       <header
-        className={`fixed top-0 right-0 left-0 z-50 border-b border-[#efb810]/35 bg-white/95 backdrop-blur-md transition-all duration-300 ${
+        className={`fixed top-0 right-0 left-0 z-50 border-b border-black/5 bg-white/95 backdrop-blur-md transition-all duration-300 ${
           showHeader
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-full opacity-0"
@@ -387,19 +387,19 @@ export default function MetroHero({
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="cursor-pointer rounded-full border border-[#efb810] bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
+              className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
             >
               Agendar
             </button>
           </nav>
 
-          {/* Mobile Menu Button with Gold Border */}
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={mobileMenuOpen}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-[#efb810] bg-white text-[#fc6998] transition hover:bg-[#fef9e7] md:hidden"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7] md:hidden"
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -409,7 +409,7 @@ export default function MetroHero({
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
-            className="border-t border-[#efb810]/30 bg-white px-5 py-4 md:hidden"
+            className="border-t border-black/5 bg-white px-5 py-4 md:hidden"
           >
             <div className="flex flex-col gap-2">
               <button
@@ -429,7 +429,7 @@ export default function MetroHero({
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
-                className="mt-1 cursor-pointer rounded-full border border-[#efb810] bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
+                className="mt-1 cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
               >
                 Agendar Horário
               </button>
