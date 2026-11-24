@@ -134,14 +134,6 @@ export default function MetroHero({
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const [ready, setReady] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -305,52 +297,6 @@ export default function MetroHero({
 
   return (
     <>
-      <nav
-        aria-label="Navegação do site"
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "border-b border-black/5 bg-white/85 backdrop-blur-md"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 md:px-10">
-          <a href="#inicio" className="flex items-center gap-2 text-ink">
-            <span
-              className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: COL_PINK }}
-              aria-hidden="true"
-            />
-            <span className="font-serif text-xl font-semibold tracking-tight sm:text-2xl">
-              Atelier Rosé
-            </span>
-          </a>
-
-          <div className="flex items-center gap-4 text-xs font-semibold tracking-wide text-ink sm:gap-7 sm:text-sm">
-            <button
-              type="button"
-              onClick={() => scrollToSection("unhas-em-gel")}
-              className="cursor-pointer transition hover:text-[#fc6998]"
-            >
-              Unhas em Gel
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("cursos")}
-              className="cursor-pointer transition hover:text-[#fc6998]"
-            >
-              Cursos
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("agendar")}
-              className="cursor-pointer rounded-full bg-[#fc6998] px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#e65283] sm:px-4 sm:py-2"
-            >
-              Agendar
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <section
         ref={wrapperRef}
         id="inicio"
