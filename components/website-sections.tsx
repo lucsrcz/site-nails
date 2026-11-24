@@ -1,0 +1,418 @@
+"use client";
+
+import { useState } from "react";
+import {
+  Sparkles,
+  Clock,
+  Award,
+  Check,
+  Calendar,
+  MapPin,
+  Instagram,
+  Phone,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const GEL_SERVICES = [
+  {
+    id: "alongamento-gel",
+    name: "Alongamento em Gel",
+    duration: "120 min",
+    price: "R$ 220",
+    tag: "Assinatura",
+    description:
+      "Estrutura ultrafina com curvatura natural, resistência impecável e acabamento espelhado.",
+  },
+  {
+    id: "banho-gel",
+    name: "Banho de Gel (Blindagem)",
+    duration: "75 min",
+    price: "R$ 145",
+    tag: "Proteção",
+    description:
+      "Camada protetora sobre a unha natural para fortalecer, evitar quebras e manter o brilho por semanas.",
+  },
+  {
+    id: "esmaltacao-gel",
+    name: "Esmaltação em Gel",
+    duration: "60 min",
+    price: "R$ 110",
+    tag: "Essencial",
+    description:
+      "Secagem imediata em cabine LED, cor intensa e durabilidade de até 21 dias sem descascar.",
+  },
+];
+
+const COURSES = [
+  {
+    id: "curso-iniciante",
+    name: "Formação Nail Designer em Gel",
+    duration: "2 dias • 16h presenciais",
+    price: "R$ 1.290",
+    description:
+      "Do zero ao acabamento de salão: anatomia da unha, preparação segura, molde, lixamento técnico e esmaltação em gel.",
+    highlights: ["Certificado incluso", "Prática em modelo real", "Apostila completa"],
+  },
+  {
+    id: "curso-aperfeicoamento",
+    name: "Aperfeiçoamento & Naturalidade",
+    duration: "1 dia • 8h intensivas",
+    price: "R$ 790",
+    description:
+      "Para profissionais que buscam reduzir tempo em mesa, eliminar descolamentos e entregar unhas ultrafinas.",
+    highlights: ["Turma reduzida (máx. 4)", "Suporte pós-curso", "Foco em rentabilidade"],
+  },
+];
+
+export default function WebsiteSections() {
+  const [selectedTopic, setSelectedTopic] = useState("Alongamento em Gel");
+  const [clientName, setClientName] = useState("");
+  const [clientPhone, setClientPhone] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const selectAndScrollToBooking = (topic: string) => {
+    setSelectedTopic(topic);
+    setSubmitted(false);
+    document.getElementById("agendar")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!clientName.trim() || !clientPhone.trim()) return;
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="bg-white text-ink">
+      {/* Seção 1: Serviços de Unhas em Gel */}
+      <section id="unhas-em-gel" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="mb-2 text-xs font-semibold tracking-[0.26em] text-[#fc6998] uppercase">
+              Serviços Especializados
+            </p>
+            <h2 className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+              Unhas em Gel
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-ink-muted">
+            Protocolos minimalistas focados na saúde da lâmina natural,
+            curvatura anatômica e brilho duradouro.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {GEL_SERVICES.map((srv) => (
+            <article
+              key={srv.id}
+              className="flex flex-col justify-between rounded-3xl border border-black/8 bg-white p-7 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#fc6998]/60 hover:shadow-sm"
+            >
+              <div>
+                <div className="mb-6 flex items-center justify-between">
+                  <span className="rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-[11px] font-semibold tracking-wider text-ink uppercase">
+                    {srv.tag}
+                  </span>
+                  <Sparkles
+                    className="h-4 w-4 text-[#fc6998]"
+                    aria-hidden="true"
+                  />
+                </div>
+                <h3 className="font-serif text-2xl font-medium text-ink">
+                  {srv.name}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+                  {srv.description}
+                </p>
+              </div>
+
+              <div className="mt-8 border-t border-black/5 pt-5">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted">
+                    <Clock
+                      className="h-3.5 w-3.5 text-[#efb810]"
+                      aria-hidden="true"
+                    />
+                    {srv.duration}
+                  </span>
+                  <span className="text-lg font-semibold text-ink">
+                    {srv.price}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => selectAndScrollToBooking(srv.name)}
+                  className="mt-4 inline-flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-[#fc6998] transition hover:underline"
+                >
+                  Agendar este serviço
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Seção 2: Cursos Profissionais */}
+      <section
+        id="cursos"
+        className="border-t border-black/5 bg-[#fff4f7]/45 py-24"
+      >
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold tracking-[0.26em] text-[#efb810] uppercase">
+                Educação &amp; Carreira
+              </p>
+              <h2 className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+                Cursos Atelier Rosé
+              </h2>
+            </div>
+            <p className="max-w-md text-sm leading-relaxed text-ink-muted">
+              Formação prática em turmas reduzidas para mulheres que desejam
+              dominar o gel com técnica, elegância e rentabilidade.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {COURSES.map((course) => (
+              <article
+                key={course.id}
+                className="flex flex-col justify-between rounded-3xl border border-black/8 bg-white p-8 transition hover:border-[#efb810]"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted">
+                        <Award
+                          className="h-4 w-4 text-[#fc6998]"
+                          aria-hidden="true"
+                        />
+                        {course.duration}
+                      </span>
+                      <h3 className="mt-2 font-serif text-3xl font-medium text-ink">
+                        {course.name}
+                      </h3>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-[#fc6998] px-4 py-1.5 text-xs font-semibold text-white">
+                      {course.price}
+                    </span>
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+                    {course.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {course.highlights.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-8 border-t border-black/5 pt-5">
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      selectAndScrollToBooking(`Curso: ${course.name}`)
+                    }
+                  >
+                    Garantir minha vaga
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Seção 3: Agendamento & Inscrição */}
+      <section id="agendar" className="mx-auto max-w-3xl px-6 py-24">
+        <div className="text-center">
+          <p className="mb-2 text-xs font-semibold tracking-[0.26em] text-[#fc6998] uppercase">
+            Reserva Online
+          </p>
+          <h2 className="font-serif text-4xl font-medium tracking-tight text-ink">
+            Agende seu horário ou curso
+          </h2>
+          <p className="mt-3 text-sm text-ink-muted">
+            Atendimento individual com hora marcada. Confirmação rápida pelo
+            WhatsApp.
+          </p>
+        </div>
+
+        {submitted ? (
+          <div className="mt-10 rounded-3xl border border-[#efb810] bg-[#fef9e7]/40 p-8 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#fc6998] text-white">
+              <Check className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <h3 className="font-serif text-2xl font-medium text-ink">
+              Solicitação enviada, {clientName}
+            </h3>
+            <p className="mt-2 text-sm text-ink-muted">
+              Interesse em <strong>{selectedTopic}</strong>
+              {preferredDate ? ` para ${preferredDate}` : ""}. Confirmaremos
+              pelo WhatsApp <strong>{clientPhone}</strong>.
+            </p>
+            <Button
+              variant="outline"
+              className="mt-6"
+              onClick={() => {
+                setSubmitted(false);
+                setClientName("");
+                setClientPhone("");
+                setPreferredDate("");
+              }}
+            >
+              Fazer nova solicitação
+            </Button>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className="mt-10 space-y-5 rounded-3xl border border-black/8 bg-white p-6 shadow-xs sm:p-10"
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="site-name"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
+                >
+                  Seu nome
+                </label>
+                <input
+                  id="site-name"
+                  type="text"
+                  required
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                  placeholder="Ex: Juliana Mendes"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="site-phone"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
+                >
+                  WhatsApp
+                </label>
+                <input
+                  id="site-phone"
+                  type="tel"
+                  required
+                  value={clientPhone}
+                  onChange={(e) => setClientPhone(e.target.value)}
+                  placeholder="(11) 99999-9999"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="site-topic"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
+                >
+                  Serviço ou Curso
+                </label>
+                <select
+                  id="site-topic"
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                >
+                  <optgroup label="Unhas em Gel">
+                    {GEL_SERVICES.map((s) => (
+                      <option key={s.id} value={s.name}>
+                        {s.name} — {s.price}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Cursos">
+                    {COURSES.map((c) => (
+                      <option key={c.id} value={`Curso: ${c.name}`}>
+                        Curso: {c.name} — {c.price}
+                      </option>
+                    ))}
+                  </optgroup>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="site-date"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
+                >
+                  Data preferida
+                </label>
+                <input
+                  id="site-date"
+                  type="date"
+                  value={preferredDate}
+                  onChange={(e) => setPreferredDate(e.target.value)}
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                />
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <Button type="submit" size="lg" className="w-full">
+                <Calendar className="h-4 w-4" aria-hidden="true" />
+                Solicitar agendamento
+              </Button>
+            </div>
+          </form>
+        )}
+      </section>
+
+      {/* Rodapé tradicional do site */}
+      <footer className="border-t border-black/5 bg-white py-12">
+        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-6 md:flex-row md:items-center">
+          <div>
+            <p className="font-serif text-xl font-semibold text-ink">
+              Atelier Rosé
+            </p>
+            <p className="mt-1 flex items-center gap-1.5 text-xs text-ink-muted">
+              <MapPin
+                className="h-3.5 w-3.5 text-[#fc6998]"
+                aria-hidden="true"
+              />
+              Jardins, São Paulo • Terça a Sábado, 09h às 19h
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6 text-xs font-medium text-ink-muted">
+            <a
+              href="#agendar"
+              className="inline-flex items-center gap-1.5 transition hover:text-[#fc6998]"
+            >
+              <Phone className="h-3.5 w-3.5 text-[#efb810]" aria-hidden="true" />
+              WhatsApp
+            </a>
+            <a
+              href="#unhas-em-gel"
+              className="inline-flex items-center gap-1.5 transition hover:text-[#fc6998]"
+            >
+              <Instagram
+                className="h-3.5 w-3.5 text-[#fc6998]"
+                aria-hidden="true"
+              />
+              @atelierrose.nails
+            </a>
+            <span>© {new Date().getFullYear()} Atelier Rosé</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
