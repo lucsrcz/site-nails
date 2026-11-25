@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 
 function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
+  const rawId = useId();
+  const gradId = `ig-grad-${rawId.replace(/:/g, "")}`;
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
       <defs>
-        <linearGradient id="ig-grad-hero" x1="0%" y1="100%" x2="100%" y2="0%">
+        <linearGradient id={gradId} x1="0%" y1="100%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#feda75" />
           <stop offset="25%" stopColor="#fa7e1e" />
           <stop offset="55%" stopColor="#d62976" />
@@ -22,7 +24,7 @@ function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
         height="20"
         rx="6"
         fill="none"
-        stroke="url(#ig-grad-hero)"
+        stroke={`url(#${gradId})`}
         strokeWidth="2.1"
       />
       <circle
@@ -30,10 +32,10 @@ function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
         cy="12"
         r="4.2"
         fill="none"
-        stroke="url(#ig-grad-hero)"
+        stroke={`url(#${gradId})`}
         strokeWidth="2.1"
       />
-      <circle cx="17.5" cy="6.5" r="1.3" fill="url(#ig-grad-hero)" />
+      <circle cx="17.5" cy="6.5" r="1.3" fill={`url(#${gradId})`} />
     </svg>
   );
 }
@@ -429,7 +431,7 @@ export default function MetroHero({
               className="bg-metallic-gold h-3 w-3 shrink-0 rounded-full shadow-[0_0_8px_rgba(239,184,16,0.55)]"
               aria-hidden="true"
             />
-            <span className="text-metallic-gold font-serif text-xl font-bold tracking-wide sm:text-2xl">
+            <span className="text-metallic-gold font-serif text-lg font-bold tracking-wide sm:text-2xl">
               Nayara Designer Nail
             </span>
           </a>
@@ -486,13 +488,13 @@ export default function MetroHero({
           </nav>
 
           {/* Mobile Original Social Icons + Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex shrink-0 items-center gap-1.5 md:hidden">
             <a
               href="https://www.instagram.com/nayara_designernail"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram @nayara_designernail"
-              className="border-pink-gold flex h-11 w-11 items-center justify-center rounded-full transition active:scale-95"
+              className="border-pink-gold flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition active:scale-95"
             >
               <InstagramBrandIcon className="h-5 w-5" />
             </a>
@@ -500,7 +502,7 @@ export default function MetroHero({
               type="button"
               onClick={() => scrollToSection("agendar")}
               aria-label="Agendar pelo WhatsApp"
-              className="border-pink-gold flex h-11 w-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95"
+              className="border-pink-gold flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition active:scale-95"
             >
               <WhatsAppBrandIcon className="h-5 w-5" />
             </button>
@@ -509,7 +511,7 @@ export default function MetroHero({
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={mobileMenuOpen}
-              className="border-pink-gold flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-[#1c1417] transition active:scale-95"
+              className="border-pink-gold flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1c1417] transition active:scale-95"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
