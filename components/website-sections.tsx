@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   Sparkles,
   Award,
@@ -10,8 +11,11 @@ import {
   Instagram,
   Phone,
   ArrowRight,
+  ShieldCheck,
+  X,
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { POLICY_SECTIONS } from "@/components/privacy-content";
 
 const GEL_SERVICES = [
   {
@@ -70,6 +74,8 @@ export default function WebsiteSections() {
   const [clientPhone, setClientPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [activePolicyId, setActivePolicyId] = useState<string | null>(null);
+  const activePolicy = POLICY_SECTIONS.find((s) => s.id === activePolicyId) ?? null;
 
   const WHATSAPP_NUMBER = "5562992118416";
 
@@ -436,7 +442,102 @@ export default function WebsiteSections() {
             <span>© {new Date().getFullYear()} Nayara Oliveira Studio</span>
           </div>
         </div>
+
+        {/* Discreet LGPD & Meta Policy Bar */}
+        <div className="mx-auto mt-8 max-w-5xl border-t border-black/5 px-5 pt-6">
+          <div className="flex flex-col justify-between gap-3 text-xs text-ink-muted sm:flex-row sm:items-center">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              {POLICY_SECTIONS.map((sec) => (
+                <button
+                  key={sec.id}
+                  type="button"
+                  onClick={() => setActivePolicyId(sec.id)}
+                  className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+                >
+                  {sec.tabLabel}
+                </button>
+              ))}
+              <Link
+                href="/privacidade"
+                className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+              >
+                Página completa
+              </Link>
+            </div>
+            <p className="text-[11px] leading-relaxed text-ink-muted/80">
+              Este site não é afiliado ou patrocinado pela Meta Platforms, Inc. (Instagram/WhatsApp).
+            </p>
+          </div>
+        </div>
       </footer>
+
+      {/* Minimalist Legal & Meta Policy Modal */}
+      {activePolicy && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={activePolicy.title}
+          onClick={() => setActivePolicyId(null)}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/55 p-4 backdrop-blur-xs"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="border-pink-gold relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8"
+          >
+            <button
+              type="button"
+              onClick={() => setActivePolicyId(null)}
+              aria-label="Fechar política"
+              className="border-pink-gold absolute top-4 right-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-ink transition hover:scale-105"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
+            <div className="flex flex-wrap gap-2 pr-12">
+              {POLICY_SECTIONS.map((sec) => {
+                const isSelected = sec.id === activePolicy.id;
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onClick={() => setActivePolicyId(sec.id)}
+                    className={`cursor-pointer rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                      isSelected
+                        ? "bg-[#fc6998] text-white"
+                        : "border border-black/10 bg-white text-ink-muted hover:border-[#efb810] hover:text-ink"
+                    }`}
+                  >
+                    {sec.tabLabel}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-6">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-[11px] font-semibold tracking-wider text-ink uppercase">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#fc6998]" aria-hidden="true" />
+                {activePolicy.badge}
+              </span>
+              <h3 className="mt-3 font-serif text-2xl font-medium text-ink sm:text-3xl">
+                {activePolicy.title}
+              </h3>
+
+              <div className="mt-5 space-y-4 border-t border-black/5 pt-5">
+                {activePolicy.items.map((item) => (
+                  <div key={item.heading}>
+                    <h4 className="text-sm font-semibold text-ink">
+                      {item.heading}
+                    </h4>
+                    <p className="mt-1 text-xs leading-relaxed text-ink-muted sm:text-sm">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
