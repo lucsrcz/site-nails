@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Instagram, MessageCircle } from "lucide-react";
 
 export interface MetroHeroProps {
   frames?: string[];
@@ -65,9 +65,10 @@ const CHAPTERS: Chapter[] = [
       "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
-    eyebrow: "Beleza & Formação",
-    title: "LOREN NAILS",
-    subtitle: "Brilhe com leveza, presença e autenticidade. Unhas em gel e cursos.",
+    eyebrow: "Alto Padrão • Nayara Oliveira",
+    title: "Nayara Designer Nail",
+    subtitle:
+      "Especialista em fibra de vidro, método molde F1, esmaltação e banho em gel.",
     start: 0.76,
     end: 1.0,
     positionClass:
@@ -384,17 +385,17 @@ export default function MetroHero({
               aria-hidden="true"
             />
             <span
-              className="font-serif text-xl font-semibold tracking-wider"
+              className="font-serif text-xl font-semibold tracking-wide"
               style={{ color: COL_PINK }}
             >
-              LOREN NAILS
+              Nayara Designer Nail
             </span>
           </a>
 
-          {/* Desktop links */}
+          {/* Desktop links & contact icons */}
           <nav
             aria-label="Menu principal"
-            className="hidden items-center gap-7 text-sm font-semibold tracking-wide md:flex"
+            className="hidden items-center gap-6 text-sm font-semibold tracking-wide md:flex"
           >
             <button
               type="button"
@@ -410,6 +411,29 @@ export default function MetroHero({
             >
               Cursos
             </button>
+
+            <div className="flex items-center gap-2 border-l border-black/10 pl-4">
+              <a
+                href="https://www.instagram.com/nayara_designernail"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram @nayara_designernail"
+                title="@nayara_designernail"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:border-[#fc6998] hover:bg-[#fff4f7]"
+              >
+                <Instagram className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <button
+                type="button"
+                onClick={() => scrollToSection("agendar")}
+                aria-label="Agendar pelo WhatsApp"
+                title="Agendar Horário"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#1c1417] transition hover:border-[#efb810] hover:bg-[#fef9e7]"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
@@ -419,16 +443,35 @@ export default function MetroHero({
             </button>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
-            aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={mobileMenuOpen}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7] md:hidden"
-          >
-            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
+          {/* Mobile Contact Icons + Menu Button */}
+          <div className="flex items-center gap-2 md:hidden">
+            <a
+              href="https://www.instagram.com/nayara_designernail"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram @nayara_designernail"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7]"
+            >
+              <Instagram className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <button
+              type="button"
+              onClick={() => scrollToSection("agendar")}
+              aria-label="Agendar Horário"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#1c1417] transition hover:bg-[#fef9e7]"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={mobileMenuOpen}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7]"
+            >
+              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Dropdown Menu */}

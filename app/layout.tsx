@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LOREN NAILS — Unhas em Gel & Cursos",
+  title: "Nayara Designer Nail — Fibra de Vidro, Molde F1 & Gel",
   description:
-    "LOREN NAILS: unhas em gel de alta precisão e cursos profissionais para nail designers.",
+    "Nayara Oliveira (@nayara_designernail): especialista em fibra de vidro, método molde F1, esmaltação em gel, blindagem e cursos.",
 };
 
 export default function RootLayout({

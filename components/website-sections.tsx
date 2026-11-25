@@ -17,16 +17,16 @@ import { Button } from "@/components/ui/button";
 const GEL_SERVICES = [
   {
     id: "alongamento-gel",
-    name: "Alongamento em Gel",
+    name: "Fibra de Vidro & Molde F1",
     duration: "120 min",
     price: "R$ 220",
-    tag: "Assinatura",
+    tag: "Alto Padrão",
     description:
-      "Estrutura ultrafina com curvatura natural, resistência impecável e acabamento espelhado.",
+      "Alongamento com naturalidade e elegância, estrutura ultrafina e resistência impecável.",
   },
   {
     id: "banho-gel",
-    name: "Banho de Gel",
+    name: "Blindagem & Banho em Gel",
     duration: "75 min",
     price: "R$ 145",
     tag: "Proteção",
@@ -66,7 +66,7 @@ const COURSES = [
 ];
 
 export default function WebsiteSections() {
-  const [selectedTopic, setSelectedTopic] = useState("Alongamento em Gel");
+  const [selectedTopic, setSelectedTopic] = useState("Fibra de Vidro & Molde F1");
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
@@ -166,7 +166,7 @@ export default function WebsiteSections() {
                 Educação &amp; Carreira
               </p>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Cursos LOREN NAILS
+                Cursos Nayara Designer Nail
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
@@ -380,15 +380,15 @@ export default function WebsiteSections() {
       <footer className="border-t border-black/5 bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
-            <p className="font-serif text-xl font-semibold tracking-wider text-ink">
-              LOREN NAILS
+            <p className="font-serif text-xl font-semibold tracking-wide text-ink">
+              Nayara Designer Nail
             </p>
             <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-muted">
               <MapPin
                 className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
-              Jardins, São Paulo • Terça a Sábado, 09h às 19h
+              Nayara Oliveira • Fibra de Vidro, Molde F1 &amp; Gel
             </p>
           </div>
 
@@ -398,19 +398,21 @@ export default function WebsiteSections() {
               className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
             >
               <Phone className="h-4 w-4 text-[#efb810]" aria-hidden="true" />
-              WhatsApp
+              Agendar Horário
             </a>
             <a
-              href="#unhas-em-gel"
+              href="https://www.instagram.com/nayara_designernail"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
             >
               <Instagram
                 className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
-              @lorennails
+              @nayara_designernail
             </a>
-            <span>© {new Date().getFullYear()} LOREN NAILS</span>
+            <span>© {new Date().getFullYear()} Nayara Designer Nail</span>
           </div>
         </div>
       </footer>
