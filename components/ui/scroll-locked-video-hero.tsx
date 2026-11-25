@@ -205,6 +205,7 @@ export default function MetroHero({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hintRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
@@ -224,6 +225,27 @@ export default function MetroHero({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [logoModalOpen]);
+
+  // Close mobile header menu when clicking/tapping outside the header or pressing Escape
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown, { passive: true });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -426,7 +448,10 @@ export default function MetroHero({
   return (
     <>
       {/* Fixed Header always visible */}
-      <header className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300">
+      <header
+        ref={headerRef}
+        className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300"
+      >
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
           <button
             type="button"
@@ -813,20 +838,20 @@ export default function MetroHero({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="border-pink-gold relative w-full max-w-sm overflow-hidden rounded-full bg-black p-2 shadow-2xl transition-transform duration-300"
+            className="border-pink-gold relative w-full max-w-md overflow-hidden rounded-3xl bg-black p-6 shadow-2xl sm:p-8"
           >
             <button
               type="button"
               onClick={() => setLogoModalOpen(false)}
               aria-label="Fechar visualização da logo"
-              className="border-pink-gold absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#1c1417] shadow-md transition hover:scale-105"
+              className="border-pink-gold absolute top-3 right-3 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#1c1417] shadow-md transition hover:scale-105"
             >
               <X className="h-4 w-4" />
             </button>
             <img
               src={`${BASE_PATH}/nayara-logo.webp`}
               alt="Nayara Oliveira Studio"
-              className="aspect-square w-full scale-105 rounded-full object-cover"
+              className="h-auto w-full object-contain"
             />
           </div>
         </div>
