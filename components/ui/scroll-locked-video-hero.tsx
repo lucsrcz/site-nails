@@ -443,10 +443,10 @@ export default function MetroHero({
             aria-label="Ampliar logo Nayara Oliveira Studio"
             className="flex min-h-[44px] cursor-pointer flex-col items-center justify-center leading-none transition hover:opacity-85"
           >
-            <span className="font-script text-metallic-gold text-[26px] font-normal tracking-normal sm:text-[32px]">
+            <span className="font-script text-metallic-gold px-2 pt-1 pb-0.5 text-[26px] leading-[1.25] font-normal tracking-normal sm:text-[32px]">
               Nayara Oliveira
             </span>
-            <span className="mt-0.5 flex w-full items-center gap-2 px-1">
+            <span className="-mt-1 flex w-full items-center gap-2 px-1">
               <span
                 className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                 aria-hidden="true"
@@ -672,7 +672,7 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script text-metallic-gold text-6xl leading-[1.05] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
+                        className="font-script text-metallic-gold px-4 py-2 text-6xl leading-[1.22] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
                         style={{
                           filter:
                             "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
@@ -680,7 +680,7 @@ export default function MetroHero({
                       >
                         {ch.title}
                       </h1>
-                      <div className="mt-1 flex w-56 items-center gap-3 sm:w-72">
+                      <div className="-mt-1 flex w-56 items-center gap-3 sm:w-72">
                         <span
                           className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                           aria-hidden="true"

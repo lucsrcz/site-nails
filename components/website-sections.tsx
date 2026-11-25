@@ -387,10 +387,10 @@ export default function WebsiteSections() {
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
             <div className="inline-flex flex-col items-center">
-              <p className="font-script text-metallic-gold text-3xl font-normal leading-none">
+              <p className="font-script text-metallic-gold px-2 py-1 text-3xl leading-[1.25] font-normal">
                 Nayara Oliveira
               </p>
-              <span className="mt-1 flex w-full items-center gap-2 px-1">
+              <span className="-mt-0.5 flex w-full items-center gap-2 px-1">
                 <span
                   className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                   aria-hidden="true"
