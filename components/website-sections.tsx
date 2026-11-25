@@ -387,11 +387,11 @@ export default function WebsiteSections() {
 
       {/* Rodapé tradicional do site */}
       <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
-      <footer className="bg-white py-10">
+      <footer className="bg-white py-6">
         <div className="mx-auto flex max-w-5xl flex-row items-start justify-between gap-4 px-5 md:items-center">
           <div>
             <div className="inline-flex flex-col items-center">
-              <p className="font-script text-metallic-gold px-2 py-1 text-2xl leading-[1.25] font-normal sm:text-3xl">
+              <p className="font-script text-metallic-gold px-2 py-0.5 text-2xl leading-[1.25] font-normal sm:text-3xl">
                 Nayara Oliveira
               </p>
               <span className="-mt-0.5 flex w-full items-center gap-2 px-1">
@@ -408,7 +408,7 @@ export default function WebsiteSections() {
                 />
               </span>
             </div>
-            <p className="mt-2 flex items-center gap-1.5 text-xs text-ink-muted sm:text-sm">
+            <p className="mt-1.5 flex items-center gap-1.5 text-xs text-ink-muted sm:text-sm">
               <MapPin
                 className="h-3.5 w-3.5 shrink-0 text-[#fc6998] sm:h-4 sm:w-4"
                 aria-hidden="true"
@@ -417,53 +417,53 @@ export default function WebsiteSections() {
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-col items-end gap-1 text-right text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-6">
-            <a
-              href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[36px] items-center gap-1.5 transition hover:text-[#fc6998] md:min-h-[44px]"
-            >
-              <Phone className="h-3.5 w-3.5 text-[#efb810] sm:h-4 sm:w-4" aria-hidden="true" />
-              WhatsApp
-            </a>
-            <a
-              href="https://www.instagram.com/nayara_designernail"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[36px] items-center gap-1.5 transition hover:text-[#fc6998] md:min-h-[44px]"
-            >
-              <Instagram
-                className="h-3.5 w-3.5 text-[#fc6998] sm:h-4 sm:w-4"
-                aria-hidden="true"
-              />
-              @nayara_designernail
-            </a>
-            <span className="mt-1 text-[11px] md:mt-0 md:text-sm">
-              © {new Date().getFullYear()} Nayara Oliveira Studio
-            </span>
-          </div>
-        </div>
-
-        {/* Discreet LGPD & Meta Policy Bar */}
-        <div className="mx-auto mt-8 max-w-5xl border-t border-black/5 px-5 pt-6">
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-ink-muted md:justify-start">
-            {POLICY_SECTIONS.map((sec) => (
-              <button
-                key={sec.id}
-                type="button"
-                onClick={() => setActivePolicyId(sec.id)}
-                className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+          <div className="flex shrink-0 flex-col items-end gap-1.5 text-right">
+            <div className="flex flex-col items-end gap-1 text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-5">
+              <a
+                href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[32px] items-center gap-1.5 transition hover:text-[#fc6998]"
               >
-                {sec.tabLabel}
-              </button>
-            ))}
-            <Link
-              href="/privacidade"
-              className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
-            >
-              Página completa
-            </Link>
+                <Phone className="h-3.5 w-3.5 text-[#efb810] sm:h-4 sm:w-4" aria-hidden="true" />
+                WhatsApp
+              </a>
+              <a
+                href="https://www.instagram.com/nayara_designernail"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[32px] items-center gap-1.5 transition hover:text-[#fc6998]"
+              >
+                <Instagram
+                  className="h-3.5 w-3.5 text-[#fc6998] sm:h-4 sm:w-4"
+                  aria-hidden="true"
+                />
+                @nayara_designernail
+              </a>
+              <span className="text-[11px] md:text-xs">
+                © {new Date().getFullYear()} Nayara Oliveira Studio
+              </span>
+            </div>
+
+            {/* Discreet LGPD & Meta links directly below contacts */}
+            <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] text-ink-muted/85">
+              {POLICY_SECTIONS.map((sec) => (
+                <button
+                  key={sec.id}
+                  type="button"
+                  onClick={() => setActivePolicyId(sec.id)}
+                  className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+                >
+                  {sec.tabLabel}
+                </button>
+              ))}
+              <Link
+                href="/privacidade"
+                className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+              >
+                Página completa
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
