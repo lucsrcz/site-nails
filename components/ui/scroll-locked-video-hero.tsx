@@ -458,21 +458,21 @@ export default function MetroHero({
           {/* Desktop links & original social icons */}
           <nav
             aria-label="Menu principal"
-            className="hidden items-center gap-6 text-sm font-semibold tracking-wide md:flex"
+            className="hidden items-center gap-6 text-xs font-semibold tracking-[0.14em] uppercase md:flex"
           >
             <button
               type="button"
               onClick={() => scrollToSection("unhas-em-gel")}
-              className="cursor-pointer py-2 text-[#1c1417] transition hover:text-[#fc6998]"
+              className="cursor-pointer py-2 text-[#1c1417] uppercase transition hover:text-[#fc6998]"
             >
-              Unhas em Gel
+              UNHAS EM GEL
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("cursos")}
-              className="cursor-pointer py-2 text-[#1c1417] transition hover:text-[#efb810]"
+              className="cursor-pointer py-2 text-[#1c1417] uppercase transition hover:text-[#efb810]"
             >
-              Cursos
+              CURSOS
             </button>
 
             <div className="flex items-center gap-2 border-l border-black/10 pl-4">
@@ -501,9 +501,9 @@ export default function MetroHero({
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="min-h-[40px] cursor-pointer rounded-full bg-[#fc6998] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#e65283]"
+              className="min-h-[40px] cursor-pointer rounded-full bg-[#fc6998] px-5 py-2 text-xs font-semibold tracking-[0.14em] text-white uppercase transition hover:bg-[#e65283]"
             >
-              Agendar
+              AGENDAR
             </button>
           </nav>
 
@@ -551,29 +551,29 @@ export default function MetroHero({
             <p className="mb-3 text-xs font-medium text-[#6e5c62]">
               Especialista em fibra de vidro, método molde F1 e banho em gel.
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 uppercase">
               <button
                 type="button"
                 onClick={() => scrollToSection("unhas-em-gel")}
-                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-sm font-semibold text-[#1c1417]"
+                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
               >
-                <span>Serviços — Unhas em Gel</span>
-                <span className="text-xs font-semibold text-[#fc6998]">Fibra &amp; Gel</span>
+                <span>SERVIÇOS — UNHAS EM GEL</span>
+                <span className="text-[11px] font-semibold text-[#fc6998]">FIBRA &amp; GEL</span>
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("cursos")}
-                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-sm font-semibold text-[#1c1417]"
+                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
               >
-                <span>Cursos Profissionais</span>
-                <span className="text-xs font-semibold text-[#b67d03]">Certificado</span>
+                <span>CURSOS PROFISSIONAIS</span>
+                <span className="text-[11px] font-semibold text-[#b67d03]">CERTIFICADO</span>
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
-                className="mt-1 min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
+                className="mt-1 min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-xs font-semibold tracking-wider text-white uppercase transition hover:bg-[#e65283]"
               >
-                Agendar Horário
+                AGENDAR HORÁRIO
               </button>
             </div>
           </nav>
