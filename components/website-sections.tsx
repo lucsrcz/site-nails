@@ -7,7 +7,6 @@ import {
   Award,
   Check,
   Calendar,
-  MapPin,
   Instagram,
   Phone,
   ArrowRight,
@@ -408,17 +407,13 @@ export default function WebsiteSections() {
                 />
               </span>
             </div>
-            <p className="mt-1.5 flex items-center gap-1.5 text-xs text-ink-muted sm:text-sm">
-              <MapPin
-                className="h-3.5 w-3.5 shrink-0 text-[#fc6998] sm:h-4 sm:w-4"
-                aria-hidden="true"
-              />
+            <p className="mt-1.5 text-xs text-ink-muted sm:text-sm">
               Fibra de Vidro, Molde F1 &amp; Gel
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-col items-end gap-1.5 text-right">
-            <div className="flex flex-col items-end gap-1 text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-5">
+          <div className="flex shrink-0 flex-col items-center pr-2 text-center md:items-end md:pr-0 md:text-right">
+            <div className="flex flex-col items-center gap-1 text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-5">
               <a
                 href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
                 target="_blank"
