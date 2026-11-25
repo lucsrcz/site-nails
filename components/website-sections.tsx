@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Sparkles,
-  Clock,
   Award,
   Check,
   Calendar,
@@ -135,23 +134,11 @@ export default function WebsiteSections() {
                 </p>
               </div>
 
-              <div className="mt-6 border-t border-black/5 pt-4">
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted">
-                    <Clock
-                      className="h-3.5 w-3.5 text-[#efb810]"
-                      aria-hidden="true"
-                    />
-                    {srv.duration}
-                  </span>
-                  <span className="text-lg font-semibold text-ink">
-                    {srv.price}
-                  </span>
-                </div>
+              <div className="mt-6 border-t border-black/5 pt-3">
                 <button
                   type="button"
                   onClick={() => selectAndScrollToBooking(srv.name)}
-                  className="mt-3 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm font-semibold text-[#fc6998] transition hover:underline"
+                  className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm font-semibold text-[#fc6998] transition hover:underline"
                 >
                   Agendar este serviço
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -344,7 +331,7 @@ export default function WebsiteSections() {
                   <optgroup label="Unhas em Gel">
                     {GEL_SERVICES.map((s) => (
                       <option key={s.id} value={s.name}>
-                        {s.name} — {s.price}
+                        {s.name}
                       </option>
                     ))}
                   </optgroup>
