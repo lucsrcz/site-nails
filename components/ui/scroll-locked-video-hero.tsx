@@ -11,10 +11,16 @@ export interface MetroHeroProps {
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-const DEFAULT_FRAMES = Array.from(
+const BASE_FRAMES = Array.from(
   { length: 103 },
   (_, i) => `${BASE_PATH}/novo-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`
 );
+
+// Repeat frame 103 twenty extra times to lengthen the final hold when LOREN NAILS appears
+const DEFAULT_FRAMES = [
+  ...BASE_FRAMES,
+  ...Array.from({ length: 20 }, () => `${BASE_PATH}/novo-frames/frame_103.jpg`),
+];
 
 const COL_PINK = "#fc6998";
 const COL_GOLD = "#efb810";
@@ -26,6 +32,7 @@ interface Chapter {
   subtitle: string;
   start: number;
   end: number;
+  positionClass: string;
   isFinal?: boolean;
 }
 
@@ -36,27 +43,35 @@ const CHAPTERS: Chapter[] = [
     subtitle: "Role suavemente e acompanhe cada detalhe da transformação.",
     start: 0.0,
     end: 0.24,
+    positionClass:
+      "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
     eyebrow: "Autoestima & Cuidado",
     title: "Cuidar de si não é luxo, é amor próprio.",
     subtitle: "Reserve um momento só seu para desacelerar e florescer.",
-    start: 0.26,
-    end: 0.5,
+    start: 0.25,
+    end: 0.49,
+    positionClass:
+      "items-center justify-end px-6 text-right md:pr-14 lg:pr-20",
   },
   {
     eyebrow: "Força Feminina",
     title: "Você se torna imparável quando se sente bem.",
     subtitle: "A confiança mora nos pequenos rituais do seu dia.",
-    start: 0.52,
-    end: 0.76,
+    start: 0.5,
+    end: 0.74,
+    positionClass:
+      "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
     eyebrow: "Beleza & Formação",
     title: "LOREN NAILS",
     subtitle: "Brilhe com leveza, presença e autenticidade. Unhas em gel e cursos.",
-    start: 0.78,
+    start: 0.76,
     end: 1.0,
+    positionClass:
+      "items-center justify-center px-6 text-center",
     isFinal: true,
   },
 ];
@@ -74,10 +89,11 @@ function drawCoverImage(
   if (!img.naturalWidth || !img.naturalHeight) return;
   const imgRatio = img.naturalWidth / img.naturalHeight;
   const canvasRatio = width / height;
+  const isPortrait = canvasRatio < 1;
 
+  // Full-bleed edge-to-edge cover so the image fills 100% of the viewport without seams
   let drawWidth = width;
   let drawHeight = height;
-
   if (canvasRatio > imgRatio) {
     drawWidth = width;
     drawHeight = width / imgRatio;
@@ -86,36 +102,48 @@ function drawCoverImage(
     drawWidth = height * imgRatio;
   }
 
-  // On portrait/mobile screens, center the crop on the nails & pink polish bottle (~28% from left).
-  const isPortrait = canvasRatio < 1;
-  const focalX = isPortrait ? 0.28 : 0.5;
-  const focalY = isPortrait ? 0.46 : 0.5;
-
+  const focalX = isPortrait ? 0.32 : 0.5;
+  const focalY = isPortrait ? 0.5 : 0.5;
   const offsetX = (width - drawWidth) * focalX;
   const offsetY = (height - drawHeight) * focalY;
 
+  ctx.save();
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
+  ctx.filter = "contrast(1.12) saturate(1.15) brightness(0.95)";
   ctx.clearRect(0, 0, width, height);
   ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  ctx.restore();
 }
 
-function getChapterVisibility(progress: number, ch: Chapter): number {
+function getChapterMotion(progress: number, ch: Chapter): {
+  opacity: number;
+  translateY: number;
+} {
   const fade = 0.055;
-  if (ch.start === 0) {
-    if (progress <= ch.end - fade) return 1;
-    if (progress >= ch.end) return 0;
-    return 1 - (progress - (ch.end - fade)) / fade;
-  }
+
   if (ch.isFinal) {
-    if (progress <= ch.start) return 0;
-    if (progress >= ch.start + fade) return 1;
-    return (progress - ch.start) / fade;
+    if (progress <= ch.start) return { opacity: 0, translateY: 28 };
+    if (progress >= ch.start + fade) return { opacity: 1, translateY: 0 };
+    const vis = (progress - ch.start) / fade;
+    return { opacity: vis, translateY: (1 - vis) * 28 };
   }
-  if (progress <= ch.start || progress >= ch.end) return 0;
-  if (progress < ch.start + fade) return (progress - ch.start) / fade;
-  if (progress > ch.end - fade) return (ch.end - progress) / fade;
-  return 1;
+
+  // Non-final texts fade smoothly in place without vertical movement
+  if (ch.start === 0) {
+    if (progress <= ch.end - fade) return { opacity: 1, translateY: 0 };
+    if (progress >= ch.end) return { opacity: 0, translateY: 0 };
+    return { opacity: 1 - (progress - (ch.end - fade)) / fade, translateY: 0 };
+  }
+
+  if (progress <= ch.start || progress >= ch.end) return { opacity: 0, translateY: 0 };
+  if (progress < ch.start + fade) {
+    return { opacity: (progress - ch.start) / fade, translateY: 0 };
+  }
+  if (progress > ch.end - fade) {
+    return { opacity: (ch.end - progress) / fade, translateY: 0 };
+  }
+  return { opacity: 1, translateY: 0 };
 }
 
 export default function MetroHero({
@@ -262,8 +290,8 @@ export default function MetroHero({
       if (next > 0.004) hasStartedScrolling = true;
       // Keep the Hero stage fixed to the viewport while scrubbing; release to bottom at end
       setPinMode(rect.bottom <= window.innerHeight ? "bottom" : "fixed");
-      // Show top navigation bar once the hero frame scroll finishes
-      setShowHeader(next >= 0.92);
+      // Reveal top navigation bar and main LOREN NAILS text together on first hero scroll
+      setShowHeader(next >= 0.01);
     };
 
     const onResize = () => {
@@ -283,11 +311,11 @@ export default function MetroHero({
       CHAPTERS.forEach((ch, idx) => {
         const el = chapterRefs.current[idx];
         if (!el) return;
-        const vis = getChapterVisibility(currentProgress, ch);
-        el.style.opacity = String(vis);
-        el.style.transform = `translateY(${(1 - vis) * 16}px)`;
-        el.style.filter = `blur(${(1 - vis) * 6}px)`;
-        el.style.pointerEvents = vis > 0.35 ? "auto" : "none";
+        const { opacity, translateY } = getChapterMotion(currentProgress, ch);
+        el.style.opacity = String(opacity);
+        el.style.transform = `translateY(${translateY}px)`;
+        el.style.filter = `blur(${(1 - opacity) * 5}px)`;
+        el.style.pointerEvents = opacity > 0.35 ? "auto" : "none";
 
         const dot = dotRefs.current[idx];
         if (dot) {
@@ -317,7 +345,7 @@ export default function MetroHero({
       CHAPTERS.forEach((ch, idx) => {
         const el = chapterRefs.current[idx];
         if (!el) return;
-        el.style.opacity = ch.isFinal ? "1" : "0";
+        el.style.opacity = idx === CHAPTERS.length - 1 ? "1" : "0";
       });
     }
 
@@ -366,26 +394,26 @@ export default function MetroHero({
           {/* Desktop links */}
           <nav
             aria-label="Menu principal"
-            className="hidden items-center gap-7 text-xs font-semibold tracking-wide md:flex"
+            className="hidden items-center gap-7 text-sm font-semibold tracking-wide md:flex"
           >
             <button
               type="button"
               onClick={() => scrollToSection("unhas-em-gel")}
-              className="cursor-pointer text-[#1c1417] transition hover:text-[#fc6998]"
+              className="cursor-pointer py-2 text-[#1c1417] transition hover:text-[#fc6998]"
             >
               Unhas em Gel
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("cursos")}
-              className="cursor-pointer text-[#1c1417] transition hover:text-[#efb810]"
+              className="cursor-pointer py-2 text-[#1c1417] transition hover:text-[#efb810]"
             >
               Cursos
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="cursor-pointer rounded-full bg-[#fc6998] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#e65283]"
+              className="min-h-[40px] cursor-pointer rounded-full bg-[#fc6998] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#e65283]"
             >
               Agendar
             </button>
@@ -470,31 +498,20 @@ export default function MetroHero({
             }}
           />
 
-          {/* Mobile: bottom scrim so nails & polish stay 100% clear in the upper/center area */}
+          {/* Subtle warm vignette & bottom edge blend (no heavy white washout) */}
           <div
-            className="pointer-events-none absolute inset-0 md:hidden"
+            className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "linear-gradient(0deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.78) 32%, rgba(255,255,255,0) 62%)",
+                "radial-gradient(circle at 50% 48%, rgba(28,20,23,0) 48%, rgba(28,20,23,0.16) 100%)",
             }}
           />
-
-          {/* Desktop: right-side scrim */}
           <div
-            className="pointer-events-none absolute inset-0 hidden md:block"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(255,255,255,0) 34%, rgba(255,255,255,0.74) 68%, rgba(255,255,255,0.94) 100%)",
-            }}
-          />
-
-          {/* Bottom gradient blend into sections below */}
-          <div
-            className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-28 bg-gradient-to-t from-white via-white/60 to-transparent"
+            className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-16 bg-gradient-to-t from-white/90 via-white/35 to-transparent"
             aria-hidden="true"
           />
 
-          {/* Scroll-Driven Self-Esteem Phrases */}
+          {/* Scroll-Driven Rotating Editorial Phrases (no white cards, ~half-screen scale, LOREN NAILS last) */}
           <div className="pointer-events-none absolute inset-0 z-10">
             {CHAPTERS.map((ch, idx) => (
               <div
@@ -502,75 +519,70 @@ export default function MetroHero({
                 ref={(el) => {
                   chapterRefs.current[idx] = el;
                 }}
-                className={
-                  ch.isFinal
-                    ? "absolute inset-0 flex items-center justify-center px-6 text-center"
-                    : "absolute inset-0 flex items-end justify-center px-6 pb-20 text-center md:items-center md:justify-end md:px-14 md:pb-0 md:text-right lg:px-24"
-                }
+                className={`absolute inset-0 flex ${ch.positionClass}`}
                 style={{
                   opacity: idx === 0 ? 1 : 0,
                   willChange: "transform, opacity, filter",
                 }}
               >
                 <div
-                  className={ch.isFinal ? "max-w-lg" : "max-w-sm md:max-w-md"}
+                  className={
+                    ch.isFinal
+                      ? "w-full max-w-[92vw] sm:max-w-2xl md:max-w-[54vw]"
+                      : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[46vw]"
+                  }
                 >
                   <span
-                    className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase md:mb-4 md:px-3.5 md:text-[11px]"
+                    className="mb-3 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-semibold tracking-[0.2em] uppercase md:mb-4"
                     style={{
                       borderColor: COL_GOLD,
-                      backgroundColor: "rgba(255,255,255,0.95)",
+                      backgroundColor: "rgba(255,255,255,0.92)",
                       color: COL_INK,
                     }}
                   >
                     <span
-                      className="h-1.5 w-1.5 rounded-full"
+                      className="h-2 w-2 rounded-full"
                       style={{ backgroundColor: COL_PINK }}
                     />
                     {ch.eyebrow}
                   </span>
 
-                  <h1
-                    className={
-                      ch.isFinal
-                        ? "font-serif text-4xl font-semibold tracking-wider sm:text-5xl lg:text-6xl"
-                        : "font-serif text-3xl font-medium leading-[1.12] tracking-tight sm:text-4xl lg:text-6xl"
-                    }
-                    style={{
-                      color: ch.isFinal ? COL_PINK : COL_INK,
-                      textShadow: ch.isFinal
-                        ? "0 2px 24px rgba(255,255,255,0.95), 0 1px 8px rgba(255,255,255,0.85)"
-                        : undefined,
-                    }}
-                  >
-                    {ch.title}
-                  </h1>
+                  {ch.isFinal ? (
+                    <h1
+                      className="font-serif text-5xl font-semibold tracking-wider sm:text-6xl md:text-7xl lg:text-8xl"
+                      style={{ color: "#e64278" }}
+                    >
+                      {ch.title}
+                    </h1>
+                  ) : (
+                    <h2
+                      className="font-serif text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+                      style={{ color: "#140d10" }}
+                    >
+                      {ch.title}
+                    </h2>
+                  )}
 
                   <p
-                    className="mt-3 text-xs font-medium leading-relaxed sm:text-sm md:mt-4 md:text-base"
-                    style={{
-                      color: "#4d3d43",
-                      textShadow: ch.isFinal
-                        ? "0 1px 14px rgba(255,255,255,0.95)"
-                        : undefined,
-                    }}
+                    className="mt-3 text-base font-medium leading-relaxed sm:text-lg md:mt-4 md:text-xl lg:text-2xl"
+                    style={{ color: "#23171b" }}
                   >
                     {ch.subtitle}
                   </p>
 
                   {ch.isFinal && (
-                    <div className="mt-6 flex flex-wrap justify-center gap-3">
+                    <div className="mt-7 flex flex-wrap justify-center gap-3.5">
                       <button
                         type="button"
                         onClick={() => scrollToSection("unhas-em-gel")}
-                        className="cursor-pointer rounded-full bg-[#fc6998] px-5 py-2.5 text-xs font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283]"
+                        className="min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-7 py-3 text-sm font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:text-base"
                       >
                         Ver Unhas em Gel
                       </button>
                       <button
                         type="button"
                         onClick={() => scrollToSection("cursos")}
-                        className="cursor-pointer rounded-full border border-[#efb810] bg-white px-5 py-2.5 text-xs font-semibold tracking-wide text-ink transition hover:bg-[#fef9e7]"
+                        className="min-h-[44px] cursor-pointer rounded-full border border-[#efb810] bg-white px-7 py-3 text-sm font-semibold tracking-wide text-ink shadow-xs transition hover:bg-[#fef9e7] md:text-base"
                       >
                         Conhecer Cursos
                       </button>

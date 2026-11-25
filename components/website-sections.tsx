@@ -90,63 +90,63 @@ export default function WebsiteSections() {
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-16 md:py-20">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold tracking-[0.26em] text-[#fc6998] uppercase">
+            <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#fc6998] uppercase">
               Serviços Especializados
             </p>
             <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
               Unhas em Gel
             </h2>
           </div>
-          <p className="max-w-sm text-xs leading-relaxed text-ink-muted sm:text-sm">
+          <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
             Protocolos minimalistas focados na saúde da lâmina natural e brilho
             duradouro.
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
           {GEL_SERVICES.map((srv) => (
             <article
               key={srv.id}
-              className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#fc6998]/60 hover:shadow-sm"
+              className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#fc6998]/60 hover:shadow-sm"
             >
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-ink uppercase">
+                  <span className="rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-xs font-semibold tracking-wider text-ink uppercase">
                     {srv.tag}
                   </span>
                   <Sparkles
-                    className="h-3.5 w-3.5 text-[#fc6998]"
+                    className="h-4 w-4 text-[#fc6998]"
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="font-serif text-xl font-medium text-ink">
+                <h3 className="font-serif text-2xl font-medium text-ink">
                   {srv.name}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-ink-muted">
+                <p className="mt-2.5 text-sm leading-relaxed text-ink-muted sm:text-base">
                   {srv.description}
                 </p>
               </div>
 
-              <div className="mt-5 border-t border-black/5 pt-4">
+              <div className="mt-6 border-t border-black/5 pt-4">
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-ink-muted">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted">
                     <Clock
-                      className="h-3 w-3 text-[#efb810]"
+                      className="h-3.5 w-3.5 text-[#efb810]"
                       aria-hidden="true"
                     />
                     {srv.duration}
                   </span>
-                  <span className="text-base font-semibold text-ink">
+                  <span className="text-lg font-semibold text-ink">
                     {srv.price}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => selectAndScrollToBooking(srv.name)}
-                  className="mt-3 inline-flex cursor-pointer items-center gap-1 text-xs font-semibold text-[#fc6998] transition hover:underline"
+                  className="mt-3 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm font-semibold text-[#fc6998] transition hover:underline"
                 >
                   Agendar este serviço
-                  <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>
             </article>
@@ -162,20 +162,20 @@ export default function WebsiteSections() {
         <div className="mx-auto max-w-5xl px-5">
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="mb-1.5 text-[11px] font-semibold tracking-[0.26em] text-[#efb810] uppercase">
+              <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#efb810] uppercase">
                 Educação &amp; Carreira
               </p>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
                 Cursos LOREN NAILS
               </h2>
             </div>
-            <p className="max-w-sm text-xs leading-relaxed text-ink-muted sm:text-sm">
+            <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
               Formação prática em turmas reduzidas para dominar o gel com
               técnica e elegância.
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {COURSES.map((course) => (
               <article
                 key={course.id}
@@ -184,31 +184,31 @@ export default function WebsiteSections() {
                 <div>
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-muted">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted sm:text-sm">
                         <Award
-                          className="h-3.5 w-3.5 text-[#fc6998]"
+                          className="h-4 w-4 text-[#fc6998]"
                           aria-hidden="true"
                         />
                         {course.duration}
                       </span>
-                      <h3 className="mt-1.5 font-serif text-2xl font-medium text-ink">
+                      <h3 className="mt-2 font-serif text-2xl font-medium text-ink">
                         {course.name}
                       </h3>
                     </div>
-                    <span className="shrink-0 rounded-full bg-[#fc6998] px-3 py-1 text-xs font-semibold text-white">
+                    <span className="shrink-0 rounded-full bg-[#fc6998] px-3.5 py-1 text-sm font-semibold text-white">
                       {course.price}
                     </span>
                   </div>
 
-                  <p className="mt-3 text-xs leading-relaxed text-ink-muted sm:text-sm">
+                  <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
                     {course.description}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap gap-1.5">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {course.highlights.map((item) => (
                       <span
                         key={item}
-                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-2.5 py-0.5 text-[11px] font-medium text-ink"
+                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
                       >
                         {item}
                       </span>
@@ -218,14 +218,14 @@ export default function WebsiteSections() {
 
                 <div className="mt-5 border-t border-black/5 pt-4">
                   <Button
-                    size="sm"
+                    size="default"
                     variant="outline"
                     onClick={() =>
                       selectAndScrollToBooking(`Curso: ${course.name}`)
                     }
                   >
                     Garantir minha vaga
-                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               </article>
@@ -235,34 +235,34 @@ export default function WebsiteSections() {
       </section>
 
       {/* Seção 3: Agendamento & Inscrição */}
-      <section id="agendar" className="mx-auto max-w-xl px-5 py-16 md:py-20">
+      <section id="agendar" className="mx-auto max-w-2xl px-5 py-16 md:py-20">
         <div className="text-center">
-          <p className="mb-1.5 text-[11px] font-semibold tracking-[0.26em] text-[#fc6998] uppercase">
+          <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#fc6998] uppercase">
             Reserva Online
           </p>
           <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
             Agende seu horário ou curso
           </h2>
-          <p className="mt-2 text-xs text-ink-muted sm:text-sm">
+          <p className="mt-2.5 text-sm text-ink-muted sm:text-base">
             Atendimento individual com hora marcada. Confirmação pelo WhatsApp.
           </p>
         </div>
 
         {submitted ? (
           <div className="mt-8 rounded-2xl border border-[#efb810] bg-[#fef9e7]/40 p-6 text-center">
-            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#fc6998] text-white">
+            <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#fc6998] text-white">
               <Check className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="font-serif text-2xl font-medium text-ink">
               Solicitação enviada, {clientName}
             </h3>
-            <p className="mt-1.5 text-xs text-ink-muted sm:text-sm">
+            <p className="mt-2 text-sm text-ink-muted sm:text-base">
               Interesse em <strong>{selectedTopic}</strong>
               {preferredDate ? ` para ${preferredDate}` : ""}. Confirmaremos
               pelo WhatsApp <strong>{clientPhone}</strong>.
             </p>
             <Button
-              size="sm"
+              size="default"
               variant="outline"
               className="mt-5"
               onClick={() => {
@@ -278,13 +278,13 @@ export default function WebsiteSections() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-4 rounded-2xl border border-black/8 bg-white p-5 shadow-xs sm:p-7"
+            className="mt-8 space-y-5 rounded-2xl border border-black/8 bg-white p-6 shadow-xs sm:p-8"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label
                   htmlFor="site-name"
-                  className="mb-1 block text-[11px] font-semibold tracking-wide text-ink uppercase"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
                 >
                   Seu nome
                 </label>
@@ -295,14 +295,14 @@ export default function WebsiteSections() {
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   placeholder="Ex: Juliana Mendes"
-                  className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="site-phone"
-                  className="mb-1 block text-[11px] font-semibold tracking-wide text-ink uppercase"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
                 >
                   WhatsApp
                 </label>
@@ -313,7 +313,7 @@ export default function WebsiteSections() {
                   value={clientPhone}
                   onChange={(e) => setClientPhone(e.target.value)}
                   placeholder="(11) 99999-9999"
-                  className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 />
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function WebsiteSections() {
               <div>
                 <label
                   htmlFor="site-topic"
-                  className="mb-1 block text-[11px] font-semibold tracking-wide text-ink uppercase"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
                 >
                   Serviço ou Curso
                 </label>
@@ -330,7 +330,7 @@ export default function WebsiteSections() {
                   id="site-topic"
                   value={selectedTopic}
                   onChange={(e) => setSelectedTopic(e.target.value)}
-                  className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white py-3 pr-9 pl-4 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 >
                   <optgroup label="Unhas em Gel">
                     {GEL_SERVICES.map((s) => (
@@ -352,7 +352,7 @@ export default function WebsiteSections() {
               <div>
                 <label
                   htmlFor="site-date"
-                  className="mb-1 block text-[11px] font-semibold tracking-wide text-ink uppercase"
+                  className="mb-1.5 block text-xs font-semibold tracking-wide text-ink uppercase"
                 >
                   Data preferida
                 </label>
@@ -361,13 +361,13 @@ export default function WebsiteSections() {
                   type="date"
                   value={preferredDate}
                   onChange={(e) => setPreferredDate(e.target.value)}
-                  className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 />
               </div>
             </div>
 
             <div className="pt-1">
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full text-base font-semibold text-white">
                 <Calendar className="h-4 w-4" aria-hidden="true" />
                 Solicitar agendamento
               </Button>
@@ -380,32 +380,32 @@ export default function WebsiteSections() {
       <footer className="border-t border-black/5 bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
-            <p className="font-serif text-lg font-semibold tracking-wider text-ink">
+            <p className="font-serif text-xl font-semibold tracking-wider text-ink">
               LOREN NAILS
             </p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-muted">
+            <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-muted">
               <MapPin
-                className="h-3.5 w-3.5 text-[#fc6998]"
+                className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
               Jardins, São Paulo • Terça a Sábado, 09h às 19h
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-5 text-xs font-medium text-ink-muted">
+          <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-ink-muted">
             <a
               href="#agendar"
-              className="inline-flex items-center gap-1.5 transition hover:text-[#fc6998]"
+              className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
             >
-              <Phone className="h-3.5 w-3.5 text-[#efb810]" aria-hidden="true" />
+              <Phone className="h-4 w-4 text-[#efb810]" aria-hidden="true" />
               WhatsApp
             </a>
             <a
               href="#unhas-em-gel"
-              className="inline-flex items-center gap-1.5 transition hover:text-[#fc6998]"
+              className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
             >
               <Instagram
-                className="h-3.5 w-3.5 text-[#fc6998]"
+                className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
               @lorennails

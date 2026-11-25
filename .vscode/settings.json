@@ -1,3 +1,4 @@
 {
-  "fiveServer.root": "out"
+  "fiveServer.root": "out",
+  "liveServer.settings.root": "/out"
 }
