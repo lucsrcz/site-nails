@@ -809,7 +809,7 @@ export default function MetroHero({
           aria-modal="true"
           aria-label="Logo Nayara Oliveira Studio"
           onClick={() => setLogoModalOpen(false)}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-6 backdrop-blur-sm animate-[fadeIn_200ms_ease-out]"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-6 backdrop-blur-sm transition-opacity duration-200"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -824,9 +824,9 @@ export default function MetroHero({
               <X className="h-4 w-4" />
             </button>
             <img
-              src={`${BASE_PATH}/esmalte-perfil.jpg`}
+              src={`${BASE_PATH}/nayara-logo.webp`}
               alt="Nayara Oliveira Studio"
-              className="aspect-square w-full rounded-full object-cover"
+              className="aspect-square w-full scale-105 rounded-full object-cover"
             />
           </div>
         </div>

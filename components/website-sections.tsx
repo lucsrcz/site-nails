@@ -20,8 +20,6 @@ const GEL_SERVICES = [
   {
     id: "alongamento-gel",
     name: "Fibra de Vidro & Molde F1",
-    duration: "120 min",
-    price: "R$ 220",
     tag: "Alto Padrão",
     description:
       "Alongamento com naturalidade e elegância, estrutura ultrafina e resistência impecável.",
@@ -29,8 +27,6 @@ const GEL_SERVICES = [
   {
     id: "banho-gel",
     name: "Blindagem & Banho em Gel",
-    duration: "75 min",
-    price: "R$ 145",
     tag: "Proteção",
     description:
       "Camada protetora sobre a unha natural para fortalecer e manter o brilho por semanas.",
@@ -38,8 +34,6 @@ const GEL_SERVICES = [
   {
     id: "esmaltacao-gel",
     name: "Esmaltação em Gel",
-    duration: "60 min",
-    price: "R$ 110",
     tag: "Essencial",
     description:
       "Secagem imediata em cabine LED, cor intensa e durabilidade de até 21 dias.",
