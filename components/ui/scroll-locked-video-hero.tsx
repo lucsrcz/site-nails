@@ -213,7 +213,17 @@ export default function MetroHero({
   const [ready, setReady] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoModalOpen, setLogoModalOpen] = useState(false);
   const [pinMode, setPinMode] = useState<"fixed" | "bottom">("fixed");
+
+  useEffect(() => {
+    if (!logoModalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLogoModalOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [logoModalOpen]);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -424,16 +434,22 @@ export default function MetroHero({
         }`}
       >
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
-          <a
-            href="#inicio"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex min-h-[44px] items-center gap-2.5"
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setLogoModalOpen(true);
+            }}
+            aria-label="Ampliar logo Nayara Oliveira Studio"
+            className="flex min-h-[44px] cursor-pointer items-center gap-2.5 text-left transition hover:opacity-90"
           >
-            <img
-              src={`${BASE_PATH}/nayara-logo.webp`}
-              alt="Nayara Oliveira Studio"
-              className="border-pink-gold h-10 w-10 shrink-0 rounded-full bg-black object-contain p-0.5 shadow-xs"
-            />
+            <span className="border-pink-gold h-10 w-10 shrink-0 overflow-hidden rounded-full bg-black shadow-xs">
+              <img
+                src={`${BASE_PATH}/nayara-logo.webp`}
+                alt="Nayara Oliveira Studio"
+                className="h-full w-full scale-115 object-cover"
+              />
+            </span>
             <div className="flex flex-col leading-none">
               <span className="font-script text-metallic-gold text-2xl font-normal tracking-normal sm:text-[28px]">
                 Nayara Oliveira
@@ -442,7 +458,7 @@ export default function MetroHero({
                 Studio
               </span>
             </div>
-          </a>
+          </button>
 
           {/* Desktop links & original social icons */}
           <nav
@@ -767,17 +783,51 @@ export default function MetroHero({
         </div>
       </section>
 
-      {/* Floating WhatsApp Side Button */}
+      {/* Floating WhatsApp Side Button — slides in from right to left when header appears */}
       <a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Falar com Nayara Designer Nail no WhatsApp"
+        aria-label="Falar com Nayara Oliveira Studio no WhatsApp"
         title="Falar no WhatsApp"
-        className="border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6"
+        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${
+          showHeader
+            ? "translate-x-0 opacity-100"
+            : "pointer-events-none translate-x-24 opacity-0"
+        }`}
       >
         <WhatsAppBrandIcon className="h-7 w-7" />
       </a>
+
+      {/* Logo Lightbox Modal */}
+      {logoModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Logo Nayara Oliveira Studio"
+          onClick={() => setLogoModalOpen(false)}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-6 backdrop-blur-sm animate-[fadeIn_200ms_ease-out]"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="border-pink-gold relative w-full max-w-sm overflow-hidden rounded-full bg-black p-2 shadow-2xl transition-transform duration-300"
+          >
+            <button
+              type="button"
+              onClick={() => setLogoModalOpen(false)}
+              aria-label="Fechar visualização da logo"
+              className="border-pink-gold absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#1c1417] shadow-md transition hover:scale-105"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <img
+              src={`${BASE_PATH}/nayara-logo.webp`}
+              alt="Nayara Oliveira Studio"
+              className="aspect-square w-full rounded-full object-cover"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
