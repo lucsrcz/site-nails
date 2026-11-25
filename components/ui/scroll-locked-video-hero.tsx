@@ -650,7 +650,7 @@ export default function MetroHero({
                 <div
                   className={
                     ch.isFinal
-                      ? "w-full max-w-[92vw] sm:max-w-2xl md:max-w-[54vw]"
+                      ? "w-full max-w-[96vw] sm:max-w-2xl md:max-w-[58vw]"
                       : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[46vw]"
                   }
                 >
@@ -672,7 +672,7 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script text-metallic-gold px-4 py-2 text-6xl leading-[1.22] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
+                        className="font-script text-metallic-gold px-5 py-3 text-[3.25rem] leading-[1.35] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
                         style={{
                           filter:
                             "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
@@ -680,7 +680,7 @@ export default function MetroHero({
                       >
                         {ch.title}
                       </h1>
-                      <div className="-mt-1 flex w-56 items-center gap-3 sm:w-72">
+                      <div className="-mt-3 flex w-56 items-center gap-3 sm:w-72">
                         <span
                           className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                           aria-hidden="true"
