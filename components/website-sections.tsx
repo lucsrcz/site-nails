@@ -11,7 +11,7 @@ import {
   Phone,
   ArrowRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 const GEL_SERVICES = [
   {
@@ -70,12 +70,6 @@ export default function WebsiteSections() {
   const [clientPhone, setClientPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
-  const selectAndScrollToBooking = (topic: string) => {
-    setSelectedTopic(topic);
-    setSubmitted(false);
-    document.getElementById("agendar")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const WHATSAPP_NUMBER = "5562992118416";
 
@@ -144,14 +138,17 @@ export default function WebsiteSections() {
               </div>
 
               <div className="mt-6 border-t border-black/5 pt-3">
-                <button
-                  type="button"
-                  onClick={() => selectAndScrollToBooking(srv.name)}
+                <a
+                  href={buildWhatsAppUrl(
+                    `Oi, Nayara! Gostaria de agendar o serviço: ${srv.name}.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm font-semibold text-[#fc6998] transition hover:underline"
                 >
                   Agendar este serviço
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </button>
+                </a>
               </div>
             </article>
           ))}
@@ -222,16 +219,17 @@ export default function WebsiteSections() {
                 </div>
 
                 <div className="mt-5 border-t border-black/5 pt-4">
-                  <Button
-                    size="default"
-                    variant="outline"
-                    onClick={() =>
-                      selectAndScrollToBooking(`Curso: ${course.name}`)
-                    }
+                  <a
+                    href={buildWhatsAppUrl(
+                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name}.`
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={buttonVariants({ variant: "outline" })}
                   >
                     Garantir minha vaga
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Button>
+                  </a>
                 </div>
               </article>
             ))}
