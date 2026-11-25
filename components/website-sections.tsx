@@ -77,9 +77,18 @@ export default function WebsiteSections() {
     document.getElementById("agendar")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const WHATSAPP_NUMBER = "5562992118416";
+
+  const buildWhatsAppUrl = (text: string) =>
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!clientName.trim() || !clientPhone.trim()) return;
+    const message = `Oi, Nayara! Me chamo ${clientName.trim()} (WhatsApp: ${clientPhone.trim()}). Gostaria de agendar: ${selectedTopic}${
+      preferredDate ? ` para o dia ${preferredDate}` : ""
+    }.`;
+    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
@@ -391,11 +400,13 @@ export default function WebsiteSections() {
 
           <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-ink-muted">
             <a
-              href="#agendar"
+              href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
             >
               <Phone className="h-4 w-4 text-[#efb810]" aria-hidden="true" />
-              Agendar Horário
+              WhatsApp
             </a>
             <a
               href="https://www.instagram.com/nayara_designernail"

@@ -58,6 +58,8 @@ export interface MetroHeroProps {
 }
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const WHATSAPP_URL =
+  "https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio";
 
 const BASE_FRAMES = Array.from(
   { length: 103 },
@@ -427,9 +429,10 @@ export default function MetroHero({
             onClick={() => setMobileMenuOpen(false)}
             className="flex min-h-[44px] items-center gap-2.5"
           >
-            <span
-              className="bg-metallic-gold h-3 w-3 shrink-0 rounded-full shadow-[0_0_8px_rgba(239,184,16,0.55)]"
-              aria-hidden="true"
+            <img
+              src={`${BASE_PATH}/nayara-perfil.jpg`}
+              alt="Nayara Designer Nail"
+              className="border-pink-gold h-9 w-9 shrink-0 rounded-full object-cover object-top shadow-xs"
             />
             <span className="text-metallic-gold font-serif text-lg font-bold tracking-wide sm:text-2xl">
               Nayara Designer Nail
@@ -467,15 +470,16 @@ export default function MetroHero({
               >
                 <InstagramBrandIcon className="h-5 w-5" />
               </a>
-              <button
-                type="button"
-                onClick={() => scrollToSection("agendar")}
-                aria-label="Agendar pelo WhatsApp"
-                title="Agendar Horário"
-                className="border-pink-gold flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition hover:scale-105"
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Falar no WhatsApp"
+                title="Falar no WhatsApp"
+                className="border-pink-gold flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105"
               >
                 <WhatsAppBrandIcon className="h-5 w-5" />
-              </button>
+              </a>
             </div>
 
             <button
@@ -498,14 +502,15 @@ export default function MetroHero({
             >
               <InstagramBrandIcon className="h-5 w-5" />
             </a>
-            <button
-              type="button"
-              onClick={() => scrollToSection("agendar")}
-              aria-label="Agendar pelo WhatsApp"
-              className="border-pink-gold flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition active:scale-95"
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Falar no WhatsApp"
+              className="border-pink-gold flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition active:scale-95"
             >
               <WhatsAppBrandIcon className="h-5 w-5" />
-            </button>
+            </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -747,6 +752,18 @@ export default function MetroHero({
           </div>
         </div>
       </section>
+
+      {/* Floating WhatsApp Side Button */}
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar com Nayara Designer Nail no WhatsApp"
+        title="Falar no WhatsApp"
+        className="border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6"
+      >
+        <WhatsAppBrandIcon className="h-7 w-7" />
+      </a>
     </>
   );
 }
