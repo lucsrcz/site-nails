@@ -642,7 +642,7 @@ export default function MetroHero({
 
                   {ch.isFinal ? (
                     <h1
-                      className="text-metallic-gold font-serif text-5xl font-bold tracking-wider sm:text-6xl md:text-7xl lg:text-8xl"
+                      className="text-metallic-gold font-serif text-[3.1rem] leading-[1.02] font-bold tracking-wide sm:text-6xl md:text-7xl lg:text-8xl"
                       style={{
                         filter:
                           "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
@@ -652,7 +652,7 @@ export default function MetroHero({
                     </h1>
                   ) : (
                     <h2
-                      className="font-serif text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+                      className="font-serif text-[3.1rem] leading-[0.98] font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
                       style={{ color: "#140d10" }}
                     >
                       {ch.title}
@@ -660,8 +660,11 @@ export default function MetroHero({
                   )}
 
                   <p
-                    className="mt-3 text-base font-medium leading-relaxed sm:text-lg md:mt-4 md:text-xl lg:text-2xl"
-                    style={{ color: "#23171b" }}
+                    className="text-metallic-gold mt-3.5 text-lg font-semibold leading-snug sm:text-xl md:mt-4 md:text-2xl lg:text-[26px]"
+                    style={{
+                      filter:
+                        "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
+                    }}
                   >
                     {ch.subtitle}
                   </p>
