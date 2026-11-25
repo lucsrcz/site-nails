@@ -425,14 +425,8 @@ export default function MetroHero({
 
   return (
     <>
-      {/* Fixed Header revealed after Hero scroll finishes */}
-      <header
-        className={`fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${
-          showHeader
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-full opacity-0"
-        }`}
-      >
+      {/* Fixed Header always visible */}
+      <header className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
           <button
             type="button"
@@ -761,7 +755,7 @@ export default function MetroHero({
           {/* Discreet Centered Bottom Scroll Hint */}
           <div
             ref={hintRef}
-            className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-7"
+            className="pointer-events-none absolute bottom-14 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-8"
           >
             <span className="rounded-full bg-white/70 px-3 py-1 text-[10px] font-medium tracking-[0.28em] text-[#1c1417]/75 uppercase backdrop-blur-sm">
               ROLE PARA BAIXO
