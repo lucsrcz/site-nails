@@ -388,10 +388,10 @@ export default function WebsiteSections() {
       {/* Rodapé tradicional do site */}
       <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
       <footer className="bg-white py-10">
-        <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
+        <div className="mx-auto flex max-w-5xl flex-row items-start justify-between gap-4 px-5 md:items-center">
           <div>
             <div className="inline-flex flex-col items-center">
-              <p className="font-script text-metallic-gold px-2 py-1 text-3xl leading-[1.25] font-normal">
+              <p className="font-script text-metallic-gold px-2 py-1 text-2xl leading-[1.25] font-normal sm:text-3xl">
                 Nayara Oliveira
               </p>
               <span className="-mt-0.5 flex w-full items-center gap-2 px-1">
@@ -399,7 +399,7 @@ export default function WebsiteSections() {
                   className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                   aria-hidden="true"
                 />
-                <span className="font-serif text-[9px] font-medium tracking-[0.42em] text-[#8c6306] uppercase">
+                <span className="font-serif text-[8px] font-medium tracking-[0.38em] text-[#8c6306] uppercase sm:text-[9px] sm:tracking-[0.42em]">
                   STUDIO
                 </span>
                 <span
@@ -408,38 +408,40 @@ export default function WebsiteSections() {
                 />
               </span>
             </div>
-            <p className="mt-2 flex items-center gap-1.5 text-sm text-ink-muted">
+            <p className="mt-2 flex items-center gap-1.5 text-xs text-ink-muted sm:text-sm">
               <MapPin
-                className="h-4 w-4 text-[#fc6998]"
+                className="h-3.5 w-3.5 shrink-0 text-[#fc6998] sm:h-4 sm:w-4"
                 aria-hidden="true"
               />
               Fibra de Vidro, Molde F1 &amp; Gel
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-sm font-medium text-ink-muted">
+          <div className="flex shrink-0 flex-col items-end gap-1 text-right text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-6">
             <a
               href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
+              className="inline-flex min-h-[36px] items-center gap-1.5 transition hover:text-[#fc6998] md:min-h-[44px]"
             >
-              <Phone className="h-4 w-4 text-[#efb810]" aria-hidden="true" />
+              <Phone className="h-3.5 w-3.5 text-[#efb810] sm:h-4 sm:w-4" aria-hidden="true" />
               WhatsApp
             </a>
             <a
               href="https://www.instagram.com/nayara_designernail"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-1.5 transition hover:text-[#fc6998]"
+              className="inline-flex min-h-[36px] items-center gap-1.5 transition hover:text-[#fc6998] md:min-h-[44px]"
             >
               <Instagram
-                className="h-4 w-4 text-[#fc6998]"
+                className="h-3.5 w-3.5 text-[#fc6998] sm:h-4 sm:w-4"
                 aria-hidden="true"
               />
               @nayara_designernail
             </a>
-            <span>© {new Date().getFullYear()} Nayara Oliveira Studio</span>
+            <span className="mt-1 text-[11px] md:mt-0 md:text-sm">
+              © {new Date().getFullYear()} Nayara Oliveira Studio
+            </span>
           </div>
         </div>
 
