@@ -90,7 +90,7 @@ const CHAPTERS: Chapter[] = [
   {
     eyebrow: "Nail Studio",
     title: "Suas mãos contam a sua história.",
-    subtitle: "Role suavemente e acompanhe cada detalhe da transformação.",
+    subtitle: "",
     start: 0.0,
     end: 0.24,
     positionClass:
@@ -703,15 +703,17 @@ export default function MetroHero({
                     </h2>
                   )}
 
-                  <p
-                    className="text-metallic-gold mt-3.5 text-lg font-semibold leading-snug sm:text-xl md:mt-4 md:text-2xl lg:text-[26px]"
-                    style={{
-                      filter:
-                        "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
-                    }}
-                  >
-                    {ch.subtitle}
-                  </p>
+                  {ch.subtitle && (
+                    <p
+                      className="text-metallic-gold mt-3.5 text-lg font-semibold leading-snug sm:text-xl md:mt-4 md:text-2xl lg:text-[26px]"
+                      style={{
+                        filter:
+                          "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
+                      }}
+                    >
+                      {ch.subtitle}
+                    </p>
+                  )}
 
                   {ch.isFinal && (
                     <div className="mt-7 flex flex-wrap justify-center gap-3.5">
@@ -756,16 +758,16 @@ export default function MetroHero({
             ))}
           </div>
 
-          {/* Scroll Hint */}
+          {/* Discreet Centered Bottom Scroll Hint */}
           <div
             ref={hintRef}
-            className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-8"
+            className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-7"
           >
-            <span className="rounded-full bg-white/90 px-3.5 py-1 text-[10px] font-semibold tracking-[0.22em] text-ink uppercase shadow-xs backdrop-blur-sm md:px-4 md:py-1.5 md:text-[11px]">
-              Role a página
+            <span className="rounded-full bg-white/70 px-3 py-1 text-[10px] font-medium tracking-[0.28em] text-[#1c1417]/75 uppercase backdrop-blur-sm">
+              Role para baixo
             </span>
             <ChevronDown
-              className="h-4 w-4 animate-bounce"
+              className="h-3.5 w-3.5 animate-bounce opacity-80"
               style={{ color: COL_PINK }}
               aria-hidden="true"
             />
