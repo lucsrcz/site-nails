@@ -3,6 +3,73 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 
+function NailPolishIcon({ className = "h-9 w-9" }: { className?: string }) {
+  const rawId = useId();
+  const uid = rawId.replace(/:/g, "");
+  const capId = `np-cap-${uid}`;
+  const bodyId = `np-body-${uid}`;
+  const shineId = `np-shine-${uid}`;
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      className={className}
+      style={{
+        filter:
+          "drop-shadow(0 0 6px rgba(252,105,152,0.45)) drop-shadow(0 0 10px rgba(239,184,16,0.4))",
+      }}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={capId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fff4bd" />
+          <stop offset="45%" stopColor="#efb810" />
+          <stop offset="100%" stopColor="#a87000" />
+        </linearGradient>
+        <linearGradient id={bodyId} x1="15%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%" stopColor="#ff94b8" />
+          <stop offset="50%" stopColor="#fc6998" />
+          <stop offset="100%" stopColor="#d9386d" />
+        </linearGradient>
+        <linearGradient id={shineId} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0.08" />
+        </linearGradient>
+      </defs>
+
+      {/* Metallic gold cap */}
+      <rect x="19" y="5" width="10" height="14" rx="2" fill={`url(#${capId})`} />
+      <rect x="20.5" y="7" width="2" height="10" rx="1" fill="#ffffff" opacity="0.45" />
+
+      {/* Bottle collar */}
+      <rect x="17" y="18" width="14" height="3" rx="1" fill={`url(#${capId})`} opacity="0.9" />
+
+      {/* Chic glass bottle */}
+      <rect
+        x="11"
+        y="21"
+        width="26"
+        height="22"
+        rx="6"
+        fill={`url(#${bodyId})`}
+      />
+
+      {/* Glossy glass specular reflection */}
+      <rect x="14.5" y="24.5" width="4" height="14" rx="2" fill={`url(#${shineId})`} />
+      <circle cx="24" cy="24" r="1.1" fill="#ffffff" opacity="0.65" />
+
+      {/* Sparkle / brilho */}
+      <path
+        d="M38 11 L39.2 14.3 L42.5 15.5 L39.2 16.7 L38 20 L36.8 16.7 L33.5 15.5 L36.8 14.3 Z"
+        fill="#efb810"
+      />
+      <path
+        d="M9 12 L9.8 14 L11.8 14.8 L9.8 15.6 L9 17.6 L8.2 15.6 L6.2 14.8 L8.2 14 Z"
+        fill="#fc6998"
+      />
+    </svg>
+  );
+}
+
 function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
   const rawId = useId();
   const gradId = `ig-grad-${rawId.replace(/:/g, "")}`;
@@ -440,15 +507,11 @@ export default function MetroHero({
               setMobileMenuOpen(false);
               setLogoModalOpen(true);
             }}
-            aria-label="Ampliar logo Nayara Oliveira Studio"
-            className="flex min-h-[44px] cursor-pointer items-center gap-2.5 text-left transition hover:opacity-90"
+            aria-label="Ampliar ícone Nayara Oliveira Studio"
+            className="flex min-h-[44px] cursor-pointer items-center gap-2 text-left transition hover:scale-[1.02]"
           >
-            <span className="border-pink-gold h-10 w-10 shrink-0 overflow-hidden rounded-full bg-white shadow-xs">
-              <img
-                src={`${BASE_PATH}/esmalte-perfil.jpg`}
-                alt="Nayara Oliveira Studio"
-                className="h-full w-full object-cover"
-              />
+            <span className="relative flex h-10 w-10 shrink-0 items-center justify-center">
+              <NailPolishIcon className="h-9 w-9" />
             </span>
             <div className="flex flex-col leading-none">
               <span className="font-script text-metallic-gold text-2xl font-normal tracking-normal sm:text-[28px]">
