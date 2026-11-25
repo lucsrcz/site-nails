@@ -1,7 +1,53 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X, Instagram, MessageCircle } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+
+function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="ig-grad-hero" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#feda75" />
+          <stop offset="25%" stopColor="#fa7e1e" />
+          <stop offset="55%" stopColor="#d62976" />
+          <stop offset="80%" stopColor="#962fbf" />
+          <stop offset="100%" stopColor="#4f5bd5" />
+        </linearGradient>
+      </defs>
+      <rect
+        x="2"
+        y="2"
+        width="20"
+        height="20"
+        rx="6"
+        fill="none"
+        stroke="url(#ig-grad-hero)"
+        strokeWidth="2.1"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4.2"
+        fill="none"
+        stroke="url(#ig-grad-hero)"
+        strokeWidth="2.1"
+      />
+      <circle cx="17.5" cy="6.5" r="1.3" fill="url(#ig-grad-hero)" />
+    </svg>
+  );
+}
+
+function WhatsAppBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        fill="#25D366"
+        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.77 14.11c-.24.68-1.4 1.3-1.95 1.38-.51.08-1.15.11-1.86-.12-.43-.14-.98-.32-1.69-.63-2.98-1.29-4.92-4.29-5.07-4.49-.15-.2-1.21-1.61-1.21-3.07 0-1.46.76-2.18 1.03-2.48.27-.3.59-.37.79-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.59.84 2.04.91 2.19.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.4-.45.53-.15.15-.31.31-.13.61.18.3.79 1.3 1.7 2.11 1.17 1.04 2.15 1.37 2.45 1.52.3.15.47.12.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.74.82 2.04.97.3.15.5.22.57.34.07.12.07.7-.17 1.38z"
+      />
+    </svg>
+  );
+}
 
 export interface MetroHeroProps {
   frames?: string[];
@@ -367,32 +413,28 @@ export default function MetroHero({
     <>
       {/* Fixed Header revealed after Hero scroll finishes */}
       <header
-        className={`fixed top-0 right-0 left-0 z-50 border-b border-black/5 bg-white/95 backdrop-blur-md transition-all duration-300 ${
+        className={`fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${
           showHeader
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-full opacity-0"
         }`}
       >
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
           <a
             href="#inicio"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2"
+            className="flex min-h-[44px] items-center gap-2.5"
           >
             <span
-              className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: COL_GOLD }}
+              className="bg-metallic-gold h-3 w-3 shrink-0 rounded-full shadow-[0_0_8px_rgba(239,184,16,0.55)]"
               aria-hidden="true"
             />
-            <span
-              className="font-serif text-xl font-semibold tracking-wide"
-              style={{ color: COL_PINK }}
-            >
+            <span className="text-metallic-gold font-serif text-xl font-bold tracking-wide sm:text-2xl">
               Nayara Designer Nail
             </span>
           </a>
 
-          {/* Desktop links & contact icons */}
+          {/* Desktop links & original social icons */}
           <nav
             aria-label="Menu principal"
             className="hidden items-center gap-6 text-sm font-semibold tracking-wide md:flex"
@@ -419,18 +461,18 @@ export default function MetroHero({
                 rel="noopener noreferrer"
                 aria-label="Instagram @nayara_designernail"
                 title="@nayara_designernail"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:border-[#fc6998] hover:bg-[#fff4f7]"
+                className="border-pink-gold flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105"
               >
-                <Instagram className="h-4 w-4" aria-hidden="true" />
+                <InstagramBrandIcon className="h-5 w-5" />
               </a>
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
                 aria-label="Agendar pelo WhatsApp"
                 title="Agendar Horário"
-                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#1c1417] transition hover:border-[#efb810] hover:bg-[#fef9e7]"
+                className="border-pink-gold flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition hover:scale-105"
               >
-                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                <WhatsAppBrandIcon className="h-5 w-5" />
               </button>
             </div>
 
@@ -443,62 +485,70 @@ export default function MetroHero({
             </button>
           </nav>
 
-          {/* Mobile Contact Icons + Menu Button */}
+          {/* Mobile Original Social Icons + Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
             <a
               href="https://www.instagram.com/nayara_designernail"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram @nayara_designernail"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7]"
+              className="border-pink-gold flex h-11 w-11 items-center justify-center rounded-full transition active:scale-95"
             >
-              <Instagram className="h-4 w-4" aria-hidden="true" />
+              <InstagramBrandIcon className="h-5 w-5" />
             </a>
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              aria-label="Agendar Horário"
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#1c1417] transition hover:bg-[#fef9e7]"
+              aria-label="Agendar pelo WhatsApp"
+              className="border-pink-gold flex h-11 w-11 cursor-pointer items-center justify-center rounded-full transition active:scale-95"
             >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              <WhatsAppBrandIcon className="h-5 w-5" />
             </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={mobileMenuOpen}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/10 bg-white text-[#fc6998] transition hover:bg-[#fff4f7]"
+              className="border-pink-gold flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-[#1c1417] transition active:scale-95"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Pink-to-Gold Gradient Line on Header Bottom */}
+        <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
+
+        {/* Mobile Dropdown Menu (Informative & Accessible) */}
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
-            className="border-t border-black/5 bg-white px-5 py-4 md:hidden"
+            className="bg-white px-5 py-4 shadow-md md:hidden"
           >
+            <p className="mb-3 text-xs font-medium text-[#6e5c62]">
+              Especialista em fibra de vidro, método molde F1 e banho em gel.
+            </p>
             <div className="flex flex-col gap-2">
               <button
                 type="button"
                 onClick={() => scrollToSection("unhas-em-gel")}
-                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-[#1c1417] transition hover:bg-[#fff4f7] hover:text-[#fc6998]"
+                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-sm font-semibold text-[#1c1417]"
               >
-                Serviços — <span className="text-[#fc6998]">Unhas em Gel</span>
+                <span>Serviços — Unhas em Gel</span>
+                <span className="text-xs font-semibold text-[#fc6998]">A partir de R$ 110</span>
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("cursos")}
-                className="cursor-pointer rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-[#1c1417] transition hover:bg-[#fef9e7]"
+                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-sm font-semibold text-[#1c1417]"
               >
-                Cursos Profissionais
+                <span>Cursos Profissionais</span>
+                <span className="text-xs font-semibold text-[#b67d03]">Certificado</span>
               </button>
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
-                className="mt-1 cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
+                className="mt-1 min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#e65283]"
               >
                 Agendar Horário
               </button>
@@ -592,8 +642,11 @@ export default function MetroHero({
 
                   {ch.isFinal ? (
                     <h1
-                      className="font-serif text-5xl font-semibold tracking-wider sm:text-6xl md:text-7xl lg:text-8xl"
-                      style={{ color: "#e64278" }}
+                      className="text-metallic-gold font-serif text-5xl font-bold tracking-wider sm:text-6xl md:text-7xl lg:text-8xl"
+                      style={{
+                        filter:
+                          "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
+                      }}
                     >
                       {ch.title}
                     </h1>

@@ -86,8 +86,16 @@ export default function WebsiteSections() {
 
   return (
     <div className="bg-white text-ink">
+      {/* Pink-to-Gold Gradient Section Divider */}
+      <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
+
       {/* Seção 1: Serviços de Unhas em Gel */}
-      <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-16 md:py-20">
+      <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
+        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wide text-ink-muted md:hidden">
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Fibra de Vidro</span>
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Molde F1</span>
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Blindagem</span>
+        </div>
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#fc6998] uppercase">
@@ -107,7 +115,7 @@ export default function WebsiteSections() {
           {GEL_SERVICES.map((srv) => (
             <article
               key={srv.id}
-              className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#fc6998]/60 hover:shadow-sm"
+              className="border-pink-gold flex flex-col justify-between rounded-2xl p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
             >
               <div>
                 <div className="mb-4 flex items-center justify-between">
@@ -155,9 +163,10 @@ export default function WebsiteSections() {
       </section>
 
       {/* Seção 2: Cursos Profissionais */}
+      <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
       <section
         id="cursos"
-        className="border-t border-black/5 bg-[#fff4f7]/45 py-16 md:py-20"
+        className="bg-[#fff4f7]/45 py-16 md:py-20"
       >
         <div className="mx-auto max-w-5xl px-5">
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -179,7 +188,7 @@ export default function WebsiteSections() {
             {COURSES.map((course) => (
               <article
                 key={course.id}
-                className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-6 transition hover:border-[#efb810]"
+                className="border-pink-gold flex flex-col justify-between rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
@@ -249,7 +258,7 @@ export default function WebsiteSections() {
         </div>
 
         {submitted ? (
-          <div className="mt-8 rounded-2xl border border-[#efb810] bg-[#fef9e7]/40 p-6 text-center">
+          <div className="border-pink-gold mt-8 rounded-2xl p-6 text-center">
             <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#fc6998] text-white">
               <Check className="h-5 w-5" aria-hidden="true" />
             </div>
@@ -278,7 +287,7 @@ export default function WebsiteSections() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-5 rounded-2xl border border-black/8 bg-white p-6 shadow-xs sm:p-8"
+            className="border-pink-gold mt-8 space-y-5 rounded-2xl p-6 shadow-xs sm:p-8"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -377,7 +386,8 @@ export default function WebsiteSections() {
       </section>
 
       {/* Rodapé tradicional do site */}
-      <footer className="border-t border-black/5 bg-white py-10">
+      <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
+      <footer className="bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
             <p className="font-serif text-xl font-semibold tracking-wide text-ink">

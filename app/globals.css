@@ -35,3 +35,40 @@
     color: #ffffff;
   }
 }
+
+.text-metallic-gold {
+  background: linear-gradient(
+    135deg,
+    #b67d03 0%,
+    #efb810 28%,
+    #fff1a8 50%,
+    #e5a608 74%,
+    #a87000 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-metallic-gold {
+  background: linear-gradient(
+    135deg,
+    #c98e06 0%,
+    #efb810 38%,
+    #fff3b8 58%,
+    #d49604 100%
+  );
+}
+
+.line-pink-gold {
+  background: linear-gradient(90deg, #fc6998 0%, #f59154 50%, #efb810 100%);
+}
+
+.border-pink-gold {
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(135deg, #fc6998 0%, #f59154 50%, #efb810 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
