@@ -443,11 +443,11 @@ export default function MetroHero({
             aria-label="Ampliar logo Nayara Oliveira Studio"
             className="flex min-h-[44px] cursor-pointer items-center gap-2.5 text-left transition hover:opacity-90"
           >
-            <span className="border-pink-gold h-10 w-10 shrink-0 overflow-hidden rounded-full bg-black shadow-xs">
+            <span className="border-pink-gold h-10 w-10 shrink-0 overflow-hidden rounded-full bg-white shadow-xs">
               <img
-                src={`${BASE_PATH}/nayara-logo.webp`}
+                src={`${BASE_PATH}/esmalte-perfil.jpg`}
                 alt="Nayara Oliveira Studio"
-                className="h-full w-full scale-115 object-cover"
+                className="h-full w-full object-cover"
               />
             </span>
             <div className="flex flex-col leading-none">
@@ -821,7 +821,7 @@ export default function MetroHero({
               <X className="h-4 w-4" />
             </button>
             <img
-              src={`${BASE_PATH}/nayara-logo.webp`}
+              src={`${BASE_PATH}/esmalte-perfil.jpg`}
               alt="Nayara Oliveira Studio"
               className="aspect-square w-full rounded-full object-cover"
             />
