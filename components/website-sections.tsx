@@ -447,28 +447,23 @@ export default function WebsiteSections() {
 
         {/* Discreet LGPD & Meta Policy Bar */}
         <div className="mx-auto mt-8 max-w-5xl border-t border-black/5 px-5 pt-6">
-          <div className="flex flex-col justify-between gap-3 text-xs text-ink-muted sm:flex-row sm:items-center">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              {POLICY_SECTIONS.map((sec) => (
-                <button
-                  key={sec.id}
-                  type="button"
-                  onClick={() => setActivePolicyId(sec.id)}
-                  className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
-                >
-                  {sec.tabLabel}
-                </button>
-              ))}
-              <Link
-                href="/privacidade"
-                className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-ink-muted md:justify-start">
+            {POLICY_SECTIONS.map((sec) => (
+              <button
+                key={sec.id}
+                type="button"
+                onClick={() => setActivePolicyId(sec.id)}
+                className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
               >
-                Página completa
-              </Link>
-            </div>
-            <p className="text-[11px] leading-relaxed text-ink-muted/80">
-              Este site não é afiliado ou patrocinado pela Meta Platforms, Inc. (Instagram/WhatsApp).
-            </p>
+                {sec.tabLabel}
+              </button>
+            ))}
+            <Link
+              href="/privacidade"
+              className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+            >
+              Página completa
+            </Link>
           </div>
         </div>
       </footer>
