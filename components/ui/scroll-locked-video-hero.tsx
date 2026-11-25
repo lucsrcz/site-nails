@@ -705,7 +705,7 @@ export default function MetroHero({
 
                   {ch.subtitle && (
                     <p
-                      className="text-metallic-gold mt-3.5 text-lg font-semibold leading-snug sm:text-xl md:mt-4 md:text-2xl lg:text-[26px]"
+                      className="text-metallic-gold mt-3.5 text-sm font-semibold leading-relaxed tracking-[0.14em] uppercase sm:text-base md:mt-4 md:text-lg"
                       style={{
                         filter:
                           "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
@@ -764,7 +764,7 @@ export default function MetroHero({
             className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:bottom-7"
           >
             <span className="rounded-full bg-white/70 px-3 py-1 text-[10px] font-medium tracking-[0.28em] text-[#1c1417]/75 uppercase backdrop-blur-sm">
-              Role para baixo
+              ROLE PARA BAIXO
             </span>
             <ChevronDown
               className="h-3.5 w-3.5 animate-bounce opacity-80"
