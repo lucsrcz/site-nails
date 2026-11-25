@@ -386,15 +386,30 @@ export default function WebsiteSections() {
       <footer className="bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
-            <p className="font-script text-3xl font-normal text-ink">
-              Nayara Oliveira
-            </p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-ink-muted">
+            <div className="inline-flex flex-col items-center">
+              <p className="font-script text-metallic-gold text-3xl font-normal leading-none">
+                Nayara Oliveira
+              </p>
+              <span className="mt-1 flex w-full items-center gap-2 px-1">
+                <span
+                  className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
+                  aria-hidden="true"
+                />
+                <span className="font-serif text-[9px] font-medium tracking-[0.42em] text-[#8c6306] uppercase">
+                  STUDIO
+                </span>
+                <span
+                  className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
+                  aria-hidden="true"
+                />
+              </span>
+            </div>
+            <p className="mt-2 flex items-center gap-1.5 text-sm text-ink-muted">
               <MapPin
                 className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
-              Studio • Fibra de Vidro, Molde F1 &amp; Gel
+              Fibra de Vidro, Molde F1 &amp; Gel
             </p>
           </div>
 
