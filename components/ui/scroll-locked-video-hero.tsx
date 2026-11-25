@@ -115,8 +115,8 @@ const CHAPTERS: Chapter[] = [
       "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
-    eyebrow: "Alto Padrão • Nayara Oliveira",
-    title: "Nayara Designer Nail",
+    eyebrow: "Studio • Alto Padrão",
+    title: "Nayara Oliveira",
     subtitle:
       "Especialista em fibra de vidro, método molde F1, esmaltação e banho em gel.",
     start: 0.76,
@@ -430,13 +430,18 @@ export default function MetroHero({
             className="flex min-h-[44px] items-center gap-2.5"
           >
             <img
-              src={`${BASE_PATH}/nayara-perfil.jpg`}
-              alt="Nayara Designer Nail"
-              className="border-pink-gold h-9 w-9 shrink-0 rounded-full object-cover object-top shadow-xs"
+              src={`${BASE_PATH}/nayara-logo.webp`}
+              alt="Nayara Oliveira Studio"
+              className="border-pink-gold h-10 w-10 shrink-0 rounded-full bg-black object-contain p-0.5 shadow-xs"
             />
-            <span className="text-metallic-gold font-serif text-lg font-bold tracking-wide sm:text-2xl">
-              Nayara Designer Nail
-            </span>
+            <div className="flex flex-col leading-none">
+              <span className="font-script text-metallic-gold text-2xl font-normal tracking-normal sm:text-[28px]">
+                Nayara Oliveira
+              </span>
+              <span className="font-serif text-[9px] font-semibold tracking-[0.35em] text-[#6e5c62] uppercase">
+                Studio
+              </span>
+            </div>
           </a>
 
           {/* Desktop links & original social icons */}
@@ -648,15 +653,24 @@ export default function MetroHero({
                   </span>
 
                   {ch.isFinal ? (
-                    <h1
-                      className="text-metallic-gold font-serif text-[3.1rem] leading-[1.02] font-bold tracking-wide sm:text-6xl md:text-7xl lg:text-8xl"
-                      style={{
-                        filter:
-                          "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
-                      }}
-                    >
-                      {ch.title}
-                    </h1>
+                    <div className="flex flex-col items-center">
+                      <h1
+                        className="font-script text-metallic-gold text-6xl leading-[1.05] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
+                        style={{
+                          filter:
+                            "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
+                        }}
+                      >
+                        {ch.title}
+                      </h1>
+                      <div className="mt-1 flex items-center gap-3">
+                        <span className="h-[1px] w-8 bg-[#efb810]" aria-hidden="true" />
+                        <span className="font-serif text-xs font-semibold tracking-[0.42em] text-[#1c1417] uppercase sm:text-sm">
+                          STUDIO
+                        </span>
+                        <span className="h-[1px] w-8 bg-[#efb810]" aria-hidden="true" />
+                      </div>
+                    </div>
                   ) : (
                     <h2
                       className="font-serif text-[3.1rem] leading-[0.98] font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"

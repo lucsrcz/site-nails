@@ -171,7 +171,7 @@ export default function WebsiteSections() {
                 Educação &amp; Carreira
               </p>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Cursos Nayara Designer Nail
+                Cursos Nayara Oliveira Studio
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
@@ -386,15 +386,15 @@ export default function WebsiteSections() {
       <footer className="bg-white py-10">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-4 px-5 md:flex-row md:items-center">
           <div>
-            <p className="font-serif text-xl font-semibold tracking-wide text-ink">
-              Nayara Designer Nail
+            <p className="font-script text-3xl font-normal text-ink">
+              Nayara Oliveira
             </p>
-            <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-muted">
+            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-ink-muted">
               <MapPin
                 className="h-4 w-4 text-[#fc6998]"
                 aria-hidden="true"
               />
-              Nayara Oliveira • Fibra de Vidro, Molde F1 &amp; Gel
+              Studio • Fibra de Vidro, Molde F1 &amp; Gel
             </p>
           </div>
 
@@ -420,7 +420,7 @@ export default function WebsiteSections() {
               />
               @nayara_designernail
             </a>
-            <span>© {new Date().getFullYear()} Nayara Designer Nail</span>
+            <span>© {new Date().getFullYear()} Nayara Oliveira Studio</span>
           </div>
         </div>
       </footer>
