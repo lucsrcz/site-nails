@@ -735,29 +735,29 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script flex flex-wrap items-baseline justify-center gap-x-3 px-4 py-2 leading-[1.28] font-normal tracking-normal sm:gap-x-4"
+                        className="font-script flex flex-wrap items-baseline justify-center gap-x-3 px-4 py-2 leading-[1.28] font-normal tracking-normal text-[#fc6998] sm:gap-x-4"
                         style={{
                           filter:
                             "drop-shadow(0 2px 16px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                         }}
                       >
-                        <span className="text-metallic-gold px-1 text-[3.75rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[9.5rem]">
+                        <span className="px-1 text-[3.75rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[9.5rem]">
                           Nayara
                         </span>
-                        <span className="px-1 text-[4.65rem] text-[#fc6998] sm:text-[5.5rem] md:text-[7rem] lg:text-[10rem] xl:text-[11.5rem]">
+                        <span className="px-1 text-[4.65rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[10rem] xl:text-[11.5rem]">
                           Oliveira
                         </span>
                       </h1>
                       <div className="-mt-3 flex w-64 items-center gap-3 sm:w-80 md:w-[26rem]">
                         <span
-                          className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
+                          className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#fc6998]"
                           aria-hidden="true"
                         />
-                        <span className="font-serif text-xs font-semibold tracking-[0.46em] text-[#b67d03] uppercase sm:text-sm md:text-base">
+                        <span className="font-serif text-xs font-semibold tracking-[0.46em] text-[#fc6998] uppercase sm:text-sm md:text-base">
                           ESTÚDIO
                         </span>
                         <span
-                          className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
+                          className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#fc6998]"
                           aria-hidden="true"
                         />
                       </div>
