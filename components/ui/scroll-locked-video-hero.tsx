@@ -733,14 +733,12 @@ export default function MetroHero({
                   )}
 
                   {ch.isFinal ? (
-                    <div className="mt-auto flex flex-col items-center md:mt-0">
+                    <div className="flex flex-col items-center">
                       <h1
                         className="font-script flex flex-wrap items-baseline justify-center gap-x-3 px-4 py-2 leading-[1.28] font-normal tracking-normal text-[#fc6998] sm:gap-x-4"
                         style={{
-                          WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.92)",
-                          paintOrder: "stroke fill",
                           filter:
-                            "drop-shadow(0 2px 12px rgba(255,255,255,0.9))",
+                            "drop-shadow(0 2px 16px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                         }}
                       >
                         <span className="px-1 text-[3.75rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[9.5rem]">
@@ -755,13 +753,7 @@ export default function MetroHero({
                           className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#fc6998]"
                           aria-hidden="true"
                         />
-                        <span
-                          className="font-serif text-xs font-semibold tracking-[0.46em] text-[#fc6998] uppercase sm:text-sm md:text-base"
-                          style={{
-                            WebkitTextStroke: "0.6px rgba(255, 255, 255, 0.9)",
-                            paintOrder: "stroke fill",
-                          }}
-                        >
+                        <span className="font-serif text-xs font-semibold tracking-[0.46em] text-[#fc6998] uppercase sm:text-sm md:text-base">
                           ESTÚDIO
                         </span>
                         <span
@@ -836,21 +828,6 @@ export default function MetroHero({
                 }}
               />
             ))}
-          </div>
-
-          {/* Discreet Centered Bottom Scroll Hint (desktop only) */}
-          <div
-            ref={hintRef}
-            className="pointer-events-none absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-1 transition-opacity duration-300 md:flex"
-          >
-            <span className="rounded-full bg-white/70 px-3 py-1 text-[10px] font-medium tracking-[0.28em] text-[#1c1417]/75 uppercase backdrop-blur-sm">
-              ROLE PARA BAIXO
-            </span>
-            <ChevronDown
-              className="h-3.5 w-3.5 animate-bounce opacity-80"
-              style={{ color: COL_PINK }}
-              aria-hidden="true"
-            />
           </div>
 
           {/* Progress Line */}
