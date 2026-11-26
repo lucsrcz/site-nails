@@ -215,7 +215,6 @@ export default function MetroHero({
   const [showHeader, setShowHeader] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoModalOpen, setLogoModalOpen] = useState(false);
-  const [pinMode, setPinMode] = useState<"fixed" | "bottom">("fixed");
 
   useEffect(() => {
     if (!logoModalOpen) return;
@@ -620,11 +619,7 @@ export default function MetroHero({
       >
         <div
           ref={stageRef}
-          className={
-            pinMode === "fixed"
-              ? "fixed top-0 right-0 left-0 z-10 h-[100lvh] overflow-hidden bg-white"
-              : "absolute right-0 bottom-0 left-0 z-10 h-[100lvh] overflow-hidden bg-white"
-          }
+          className="sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform"
         >
           <canvas
             ref={canvasRef}
