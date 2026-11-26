@@ -711,7 +711,7 @@ export default function MetroHero({
                 <div
                   className={
                     ch.isFinal
-                      ? "flex h-full w-full max-w-[96vw] flex-col items-center justify-center pt-16 pb-20 sm:max-w-2xl md:h-auto md:max-w-[76vw] md:py-0"
+                      ? "flex h-full w-full max-w-[96vw] flex-col items-center justify-between pt-20 pb-7 sm:max-w-2xl md:h-auto md:max-w-[76vw] md:justify-center md:py-0"
                       : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[68vw] lg:max-w-[74vw]"
                   }
                 >
@@ -733,7 +733,7 @@ export default function MetroHero({
                   )}
 
                   {ch.isFinal ? (
-                    <div className="flex flex-col items-center">
+                    <div className="my-auto flex flex-col items-center md:my-0">
                       <h1
                         className="font-script flex flex-wrap items-baseline justify-center gap-x-3 px-4 py-2 leading-[1.28] font-normal tracking-normal text-[#fc6998] sm:gap-x-4"
                         style={{
@@ -761,6 +761,23 @@ export default function MetroHero({
                           aria-hidden="true"
                         />
                       </div>
+
+                      <div className="mt-6 flex flex-wrap justify-center gap-3.5 md:mt-7">
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection("unhas-em-gel")}
+                          className="min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-7 py-3 text-sm font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:text-base"
+                        >
+                          Ver Unhas em Gel
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection("cursos")}
+                          className="min-h-[44px] cursor-pointer rounded-full border border-[#efb810] bg-white px-7 py-3 text-sm font-semibold tracking-wide text-ink shadow-xs transition hover:bg-[#fef9e7] md:text-base"
+                        >
+                          Conhecer Cursos
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <h2
@@ -771,30 +788,11 @@ export default function MetroHero({
                     </h2>
                   )}
 
-                  {ch.isFinal && (
-                    <div className="mt-6 flex flex-wrap justify-center gap-3.5 md:order-last md:mt-7">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection("unhas-em-gel")}
-                        className="min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-7 py-3 text-sm font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:text-base"
-                      >
-                        Ver Unhas em Gel
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection("cursos")}
-                        className="min-h-[44px] cursor-pointer rounded-full border border-[#efb810] bg-white px-7 py-3 text-sm font-semibold tracking-wide text-ink shadow-xs transition hover:bg-[#fef9e7] md:text-base"
-                      >
-                        Conhecer Cursos
-                      </button>
-                    </div>
-                  )}
-
                   {ch.subtitle && (
                     <p
                       className={`text-metallic-gold font-serif font-medium tracking-[0.18em] uppercase ${
                         ch.isFinal
-                          ? "mt-auto max-w-xs text-[11px] leading-relaxed sm:max-w-lg sm:text-sm md:mt-4 md:max-w-xl md:text-base"
+                          ? "max-w-xs text-[11px] leading-relaxed sm:max-w-lg sm:text-sm md:mt-5 md:max-w-xl md:text-base"
                           : "mt-3.5 text-sm leading-relaxed sm:text-base md:mt-4 md:text-lg"
                       }`}
                       style={{
