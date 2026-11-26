@@ -708,13 +708,18 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script text-metallic-gold px-4 py-2 text-[4.5rem] leading-[1.28] font-normal tracking-normal sm:text-8xl md:text-9xl lg:text-[9.5rem] xl:text-[11rem]"
+                        className="font-script flex flex-wrap items-baseline justify-center gap-x-3 px-4 py-2 leading-[1.28] font-normal tracking-normal sm:gap-x-4"
                         style={{
                           filter:
                             "drop-shadow(0 2px 16px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                         }}
                       >
-                        {ch.title}
+                        <span className="text-metallic-gold px-1 text-[3.75rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[9.5rem]">
+                          Nayara
+                        </span>
+                        <span className="px-1 text-[4.65rem] text-[#fc6998] sm:text-[5.5rem] md:text-[7rem] lg:text-[10rem] xl:text-[11.5rem]">
+                          Oliveira
+                        </span>
                       </h1>
                       <div className="-mt-3 flex w-64 items-center gap-3 sm:w-80 md:w-[26rem]">
                         <span
