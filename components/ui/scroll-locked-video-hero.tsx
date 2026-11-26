@@ -708,24 +708,24 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script px-4 py-2 text-[3.85rem] leading-[1.3] font-normal tracking-normal text-[#c86382] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[10rem]"
+                        className="font-script text-metallic-gold px-4 py-2 text-[4.5rem] leading-[1.28] font-normal tracking-normal sm:text-8xl md:text-9xl lg:text-[9.5rem] xl:text-[11rem]"
                         style={{
                           filter:
-                            "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.14))",
+                            "drop-shadow(0 2px 16px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                         }}
                       >
                         {ch.title}
                       </h1>
-                      <div className="-mt-3 flex w-60 items-center gap-3 sm:w-72 md:w-96">
+                      <div className="-mt-3 flex w-64 items-center gap-3 sm:w-80 md:w-[26rem]">
                         <span
-                          className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#c86382]"
+                          className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                           aria-hidden="true"
                         />
-                        <span className="font-serif text-xs font-medium tracking-[0.46em] text-[#c86382] uppercase sm:text-sm md:text-base">
+                        <span className="font-serif text-xs font-semibold tracking-[0.46em] text-[#b67d03] uppercase sm:text-sm md:text-base">
                           ESTÚDIO
                         </span>
                         <span
-                          className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#c86382]"
+                          className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
                           aria-hidden="true"
                         />
                       </div>
