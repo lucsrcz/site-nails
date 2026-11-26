@@ -12,9 +12,17 @@ import {
   ArrowRight,
   ShieldCheck,
   X,
+  Coffee,
+  Gift,
+  HeartHandshake,
+  MapPin,
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { POLICY_SECTIONS } from "@/components/privacy-content";
+
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const MAPS_URL =
+  "https://maps.google.com/maps?q=-16.172563552856445%2C-47.927513122558594&z=17&hl=pt-BR";
 
 const GEL_SERVICES = [
   {
@@ -42,22 +50,39 @@ const GEL_SERVICES = [
 
 const COURSES = [
   {
-    id: "curso-iniciante",
-    name: "Formação Nail Designer em Gel",
-    duration: "2 dias • 16h presenciais",
-    price: "R$ 1.290",
+    id: "florescendo-molde-f1",
+    name: "Florescendo no Molde F1",
+    image: `${BASE_PATH}/curso-florescendo-f1.png`,
+    duration: "1 dia inteiro presencial",
+    price: "R$ 1.100,00",
+    entryNote:
+      "Entrada de R$ 150,00 para confirmar inscrição e restante parcelado no cartão de crédito.",
     description:
-      "Do zero ao acabamento de salão: anatomia da unha, preparação segura, molde e esmaltação em gel.",
-    highlights: ["Certificado incluso", "Prática em modelo", "Apostila completa"],
+      "Curso presencial com foco na técnica de Molde F1, ensinando todo o passo a passo para desenvolver uma aplicação com segurança, técnica e excelência.",
+    details: [
+      { icon: Coffee, text: "Coffee break especial pela manhã e 1h30 de almoço" },
+      { icon: Gift, text: "Bônus exclusivo: técnica de Fibra de Vidro sem custo adicional" },
+      { icon: HeartHandshake, text: "Suporte vitalício após a conclusão do curso" },
+    ],
+    closingNote:
+      "Encerramento definido conforme o desenvolvimento e aproveitamento da aluna.",
   },
   {
-    id: "curso-aperfeicoamento",
-    name: "Aperfeiçoamento & Naturalidade",
-    duration: "1 dia • 8h intensivas",
-    price: "R$ 790",
+    id: "aperfeicoamento",
+    name: "Aperfeiçoamento",
+    duration: "1 dia de curso presencial",
+    price: "R$ 800,00",
+    entryNote:
+      "Imersão prática voltada para quem já atua na área e busca excelência em mesa.",
     description:
-      "Para profissionais que buscam reduzir tempo em mesa, eliminar descolamentos e entregar unhas ultrafinas.",
-    highlights: ["Turma reduzida", "Suporte pós-curso", "Foco em rentabilidade"],
+      "Aperfeiçoe controle de produto, simetria, curvatura, acabamento ultrafino e redução do tempo de atendimento no Molde F1 e Fibra de Vidro.",
+    details: [
+      { icon: Award, text: "Correção de descolamentos e nivelamento perfeito" },
+      { icon: Sparkles, text: "Acabamento natural com brilho espelhado duradouro" },
+      { icon: HeartHandshake, text: "Acompanhamento e suporte pós-curso" },
+    ],
+    closingNote:
+      "Saia ainda mais segura para elevar o padrão e o faturamento dos seus atendimentos.",
   },
 ];
 
@@ -167,12 +192,12 @@ export default function WebsiteSections() {
                 Educação &amp; Carreira
               </p>
               <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-                Cursos Nayara Oliveira Studio
+                Cursos Nayara Oliveira Estúdio
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
-              Formação prática em turmas reduzidas para dominar o gel com
-              técnica e elegância.
+              Formação presencial para você sair preparada, confiante e pronta
+              para atuar com excelência.
             </p>
           </div>
 
@@ -183,6 +208,16 @@ export default function WebsiteSections() {
                 className="border-pink-gold flex flex-col justify-between rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
               >
                 <div>
+                  {course.image && (
+                    <div className="mb-5 overflow-hidden rounded-xl bg-[#f9e5e8]">
+                      <img
+                        src={course.image}
+                        alt={course.name}
+                        className="h-44 w-full object-cover object-center"
+                      />
+                    </div>
+                  )}
+
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted sm:text-sm">
@@ -192,7 +227,7 @@ export default function WebsiteSections() {
                         />
                         {course.duration}
                       </span>
-                      <h3 className="mt-2 font-serif text-2xl font-medium text-ink">
+                      <h3 className="mt-1.5 font-serif text-2xl font-semibold text-ink">
                         {course.name}
                       </h3>
                     </div>
@@ -201,26 +236,41 @@ export default function WebsiteSections() {
                     </span>
                   </div>
 
-                  <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
+                  <p className="mt-2 text-xs font-semibold text-[#8c6306]">
+                    {course.entryNote}
+                  </p>
+
+                  <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                     {course.description}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {course.highlights.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
+                  <ul className="mt-4 space-y-2 border-t border-black/5 pt-4">
+                    {course.details.map((detail) => {
+                      const Icon = detail.icon;
+                      return (
+                        <li
+                          key={detail.text}
+                          className="flex items-start gap-2 text-xs leading-relaxed text-ink sm:text-sm"
+                        >
+                          <Icon
+                            className="mt-0.5 h-4 w-4 shrink-0 text-[#fc6998]"
+                            aria-hidden="true"
+                          />
+                          <span>{detail.text}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <p className="mt-3 text-xs italic text-ink-muted">
+                    {course.closingNote}
+                  </p>
                 </div>
 
                 <div className="mt-5 border-t border-black/5 pt-4">
                   <a
                     href={buildWhatsAppUrl(
-                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name}.`
+                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name} (${course.price}).`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -332,7 +382,7 @@ export default function WebsiteSections() {
                   id="site-topic"
                   value={selectedTopic}
                   onChange={(e) => setSelectedTopic(e.target.value)}
-                  className="w-full rounded-xl border border-black/15 bg-white py-3 pr-9 pl-4 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 >
                   <optgroup label="Unhas em Gel">
                     {GEL_SERVICES.map((s) => (
@@ -393,7 +443,7 @@ export default function WebsiteSections() {
                   aria-hidden="true"
                 />
                 <span className="font-serif text-[8px] font-medium tracking-[0.38em] text-[#8c6306] uppercase sm:text-[9px] sm:tracking-[0.42em]">
-                  STUDIO
+                  ESTÚDIO
                 </span>
                 <span
                   className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
@@ -408,6 +458,15 @@ export default function WebsiteSections() {
 
           <div className="flex shrink-0 flex-col items-center pr-2 text-center md:items-end md:pr-0 md:text-right">
             <div className="flex flex-col items-center gap-1 text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-5">
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[32px] items-center gap-1.5 transition hover:text-[#fc6998]"
+              >
+                <MapPin className="h-3.5 w-3.5 text-[#fc6998] sm:h-4 sm:w-4" aria-hidden="true" />
+                Localização
+              </a>
               <a
                 href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
                 target="_blank"
@@ -430,7 +489,7 @@ export default function WebsiteSections() {
                 @nayara_designernail
               </a>
               <span className="text-[11px] md:text-xs">
-                © {new Date().getFullYear()} Nayara Oliveira Studio
+                © {new Date().getFullYear()} Nayara Oliveira Estúdio
               </span>
             </div>
 

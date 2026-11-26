@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, MapPin } from "lucide-react";
 
 function InstagramBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
   const rawId = useId();
@@ -52,7 +52,6 @@ function WhatsAppBrandIcon({ className = "h-5 w-5" }: { className?: string }) {
 }
 
 export interface MetroHeroProps {
-  frames?: string[];
   className?: string;
   style?: React.CSSProperties;
 }
@@ -60,23 +59,14 @@ export interface MetroHeroProps {
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const WHATSAPP_URL =
   "https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio";
-
-const BASE_FRAMES = Array.from(
-  { length: 103 },
-  (_, i) => `${BASE_PATH}/novo-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`
-);
-
-// Repeat frame 103 twenty extra times to lengthen the final hold when LOREN NAILS appears
-const DEFAULT_FRAMES = [
-  ...BASE_FRAMES,
-  ...Array.from({ length: 20 }, () => `${BASE_PATH}/novo-frames/frame_103.jpg`),
-];
+const MAPS_URL =
+  "https://maps.google.com/maps?q=-16.172563552856445%2C-47.927513122558594&z=17&hl=pt-BR";
 
 const COL_PINK = "#fc6998";
 const COL_GOLD = "#efb810";
 const COL_INK = "#1c1417";
 
-interface Chapter {
+interface Phrase {
   eyebrow: string;
   title: string;
   subtitle: string;
@@ -86,7 +76,7 @@ interface Chapter {
   isFinal?: boolean;
 }
 
-const CHAPTERS: Chapter[] = [
+const PHRASES: Phrase[] = [
   {
     eyebrow: "Autoestima & Cuidado",
     title: "Cuidar de si não é luxo, é amor próprio.",
@@ -97,7 +87,7 @@ const CHAPTERS: Chapter[] = [
       "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
-    eyebrow: "Nail Studio",
+    eyebrow: "Nail Estúdio",
     title: "Suas mãos contam a sua história.",
     subtitle: "",
     start: 0.25,
@@ -115,7 +105,7 @@ const CHAPTERS: Chapter[] = [
       "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
-    eyebrow: "Studio • Alto Padrão",
+    eyebrow: "Estúdio • Alto Padrão",
     title: "Nayara Oliveira",
     subtitle:
       "Especialista em fibra de vidro, método molde F1, esmaltação e banho em gel.",
@@ -131,88 +121,47 @@ function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v));
 }
 
-function drawCoverImage(
-  ctx: CanvasRenderingContext2D,
-  img: HTMLImageElement,
-  width: number,
-  height: number
-) {
-  if (!img.naturalWidth || !img.naturalHeight) return;
-  const imgRatio = img.naturalWidth / img.naturalHeight;
-  const canvasRatio = width / height;
-  const isPortrait = canvasRatio < 1;
-
-  // Full-bleed edge-to-edge cover so the image fills 100% of the viewport without seams
-  let drawWidth = width;
-  let drawHeight = height;
-  if (canvasRatio > imgRatio) {
-    drawWidth = width;
-    drawHeight = width / imgRatio;
-  } else {
-    drawHeight = height;
-    drawWidth = height * imgRatio;
-  }
-
-  const focalX = isPortrait ? 0.32 : 0.5;
-  const focalY = isPortrait ? 0.5 : 0.5;
-  const offsetX = (width - drawWidth) * focalX;
-  const offsetY = (height - drawHeight) * focalY;
-
-  ctx.save();
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-  ctx.filter = "contrast(1.12) saturate(1.15) brightness(0.95)";
-  ctx.clearRect(0, 0, width, height);
-  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-  ctx.restore();
-}
-
-function getChapterMotion(progress: number, ch: Chapter): {
+function getPhraseMotion(progress: number, ph: Phrase): {
   opacity: number;
   translateY: number;
 } {
   const fade = 0.055;
 
-  if (ch.isFinal) {
-    if (progress <= ch.start) return { opacity: 0, translateY: 28 };
-    if (progress >= ch.start + fade) return { opacity: 1, translateY: 0 };
-    const vis = (progress - ch.start) / fade;
+  if (ph.isFinal) {
+    if (progress <= ph.start) return { opacity: 0, translateY: 28 };
+    if (progress >= ph.start + fade) return { opacity: 1, translateY: 0 };
+    const vis = (progress - ph.start) / fade;
     return { opacity: vis, translateY: (1 - vis) * 28 };
   }
 
-  // Non-final texts fade smoothly in place without vertical movement
-  if (ch.start === 0) {
-    if (progress <= ch.end - fade) return { opacity: 1, translateY: 0 };
-    if (progress >= ch.end) return { opacity: 0, translateY: 0 };
-    return { opacity: 1 - (progress - (ch.end - fade)) / fade, translateY: 0 };
+  if (ph.start === 0) {
+    if (progress <= ph.end - fade) return { opacity: 1, translateY: 0 };
+    if (progress >= ph.end) return { opacity: 0, translateY: 0 };
+    return { opacity: 1 - (progress - (ph.end - fade)) / fade, translateY: 0 };
   }
 
-  if (progress <= ch.start || progress >= ch.end) return { opacity: 0, translateY: 0 };
-  if (progress < ch.start + fade) {
-    return { opacity: (progress - ch.start) / fade, translateY: 0 };
+  if (progress <= ph.start || progress >= ph.end) return { opacity: 0, translateY: 0 };
+  if (progress < ph.start + fade) {
+    return { opacity: (progress - ph.start) / fade, translateY: 0 };
   }
-  if (progress > ch.end - fade) {
-    return { opacity: (ch.end - progress) / fade, translateY: 0 };
+  if (progress > ph.end - fade) {
+    return { opacity: (ph.end - progress) / fade, translateY: 0 };
   }
   return { opacity: 1, translateY: 0 };
 }
 
-export default function MetroHero({
-  frames = DEFAULT_FRAMES,
-  className,
-  style,
-}: MetroHeroProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export default function MetroHero({ className, style }: MetroHeroProps) {
+  const stageRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const phraseRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hintRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  const [ready, setReady] = useState(false);
-  const [showHeader, setShowHeader] = useState(false);
+  const [loadPercent, setLoadPercent] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
+  const [showSidePin, setShowSidePin] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoModalOpen, setLogoModalOpen] = useState(false);
 
@@ -225,7 +174,6 @@ export default function MetroHero({
     return () => window.removeEventListener("keydown", onKey);
   }, [logoModalOpen]);
 
-  // Close mobile header menu when clicking/tapping outside the header or pressing Escape
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const onPointerDown = (e: MouseEvent | TouchEvent) => {
@@ -247,151 +195,127 @@ export default function MetroHero({
   }, [mobileMenuOpen]);
 
   useEffect(() => {
-    const wrapper = wrapperRef.current;
     const stage = stageRef.current;
-    const canvas = canvasRef.current;
-    if (!wrapper || !stage || !canvas) return;
+    const video = videoRef.current;
+    if (!stage || !video) return;
 
     const reduceMotion =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+    let objectUrl = "";
+    let cancelled = false;
     let rafId = 0;
-    let targetProgress = reduceMotion ? 1 : 0;
-    let currentProgress = reduceMotion ? 1 : 0;
+    let atual = 0;
+    let alvo = 0;
     let hasStartedScrolling = reduceMotion;
 
-    const loadedImages: HTMLImageElement[] = [];
-    let lastDrawnIndex = -1;
+    // 1. Download full video as Blob via ReadableStream for instant, range-free seeking
+    const videoUrl =
+      window.innerWidth < 768
+        ? `${BASE_PATH}/assets/film-mobile.mp4`
+        : `${BASE_PATH}/assets/film.mp4`;
 
-    const syncCanvasSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 3);
-      const rect = stage.getBoundingClientRect();
-      const targetW = Math.max(1, Math.round(rect.width * dpr));
-      const targetH = Math.max(1, Math.round(rect.height * dpr));
-
-      // Always keep canvas backing buffer 1:1 with its CSS aspect ratio (zero stretching)
-      if (canvas.width !== targetW || canvas.height !== targetH) {
-        canvas.width = targetW;
-        canvas.height = targetH;
-        lastDrawnIndex = -1;
-      }
-    };
-
-    const renderCanvasFrame = (progress: number) => {
-      const ctx = canvas.getContext("2d", { alpha: false });
-      if (!ctx) return;
-
-      syncCanvasSize();
-
-      const index = clamp(
-        Math.round(progress * (frames.length - 1)),
-        0,
-        frames.length - 1
-      );
-
-      let img = loadedImages[index];
-      if (!img || !img.complete || img.naturalWidth === 0) {
-        for (let offset = 1; offset < frames.length; offset++) {
-          const prev = loadedImages[index - offset];
-          if (prev?.complete && prev.naturalWidth > 0) {
-            img = prev;
-            break;
-          }
-          const next = loadedImages[index + offset];
-          if (next?.complete && next.naturalWidth > 0) {
-            img = next;
-            break;
-          }
-        }
-      }
-
-      if (img && img.complete && img.naturalWidth > 0 && index !== lastDrawnIndex) {
-        drawCoverImage(ctx, img, canvas.width, canvas.height);
-        lastDrawnIndex = index;
-      }
-    };
-
-    syncCanvasSize();
-
-    // Priority keyframe-first loading: load frame 0, final frame, and every 8th frame first
-    // so scrubbing is responsive immediately, then fill in-between frames in small batches.
-    const keyIndices: number[] = [];
-    const restIndices: number[] = [];
-    for (let i = 0; i < frames.length; i++) {
-      if (i === 0 || i === frames.length - 1 || i % 8 === 0) {
-        keyIndices.push(i);
+    const unlockTouch = () => {
+      const p = video.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => video.pause()).catch(() => {});
       } else {
-        restIndices.push(i);
+        video.pause();
       }
-    }
-
-    let cancelled = false;
-    const loadFrame = (idx: number, highPriority = false): Promise<void> =>
-      new Promise((resolve) => {
-        if (cancelled) return resolve();
-        const img = new Image();
-        img.decoding = "async";
-        if (highPriority && "fetchPriority" in img) {
-          (img as HTMLImageElement & { fetchPriority: string }).fetchPriority = "high";
-        }
-        img.onload = () => {
-          if (!cancelled) {
-            if (idx === 0 || (reduceMotion && idx === frames.length - 1)) {
-              setReady(true);
-              renderCanvasFrame(currentProgress);
-            }
-          }
-          resolve();
-        };
-        img.onerror = () => resolve();
-        img.src = frames[idx];
-        loadedImages[idx] = img;
-      });
+    };
+    window.addEventListener("touchstart", unlockTouch, { once: true, passive: true });
 
     (async () => {
-      await Promise.all(keyIndices.map((idx) => loadFrame(idx, true)));
-      const BATCH_SIZE = 8;
-      for (let i = 0; i < restIndices.length; i += BATCH_SIZE) {
-        if (cancelled) break;
-        const batch = restIndices.slice(i, i + BATCH_SIZE);
-        await Promise.all(batch.map((idx) => loadFrame(idx, false)));
+      try {
+        const res = await fetch(videoUrl);
+        if (!res.ok) throw new Error("Video fetch failed");
+        const contentLength = Number(res.headers.get("content-length") || 0);
+        const reader = res.body?.getReader();
+
+        if (reader && contentLength > 0) {
+          const chunks: Uint8Array<ArrayBuffer>[] = [];
+          let received = 0;
+          while (!cancelled) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            if (value) {
+              chunks.push(value);
+              received += value.length;
+              setLoadPercent(Math.min(99, Math.round((received / contentLength) * 100)));
+            }
+          }
+          if (cancelled) return;
+          const blob = new Blob(chunks, { type: "video/mp4" });
+          objectUrl = URL.createObjectURL(blob);
+        } else {
+          const blob = await res.blob();
+          if (cancelled) return;
+          objectUrl = URL.createObjectURL(blob);
+        }
+
+        video.src = objectUrl;
+        video.load();
+        setLoadPercent(100);
+      } catch {
+        // Fallback if ReadableStream fails
+        video.src = videoUrl;
+        setLoadPercent(100);
+        setVideoReady(true);
       }
     })();
 
-    const updateTargetFromScroll = () => {
-      if (reduceMotion) {
-        setShowHeader(true);
-        return;
+    const onLoadedData = () => {
+      if (cancelled) return;
+      setVideoReady(true);
+      if (reduceMotion && video.duration) {
+        video.currentTime = video.duration;
       }
-      const rect = wrapper.getBoundingClientRect();
-      const scrollable = Math.max(1, rect.height - window.innerHeight);
-      const next = clamp(-rect.top / scrollable, 0, 1);
-      targetProgress = next;
-      if (next > 0.004) hasStartedScrolling = true;
-      const shouldShow = next >= 0.01;
-      setShowHeader((prev) => (prev === shouldShow ? prev : shouldShow));
+    };
+    video.addEventListener("loadeddata", onLoadedData);
+
+    // 2. Smooth scroll progress & lerp video scrubbing
+    const updateScrollTarget = () => {
+      const stageTop = stage.offsetTop;
+      const scrollable = Math.max(1, stage.offsetHeight - window.innerHeight);
+      const p = clamp((window.scrollY - stageTop) / scrollable, 0, 1);
+
+      if (video.duration && !Number.isNaN(video.duration)) {
+        alvo = p * video.duration;
+      }
+
+      if (p > 0.004) hasStartedScrolling = true;
+      const shouldShowPin = p >= 0.78;
+      setShowSidePin((prev) => (prev === shouldShowPin ? prev : shouldShowPin));
+
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${p})`;
+      }
     };
 
-    const onResize = () => {
-      syncCanvasSize();
-      renderCanvasFrame(currentProgress);
-      updateTargetFromScroll();
-    };
+    window.addEventListener("scroll", updateScrollTarget, { passive: true });
+    window.addEventListener("resize", updateScrollTarget);
+    updateScrollTarget();
 
-    window.addEventListener("scroll", updateTargetFromScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    updateTargetFromScroll();
+    function loop() {
+      const vid = videoRef.current;
+      if (vid && vid.duration && !Number.isNaN(vid.duration)) {
+        atual += (alvo - atual) * 0.12;
+        if (Math.abs(alvo - atual) > 0.01 && vid.readyState >= 2) {
+          vid.currentTime = atual;
+        }
+      }
 
-    function frame() {
-      currentProgress += (targetProgress - currentProgress) * 0.14;
-      renderCanvasFrame(currentProgress);
+      const normProgress =
+        vid && vid.duration && !Number.isNaN(vid.duration)
+          ? clamp(atual / vid.duration, 0, 1)
+          : 0;
 
-      CHAPTERS.forEach((ch, idx) => {
-        const el = chapterRefs.current[idx];
+      PHRASES.forEach((ph, idx) => {
+        const el = phraseRefs.current[idx];
         if (!el) return;
-        const { opacity, translateY } = getChapterMotion(currentProgress, ch);
-        const blurPx = (1 - opacity) * 5;
+        const { opacity, translateY } = getPhraseMotion(normProgress, ph);
+        const blurPx = (1 - opacity) * 6;
         el.style.opacity = String(opacity);
         el.style.transform =
           translateY === 0
@@ -402,12 +326,9 @@ export default function MetroHero({
 
         const dot = dotRefs.current[idx];
         if (dot) {
-          const isCurrent =
-            currentProgress >= ch.start && currentProgress <= ch.end;
+          const isCurrent = normProgress >= ph.start && normProgress <= ph.end;
           dot.style.width = isCurrent ? "22px" : "6px";
-          dot.style.backgroundColor = isCurrent
-            ? COL_PINK
-            : "rgba(28,20,23,0.22)";
+          dot.style.backgroundColor = isCurrent ? COL_PINK : "rgba(28,20,23,0.22)";
         }
       });
 
@@ -415,30 +336,29 @@ export default function MetroHero({
         hintRef.current.style.opacity = hasStartedScrolling ? "0" : "1";
       }
 
-      if (progressBarRef.current) {
-        progressBarRef.current.style.transform = `scaleX(${currentProgress})`;
-      }
-
-      rafId = requestAnimationFrame(frame);
+      rafId = requestAnimationFrame(loop);
     }
 
     if (!reduceMotion) {
-      rafId = requestAnimationFrame(frame);
+      rafId = requestAnimationFrame(loop);
     } else {
-      CHAPTERS.forEach((ch, idx) => {
-        const el = chapterRefs.current[idx];
+      PHRASES.forEach((_, idx) => {
+        const el = phraseRefs.current[idx];
         if (!el) return;
-        el.style.opacity = idx === CHAPTERS.length - 1 ? "1" : "0";
+        el.style.opacity = idx === PHRASES.length - 1 ? "1" : "0";
       });
     }
 
     return () => {
       cancelled = true;
-      window.removeEventListener("scroll", updateTargetFromScroll);
-      window.removeEventListener("resize", onResize);
+      video.removeEventListener("loadeddata", onLoadedData);
+      window.removeEventListener("touchstart", unlockTouch);
+      window.removeEventListener("scroll", updateScrollTarget);
+      window.removeEventListener("resize", updateScrollTarget);
       cancelAnimationFrame(rafId);
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [frames]);
+  }, []);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
@@ -459,7 +379,7 @@ export default function MetroHero({
               setMobileMenuOpen(false);
               setLogoModalOpen(true);
             }}
-            aria-label="Ampliar logo Nayara Oliveira Studio"
+            aria-label="Ampliar logo Nayara Oliveira Estúdio"
             className="flex min-h-[44px] cursor-pointer flex-col items-center justify-center leading-none transition hover:opacity-85"
           >
             <span className="font-script text-metallic-gold px-2 pt-1 pb-0.5 text-[26px] leading-[1.25] font-normal tracking-normal sm:text-[32px]">
@@ -471,7 +391,7 @@ export default function MetroHero({
                 aria-hidden="true"
               />
               <span className="font-serif text-[9px] font-medium tracking-[0.42em] text-[#8c6306] uppercase sm:text-[10px]">
-                STUDIO
+                ESTÚDIO
               </span>
               <span
                 className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
@@ -567,7 +487,7 @@ export default function MetroHero({
         {/* Pink-to-Gold Gradient Line on Header Bottom */}
         <div className="line-pink-gold h-[2px] w-full" aria-hidden="true" />
 
-        {/* Mobile Dropdown Menu (Informative & Accessible) */}
+        {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
@@ -605,58 +525,78 @@ export default function MetroHero({
         )}
       </header>
 
-      <section
-        ref={wrapperRef}
-        id="inicio"
-        aria-label="LOREN NAILS — Apresentação"
-        className={className}
-        style={{
-          position: "relative",
-          height: "320vh",
-          width: "100%",
-          backgroundColor: "#ffffff",
-          ...style,
-        }}
+      {/* Top Fixed Scroll Progress Line */}
+      <div
+        className="pointer-events-none fixed top-0 right-0 left-0 z-[60] h-[3px]"
+        aria-hidden="true"
       >
         <div
-          ref={stageRef}
-          className="sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform"
-        >
-          <canvas
-            ref={canvasRef}
+          ref={progressBarRef}
+          className="line-pink-gold h-full w-full origin-left"
+          style={{ transform: "scaleX(0)" }}
+        />
+      </div>
+
+      {/* #stage: 500vh on mobile, 700vh on desktop */}
+      <section
+        ref={stageRef}
+        id="stage"
+        aria-label="Nayara Oliveira Estúdio — Apresentação"
+        className={`relative h-[500vh] w-full bg-white md:h-[700vh] ${className || ""}`}
+        style={style}
+      >
+        <div className="sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform">
+          <video
+            ref={videoRef}
+            id="film"
+            muted
+            playsInline
+            preload="auto"
+            poster={`${BASE_PATH}/assets/poster.jpg`}
+            className="pointer-events-none h-full w-full object-cover object-[32%_50%] md:object-center"
             style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              opacity: ready ? 1 : 0,
-              transition: "opacity 0.5s ease",
-              pointerEvents: "none",
+              filter: "contrast(1.08) saturate(1.12) brightness(0.96)",
             }}
           />
 
-          {/* Subtle warm vignette & bottom edge blend (no heavy white washout) */}
+          {/* Subtle dark/warm overlay for text legibility */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(circle at 50% 48%, rgba(28,20,23,0) 48%, rgba(28,20,23,0.16) 100%)",
+                "radial-gradient(circle at 50% 48%, rgba(28,20,23,0.06) 40%, rgba(28,20,23,0.24) 100%)",
             }}
           />
+
+          {/* Bottom gradient blend into sections */}
           <div
             className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-16 bg-gradient-to-t from-white/90 via-white/35 to-transparent"
             aria-hidden="true"
           />
 
-          {/* Scroll-Driven Rotating Editorial Phrases (no white cards, ~half-screen scale, LOREN NAILS last) */}
+          {/* Download Progress Overlay until Blob Video is Ready */}
+          {!videoReady && (
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/85 backdrop-blur-sm">
+              <span className="font-script text-metallic-gold px-4 text-4xl sm:text-5xl">
+                Nayara Oliveira
+              </span>
+              <span className="mt-2 font-serif text-xs font-semibold tracking-[0.3em] text-[#1c1417] uppercase">
+                Carregando experiência • {loadPercent}%
+              </span>
+            </div>
+          )}
+
+          {/* Synchronized .phrase Text Blocks */}
           <div className="pointer-events-none absolute inset-0 z-10">
-            {CHAPTERS.map((ch, idx) => (
+            {PHRASES.map((ph, idx) => (
               <div
-                key={ch.eyebrow}
+                key={ph.eyebrow}
                 ref={(el) => {
-                  chapterRefs.current[idx] = el;
+                  phraseRefs.current[idx] = el;
                 }}
-                className={`absolute inset-0 flex ${ch.positionClass}`}
+                data-start={ph.start}
+                data-end={ph.end}
+                className={`phrase absolute inset-0 flex ${ph.positionClass}`}
                 style={{
                   opacity: idx === 0 ? 1 : 0,
                   willChange: "transform, opacity, filter",
@@ -664,7 +604,7 @@ export default function MetroHero({
               >
                 <div
                   className={
-                    ch.isFinal
+                    ph.isFinal
                       ? "w-full max-w-[96vw] sm:max-w-2xl md:max-w-[76vw]"
                       : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[68vw] lg:max-w-[74vw]"
                   }
@@ -681,10 +621,10 @@ export default function MetroHero({
                       className="h-2 w-2 rounded-full"
                       style={{ backgroundColor: COL_PINK }}
                     />
-                    {ch.eyebrow}
+                    {ph.eyebrow}
                   </span>
 
-                  {ch.isFinal ? (
+                  {ph.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
                         className="font-script text-metallic-gold px-5 py-3 text-[3.25rem] leading-[1.35] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[10rem]"
@@ -693,7 +633,7 @@ export default function MetroHero({
                             "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                         }}
                       >
-                        {ch.title}
+                        {ph.title}
                       </h1>
                       <div className="-mt-3 flex w-56 items-center gap-3 sm:w-72 md:w-96">
                         <span
@@ -701,7 +641,7 @@ export default function MetroHero({
                           aria-hidden="true"
                         />
                         <span className="font-serif text-xs font-medium tracking-[0.46em] text-[#8c6306] uppercase sm:text-sm md:text-base">
-                          STUDIO
+                          ESTÚDIO
                         </span>
                         <span
                           className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
@@ -714,11 +654,11 @@ export default function MetroHero({
                       className="font-serif text-[3.1rem] leading-[0.95] font-bold tracking-tight sm:text-6xl md:text-[5.5rem] lg:text-[7rem] xl:text-[8.25rem]"
                       style={{ color: "#140d10" }}
                     >
-                      {ch.title}
+                      {ph.title}
                     </h2>
                   )}
 
-                  {ch.subtitle && (
+                  {ph.subtitle && (
                     <p
                       className="text-metallic-gold mt-3.5 text-sm font-semibold leading-relaxed tracking-[0.14em] uppercase sm:text-base md:mt-4 md:text-lg"
                       style={{
@@ -726,11 +666,11 @@ export default function MetroHero({
                           "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                       }}
                     >
-                      {ch.subtitle}
+                      {ph.subtitle}
                     </p>
                   )}
 
-                  {ch.isFinal && (
+                  {ph.isFinal && (
                     <div className="mt-7 flex flex-wrap justify-center gap-3.5">
                       <button
                         type="button"
@@ -758,9 +698,9 @@ export default function MetroHero({
             className="pointer-events-none absolute right-6 bottom-6 z-20 hidden items-center gap-2 md:right-12 md:flex"
             aria-hidden="true"
           >
-            {CHAPTERS.map((ch, idx) => (
+            {PHRASES.map((ph, idx) => (
               <span
-                key={ch.eyebrow}
+                key={ph.eyebrow}
                 ref={(el) => {
                   dotRefs.current[idx] = el;
                 }}
@@ -787,39 +727,23 @@ export default function MetroHero({
               aria-hidden="true"
             />
           </div>
-
-          {/* Progress Line */}
-          <div
-            className="absolute right-0 bottom-0 left-0 z-20 h-[3px]"
-            style={{ backgroundColor: "rgba(28, 20, 23, 0.08)" }}
-          >
-            <div
-              ref={progressBarRef}
-              style={{
-                height: "100%",
-                width: "100%",
-                background: `linear-gradient(90deg, ${COL_PINK}, ${COL_GOLD})`,
-                transform: "scaleX(0)",
-                transformOrigin: "left center",
-              }}
-            />
-          </div>
         </div>
       </section>
 
-      {/* Floating WhatsApp Side Button — slides in from right to left when header appears */}
+      {/* Small Floating Location Pin Button — slides in from right to left */}
       <a
-        href={WHATSAPP_URL}
+        href={MAPS_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Falar com Nayara Oliveira Studio no WhatsApp"
-        title="Falar no WhatsApp"
-        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${showHeader
-          ? "translate-x-0 opacity-100"
-          : "pointer-events-none translate-x-24 opacity-0"
-          }`}
+        aria-label="Ver localização no Google Maps"
+        title="Ver localização no mapa"
+        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${
+          showSidePin
+            ? "translate-x-0 opacity-100"
+            : "pointer-events-none translate-x-24 opacity-0"
+        }`}
       >
-        <WhatsAppBrandIcon className="h-7 w-7" />
+        <MapPin className="h-5 w-5 text-[#fc6998]" aria-hidden="true" />
       </a>
 
       {/* Logo Lightbox Modal */}
@@ -827,13 +751,13 @@ export default function MetroHero({
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Logo Nayara Oliveira Studio"
+          aria-label="Logo Nayara Oliveira Estúdio"
           onClick={() => setLogoModalOpen(false)}
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-6 backdrop-blur-sm transition-opacity duration-200"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="border-pink-gold relative w-full max-w-md overflow-hidden rounded-3xl bg-black p-6 shadow-2xl sm:p-8"
+            className="border-pink-gold relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-6 shadow-2xl sm:p-8"
           >
             <button
               type="button"
@@ -844,8 +768,8 @@ export default function MetroHero({
               <X className="h-4 w-4" />
             </button>
             <img
-              src={`${BASE_PATH}/nayara-logo.webp`}
-              alt="Nayara Oliveira Studio"
+              src={`${BASE_PATH}/nayara-estudio-logo.png`}
+              alt="Nayara Oliveira Estúdio"
               className="h-auto w-full object-contain"
             />
           </div>

@@ -25,7 +25,7 @@ export default function PrivacidadePage() {
                 aria-hidden="true"
               />
               <span className="font-serif text-[8px] font-medium tracking-[0.42em] text-[#8c6306] uppercase">
-                STUDIO
+                ESTÚDIO
               </span>
               <span
                 className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
