@@ -88,18 +88,18 @@ interface Chapter {
 
 const CHAPTERS: Chapter[] = [
   {
-    eyebrow: "Nail Studio",
-    title: "Suas mãos contam a sua história.",
-    subtitle: "",
+    eyebrow: "Autoestima & Cuidado",
+    title: "Cuidar de si não é luxo, é amor próprio.",
+    subtitle: "Reserve um momento só seu para desacelerar e florescer.",
     start: 0.0,
     end: 0.24,
     positionClass:
       "items-center justify-start px-6 text-left md:pl-14 lg:pl-20",
   },
   {
-    eyebrow: "Autoestima & Cuidado",
-    title: "Cuidar de si não é luxo, é amor próprio.",
-    subtitle: "Reserve um momento só seu para desacelerar e florescer.",
+    eyebrow: "Nail Studio",
+    title: "Suas mãos contam a sua história.",
+    subtitle: "",
     start: 0.25,
     end: 0.49,
     positionClass:
