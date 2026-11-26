@@ -45,7 +45,7 @@ export default function PrivacidadePage() {
           Políticas de Privacidade, LGPD &amp; Meta
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          Última atualização: {new Date().getFullYear()} • Nayara Oliveira Studio
+          Última atualização: {new Date().getFullYear()} • Nayara Oliveira Estúdio
           (@nayara_designernail)
         </p>
 

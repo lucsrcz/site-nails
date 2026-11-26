@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Nayara Oliveira Estúdio — Fibra de Vidro, Molde F1 & Gel",
   description:
-    "Nayara Oliveira Estúdio (@nayara_designernail): especialista em fibra de vidro, método molde F1, esmaltação em gel, blindagem e cursos.",
+    "Nayara Oliveira Estúdio (@nayara_designernail): especialista em fibra de vidro, método molde F1, esmaltação em gel, blindagem e curso Florescendo no Molde F1.",
 };
 
 export default function RootLayout({

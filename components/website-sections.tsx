@@ -12,17 +12,9 @@ import {
   ArrowRight,
   ShieldCheck,
   X,
-  Coffee,
-  Gift,
-  HeartHandshake,
-  MapPin,
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { POLICY_SECTIONS } from "@/components/privacy-content";
-
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const MAPS_URL =
-  "https://maps.google.com/maps?q=-16.172563552856445%2C-47.927513122558594&z=17&hl=pt-BR";
 
 const GEL_SERVICES = [
   {
@@ -48,41 +40,47 @@ const GEL_SERVICES = [
   },
 ];
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const LOCATION_URL =
+  "https://maps.google.com/maps?q=-16.172563552856445%2C-47.927513122558594&z=17&hl=pt-BR";
+
 const COURSES = [
   {
     id: "florescendo-molde-f1",
     name: "Florescendo no Molde F1",
-    image: `${BASE_PATH}/curso-florescendo-f1.png`,
-    duration: "1 dia inteiro presencial",
+    duration: "1 dia inteiro • Presencial",
     price: "R$ 1.100,00",
-    entryNote:
+    paymentNote:
       "Entrada de R$ 150,00 para confirmar inscrição e restante parcelado no cartão de crédito.",
+    image: `${BASE_PATH}/curso-florescendo.png`,
     description:
-      "Curso presencial com foco na técnica de Molde F1, ensinando todo o passo a passo para desenvolver uma aplicação com segurança, técnica e excelência.",
-    details: [
-      { icon: Coffee, text: "Coffee break especial pela manhã e 1h30 de almoço" },
-      { icon: Gift, text: "Bônus exclusivo: técnica de Fibra de Vidro sem custo adicional" },
-      { icon: HeartHandshake, text: "Suporte vitalício após a conclusão do curso" },
+      "Um dia inteiro presencial com foco na técnica de molde F1, ensinando todo o passo a passo para desenvolver uma aplicação com segurança, técnica e excelência — para sair preparada, confiante e pronta para dar os primeiros passos na profissão.",
+    schedule: [
+      "Coffee break especial pela manhã",
+      "1h30 de intervalo para o almoço",
+      "Encerramento conforme o aproveitamento da aluna",
+      "Bônus: técnica de fibra de vidro sem custo adicional",
+      "Suporte vitalício após a conclusão do curso",
     ],
-    closingNote:
-      "Encerramento definido conforme o desenvolvimento e aproveitamento da aluna.",
+    highlights: ["Bônus Fibra de Vidro", "Suporte Vitalício", "Coffee Break"],
   },
   {
-    id: "aperfeicoamento",
-    name: "Aperfeiçoamento",
-    duration: "1 dia de curso presencial",
+    id: "curso-aperfeicoamento",
+    name: "Aperfeiçoamento no Molde F1 & Fibra",
+    duration: "1 dia • Presencial",
     price: "R$ 800,00",
-    entryNote:
-      "Imersão prática voltada para quem já atua na área e busca excelência em mesa.",
+    paymentNote:
+      "Consulte condições de reserva e parcelamento diretamente pelo WhatsApp.",
+    image: undefined,
     description:
-      "Aperfeiçoe controle de produto, simetria, curvatura, acabamento ultrafino e redução do tempo de atendimento no Molde F1 e Fibra de Vidro.",
-    details: [
-      { icon: Award, text: "Correção de descolamentos e nivelamento perfeito" },
-      { icon: Sparkles, text: "Acabamento natural com brilho espelhado duradouro" },
-      { icon: HeartHandshake, text: "Acompanhamento e suporte pós-curso" },
+      "Indicado para profissionais que já atendem e desejam elevar o padrão do acabamento: controle de produto, curvatura anatômica, redução do tempo em mesa, eliminação de descolamentos e naturalidade impecável.",
+    schedule: [
+      "Diagnóstico individual de técnica e lixamento",
+      "Prática intensiva de simetria, curvatura e naturalidade",
+      "Estratégias para agilidade e rentabilidade em mesa",
+      "Acompanhamento próximo durante todo o dia",
     ],
-    closingNote:
-      "Saia ainda mais segura para elevar o padrão e o faturamento dos seus atendimentos.",
+    highlights: ["1 Dia Intensivo", "Foco em Naturalidade", "Acompanhamento Próximo"],
   },
 ];
 
@@ -196,8 +194,8 @@ export default function WebsiteSections() {
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
-              Formação presencial para você sair preparada, confiante e pronta
-              para atuar com excelência.
+              Formação prática em turmas reduzidas para dominar o gel com
+              técnica e elegância.
             </p>
           </div>
 
@@ -209,12 +207,15 @@ export default function WebsiteSections() {
               >
                 <div>
                   {course.image && (
-                    <div className="mb-5 overflow-hidden rounded-xl bg-[#f9e5e8]">
+                    <div className="mb-4 flex items-center gap-3">
                       <img
                         src={course.image}
                         alt={course.name}
-                        className="h-44 w-full object-cover object-center"
+                        className="h-16 w-16 rounded-xl border border-[#efb810]/50 object-cover"
                       />
+                      <span className="text-xs font-semibold tracking-wider text-[#c86382] uppercase">
+                        Curso Completo • Com Bônus
+                      </span>
                     </div>
                   )}
 
@@ -227,7 +228,7 @@ export default function WebsiteSections() {
                         />
                         {course.duration}
                       </span>
-                      <h3 className="mt-1.5 font-serif text-2xl font-semibold text-ink">
+                      <h3 className="mt-2 font-serif text-2xl font-medium text-ink">
                         {course.name}
                       </h3>
                     </div>
@@ -236,41 +237,42 @@ export default function WebsiteSections() {
                     </span>
                   </div>
 
-                  <p className="mt-2 text-xs font-semibold text-[#8c6306]">
-                    {course.entryNote}
+                  <p className="mt-2 text-xs font-medium text-[#8c6306]">
+                    {course.paymentNote}
                   </p>
 
                   <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                     {course.description}
                   </p>
 
-                  <ul className="mt-4 space-y-2 border-t border-black/5 pt-4">
-                    {course.details.map((detail) => {
-                      const Icon = detail.icon;
-                      return (
-                        <li
-                          key={detail.text}
-                          className="flex items-start gap-2 text-xs leading-relaxed text-ink sm:text-sm"
-                        >
-                          <Icon
-                            className="mt-0.5 h-4 w-4 shrink-0 text-[#fc6998]"
-                            aria-hidden="true"
-                          />
-                          <span>{detail.text}</span>
-                        </li>
-                      );
-                    })}
+                  <ul className="mt-4 space-y-1.5 text-xs text-ink-muted sm:text-sm">
+                    {course.schedule.map((point) => (
+                      <li key={point} className="flex items-start gap-2">
+                        <Check
+                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#fc6998]"
+                          aria-hidden="true"
+                        />
+                        <span>{point}</span>
+                      </li>
+                    ))}
                   </ul>
 
-                  <p className="mt-3 text-xs italic text-ink-muted">
-                    {course.closingNote}
-                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {course.highlights.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-5 border-t border-black/5 pt-4">
                   <a
                     href={buildWhatsAppUrl(
-                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name} (${course.price}).`
+                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name}.`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -382,7 +384,7 @@ export default function WebsiteSections() {
                   id="site-topic"
                   value={selectedTopic}
                   onChange={(e) => setSelectedTopic(e.target.value)}
-                  className="w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
+                  className="w-full rounded-xl border border-black/15 bg-white py-3 pr-9 pl-4 text-base text-ink outline-none focus:border-[#fc6998] focus:ring-2 focus:ring-[#fc6998]/20"
                 >
                   <optgroup label="Unhas em Gel">
                     {GEL_SERVICES.map((s) => (
@@ -434,39 +436,35 @@ export default function WebsiteSections() {
         <div className="mx-auto flex max-w-5xl flex-row items-start justify-between gap-4 px-5 md:items-center">
           <div>
             <div className="inline-flex flex-col items-center">
-              <p className="font-script text-metallic-gold px-2 py-0.5 text-2xl leading-[1.25] font-normal sm:text-3xl">
+              <p className="font-script px-2 py-0.5 text-2xl leading-[1.25] font-normal text-[#c86382] sm:text-3xl">
                 Nayara Oliveira
               </p>
               <span className="-mt-0.5 flex w-full items-center gap-2 px-1">
                 <span
-                  className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
+                  className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#c86382]"
                   aria-hidden="true"
                 />
-                <span className="font-serif text-[8px] font-medium tracking-[0.38em] text-[#8c6306] uppercase sm:text-[9px] sm:tracking-[0.42em]">
+                <span className="font-serif text-[8px] font-medium tracking-[0.38em] text-[#c86382] uppercase sm:text-[9px] sm:tracking-[0.42em]">
                   ESTÚDIO
                 </span>
                 <span
-                  className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#efb810]"
+                  className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#c86382]"
                   aria-hidden="true"
                 />
               </span>
             </div>
-            <p className="mt-1.5 text-xs text-ink-muted sm:text-sm">
-              Fibra de Vidro, Molde F1 &amp; Gel
-            </p>
+            <a
+              href={LOCATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1.5 block text-xs text-ink-muted underline-offset-4 transition hover:text-[#fc6998] hover:underline sm:text-sm"
+            >
+              Fibra de Vidro, Molde F1 &amp; Gel • Ver endereço no mapa
+            </a>
           </div>
 
           <div className="flex shrink-0 flex-col items-center pr-2 text-center md:items-end md:pr-0 md:text-right">
             <div className="flex flex-col items-center gap-1 text-xs font-medium text-ink-muted sm:text-sm md:flex-row md:items-center md:gap-5">
-              <a
-                href={MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[32px] items-center gap-1.5 transition hover:text-[#fc6998]"
-              >
-                <MapPin className="h-3.5 w-3.5 text-[#fc6998] sm:h-4 sm:w-4" aria-hidden="true" />
-                Localização
-              </a>
               <a
                 href="https://wa.me/5562992118416?text=Oi%2C%20gostaria%20de%20marcar%20meu%20hor%C3%A1rio"
                 target="_blank"

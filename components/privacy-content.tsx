@@ -15,7 +15,7 @@ export const POLICY_SECTIONS: PolicySection[] = [
     items: [
       {
         heading: "1. Controladora dos Dados",
-        body: "Este site é mantido por Nayara Oliveira Studio (@nayara_designernail), responsável pelo tratamento dos dados pessoais coletados nesta página, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).",
+        body: "Este site é mantido por Nayara Oliveira Estúdio (@nayara_designernail), responsável pelo tratamento dos dados pessoais coletados nesta página, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).",
       },
       {
         heading: "2. Dados Coletados e Finalidade",
@@ -83,7 +83,7 @@ export const POLICY_SECTIONS: PolicySection[] = [
     items: [
       {
         heading: "1. Pré-Agendamento e Confirmação",
-        body: "O envio de solicitação pelo formulário ou clique nos botões de serviço direciona para o WhatsApp oficial e não garante reserva automática até a confirmação de dia e horário pela equipe Nayara Oliveira Studio.",
+        body: "O envio de solicitação pelo formulário ou clique nos botões de serviço direciona para o WhatsApp oficial e não garante reserva automática até a confirmação de dia e horário pela equipe Nayara Oliveira Estúdio.",
       },
       {
         heading: "2. Cursos e Vagas",
@@ -91,7 +91,7 @@ export const POLICY_SECTIONS: PolicySection[] = [
       },
       {
         heading: "3. Propriedade Intelectual",
-        body: "Todos os textos, identidade visual, fotografias e elementos gráficos deste site pertencem a Nayara Oliveira Studio, sendo vedada a reprodução comercial sem autorização prévia.",
+        body: "Todos os textos, identidade visual, fotografias e elementos gráficos deste site pertencem a Nayara Oliveira Estúdio, sendo vedada a reprodução comercial sem autorização prévia.",
       },
     ],
   },
