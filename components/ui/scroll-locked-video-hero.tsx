@@ -447,15 +447,10 @@ export default function MetroHero({
 
   return (
     <>
-      {/* Fixed Header always visible — iOS/iPhone frosted glass blur */}
+      {/* Fixed Header always visible */}
       <header
         ref={headerRef}
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.22)",
-          backdropFilter: "blur(24px) saturate(180%)",
-          WebkitBackdropFilter: "blur(24px) saturate(180%)",
-        }}
-        className="fixed top-0 right-0 left-0 z-50 transition-all duration-300"
+        className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300"
       >
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
           <button
@@ -576,12 +571,7 @@ export default function MetroHero({
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.72)",
-              backdropFilter: "blur(24px) saturate(180%)",
-              WebkitBackdropFilter: "blur(24px) saturate(180%)",
-            }}
-            className="px-5 py-4 shadow-md md:hidden"
+            className="bg-white px-5 py-4 shadow-md md:hidden"
           >
             <p className="mb-3 text-xs font-medium text-[#6e5c62]">
               Especialista em fibra de vidro, método molde F1 e banho em gel.
