@@ -74,15 +74,7 @@ const DEFAULT_FRAMES = [
   ...Array.from({ length: 20 }, () => `${BASE_PATH}/novo-frames/frame_103.jpg`),
 ];
 
-const MOBILE_BASE_FRAMES = Array.from(
-  { length: 90 },
-  (_, i) => `${BASE_PATH}/mobile-frames/frame_${String(i + 1).padStart(3, "0")}.png`
-);
-
-const MOBILE_FRAMES = [
-  ...MOBILE_BASE_FRAMES,
-  ...Array.from({ length: 16 }, () => `${BASE_PATH}/mobile-frames/frame_090.png`),
-];
+const MOBILE_FRAMES = [`${BASE_PATH}/mobile-hero.jpg`];
 
 const COL_PINK = "#fc6998";
 const COL_GOLD = "#efb810";
