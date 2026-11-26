@@ -263,7 +263,12 @@ export default function MetroHero({
     const wrapper = wrapperRef.current;
     const stage = stageRef.current;
     const canvas = canvasRef.current;
-    if (!wrapper || !stage || !canvas) return;
+    if (!wrapper || !stage) return;
+    if (isMobileViewport) {
+      setReady(true);
+      return;
+    }
+    if (!canvas) return;
 
     const reduceMotion =
       typeof window !== "undefined" &&
@@ -687,9 +692,19 @@ export default function MetroHero({
                 ref={(el) => {
                   chapterRefs.current[idx] = el;
                 }}
-                className={`absolute inset-0 flex ${ch.positionClass}`}
+                className={`absolute inset-0 ${
+                  isMobileViewport && !ch.isFinal ? "hidden" : "flex"
+                } ${ch.positionClass}`}
                 style={{
-                  opacity: idx === 0 ? 1 : 0,
+                  opacity: isMobileViewport
+                    ? ch.isFinal
+                      ? 1
+                      : 0
+                    : idx === 0
+                      ? 1
+                      : 0,
+                  pointerEvents:
+                    isMobileViewport && ch.isFinal ? "auto" : undefined,
                   willChange: "transform, opacity, filter",
                 }}
               >
