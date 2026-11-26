@@ -68,10 +68,20 @@ const BASE_FRAMES = Array.from(
   (_, i) => `${BASE_PATH}/novo-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`
 );
 
-// Repeat frame 103 twenty extra times to lengthen the final hold when LOREN NAILS appears
+// Repeat frame 103 twenty extra times to lengthen the final hold when Nayara Oliveira appears
 const DEFAULT_FRAMES = [
   ...BASE_FRAMES,
   ...Array.from({ length: 20 }, () => `${BASE_PATH}/novo-frames/frame_103.jpg`),
+];
+
+const MOBILE_BASE_FRAMES = Array.from(
+  { length: 90 },
+  (_, i) => `${BASE_PATH}/mobile-frames/frame_${String(i + 1).padStart(3, "0")}.png`
+);
+
+const MOBILE_FRAMES = [
+  ...MOBILE_BASE_FRAMES,
+  ...Array.from({ length: 16 }, () => `${BASE_PATH}/mobile-frames/frame_090.png`),
 ];
 
 const COL_PINK = "#fc6998";
@@ -155,10 +165,9 @@ function drawCoverImage(
     drawWidth = height * imgRatio;
   }
 
-  const focalX = isPortrait ? 0.32 : 0.5;
-  const focalY = isPortrait ? 0.5 : 0.5;
-  const offsetX = (width - drawWidth) * focalX;
-  const offsetY = (height - drawHeight) * focalY;
+  // Both desktop (16:9) and mobile (9:16) now use native-orientation frames centered at 50%
+  const offsetX = (width - drawWidth) * 0.5;
+  const offsetY = (height - drawHeight) * 0.5;
 
   ctx.save();
   ctx.imageSmoothingEnabled = true;
@@ -200,10 +209,20 @@ function getChapterMotion(progress: number, ch: Chapter): {
 }
 
 export default function MetroHero({
-  frames = DEFAULT_FRAMES,
+  frames,
   className,
   style,
 }: MetroHeroProps) {
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobileViewport(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const activeFrames = frames ?? (isMobileViewport ? MOBILE_FRAMES : DEFAULT_FRAMES);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -287,14 +306,14 @@ export default function MetroHero({
       syncCanvasSize();
 
       const index = clamp(
-        Math.round(progress * (frames.length - 1)),
+        Math.round(progress * (activeFrames.length - 1)),
         0,
-        frames.length - 1
+        activeFrames.length - 1
       );
 
       let img = loadedImages[index];
       if (!img || !img.complete || img.naturalWidth === 0) {
-        for (let offset = 1; offset < frames.length; offset++) {
+        for (let offset = 1; offset < activeFrames.length; offset++) {
           const prev = loadedImages[index - offset];
           if (prev?.complete && prev.naturalWidth > 0) {
             img = prev;
@@ -320,8 +339,8 @@ export default function MetroHero({
     // so scrubbing is responsive immediately, then fill in-between frames in small batches.
     const keyIndices: number[] = [];
     const restIndices: number[] = [];
-    for (let i = 0; i < frames.length; i++) {
-      if (i === 0 || i === frames.length - 1 || i % 8 === 0) {
+    for (let i = 0; i < activeFrames.length; i++) {
+      if (i === 0 || i === activeFrames.length - 1 || i % 8 === 0) {
         keyIndices.push(i);
       } else {
         restIndices.push(i);
@@ -339,7 +358,7 @@ export default function MetroHero({
         }
         img.onload = () => {
           if (!cancelled) {
-            if (idx === 0 || (reduceMotion && idx === frames.length - 1)) {
+            if (idx === 0 || (reduceMotion && idx === activeFrames.length - 1)) {
               setReady(true);
               renderCanvasFrame(currentProgress);
             }
@@ -347,7 +366,7 @@ export default function MetroHero({
           resolve();
         };
         img.onerror = () => resolve();
-        img.src = frames[idx];
+        img.src = activeFrames[idx];
         loadedImages[idx] = img;
       });
 
@@ -440,7 +459,7 @@ export default function MetroHero({
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(rafId);
     };
-  }, [frames]);
+  }, [activeFrames]);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
