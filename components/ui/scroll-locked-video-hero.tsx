@@ -669,8 +669,8 @@ export default function MetroHero({
                 <div
                   className={
                     ch.isFinal
-                      ? "w-full max-w-[96vw] sm:max-w-2xl md:max-w-[58vw]"
-                      : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[46vw]"
+                      ? "w-full max-w-[96vw] sm:max-w-2xl md:max-w-[76vw]"
+                      : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[68vw] lg:max-w-[74vw]"
                   }
                 >
                   <span
@@ -691,7 +691,7 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script text-metallic-gold px-5 py-3 text-[3.25rem] leading-[1.35] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-9xl"
+                        className="font-script text-metallic-gold px-5 py-3 text-[3.25rem] leading-[1.35] font-normal tracking-normal sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[10rem]"
                         style={{
                           filter:
                             "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
@@ -699,12 +699,12 @@ export default function MetroHero({
                       >
                         {ch.title}
                       </h1>
-                      <div className="-mt-3 flex w-56 items-center gap-3 sm:w-72">
+                      <div className="-mt-3 flex w-56 items-center gap-3 sm:w-72 md:w-96">
                         <span
                           className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#efb810]"
                           aria-hidden="true"
                         />
-                        <span className="font-serif text-xs font-medium tracking-[0.46em] text-[#8c6306] uppercase sm:text-sm">
+                        <span className="font-serif text-xs font-medium tracking-[0.46em] text-[#8c6306] uppercase sm:text-sm md:text-base">
                           STUDIO
                         </span>
                         <span
@@ -715,7 +715,7 @@ export default function MetroHero({
                     </div>
                   ) : (
                     <h2
-                      className="font-serif text-[3.1rem] leading-[0.98] font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+                      className="font-serif text-[3.1rem] leading-[0.95] font-bold tracking-tight sm:text-6xl md:text-[5.5rem] lg:text-[7rem] xl:text-[8.25rem]"
                       style={{ color: "#140d10" }}
                     >
                       {ch.title}
@@ -818,11 +818,10 @@ export default function MetroHero({
         rel="noopener noreferrer"
         aria-label="Falar com Nayara Oliveira Studio no WhatsApp"
         title="Falar no WhatsApp"
-        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${
-          showHeader
-            ? "translate-x-0 opacity-100"
-            : "pointer-events-none translate-x-24 opacity-0"
-        }`}
+        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${showHeader
+          ? "translate-x-0 opacity-100"
+          : "pointer-events-none translate-x-24 opacity-0"
+          }`}
       >
         <WhatsAppBrandIcon className="h-7 w-7" />
       </a>
