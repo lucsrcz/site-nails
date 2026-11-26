@@ -362,7 +362,6 @@ export default function MetroHero({
     const updateTargetFromScroll = () => {
       if (reduceMotion) {
         setShowHeader(true);
-        setPinMode("bottom");
         return;
       }
       const rect = wrapper.getBoundingClientRect();
@@ -370,10 +369,8 @@ export default function MetroHero({
       const next = clamp(-rect.top / scrollable, 0, 1);
       targetProgress = next;
       if (next > 0.004) hasStartedScrolling = true;
-      // Keep the Hero stage fixed to the viewport while scrubbing; release to bottom at end
-      setPinMode(rect.bottom <= window.innerHeight ? "bottom" : "fixed");
-      // Reveal top navigation bar and main LOREN NAILS text together on first hero scroll
-      setShowHeader(next >= 0.01);
+      const shouldShow = next >= 0.01;
+      setShowHeader((prev) => (prev === shouldShow ? prev : shouldShow));
     };
 
     const onResize = () => {
@@ -394,9 +391,13 @@ export default function MetroHero({
         const el = chapterRefs.current[idx];
         if (!el) return;
         const { opacity, translateY } = getChapterMotion(currentProgress, ch);
+        const blurPx = (1 - opacity) * 5;
         el.style.opacity = String(opacity);
-        el.style.transform = `translateY(${translateY}px)`;
-        el.style.filter = `blur(${(1 - opacity) * 5}px)`;
+        el.style.transform =
+          translateY === 0
+            ? "translate3d(0, 0, 0)"
+            : `translate3d(0, ${translateY}px, 0)`;
+        el.style.filter = blurPx > 0.15 ? `blur(${blurPx}px)` : "none";
         el.style.pointerEvents = opacity > 0.35 ? "auto" : "none";
 
         const dot = dotRefs.current[idx];
