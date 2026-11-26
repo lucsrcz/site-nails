@@ -633,26 +633,38 @@ export default function MetroHero({
         id="inicio"
         aria-label="Nayara Oliveira Estúdio — Apresentação"
         className={`relative w-full bg-white ${
-          isMobileViewport ? "h-[100lvh]" : "h-[320vh]"
+          isMobileViewport ? "h-[100svh] overflow-hidden" : "h-[320vh]"
         } ${className ?? ""}`}
         style={style}
       >
         <div
           ref={stageRef}
-          className="sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform"
+          className={
+            isMobileViewport
+              ? "relative h-full w-full overflow-hidden bg-white"
+              : "sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform"
+          }
         >
-          <canvas
-            ref={canvasRef}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              opacity: ready ? 1 : 0,
-              transition: "opacity 0.5s ease",
-              pointerEvents: "none",
-            }}
-          />
+          {isMobileViewport ? (
+            <img
+              src={`${BASE_PATH}/mobile-hero.jpg`}
+              alt="Nayara Oliveira Estúdio"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+            />
+          ) : (
+            <canvas
+              ref={canvasRef}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                opacity: ready ? 1 : 0,
+                transition: "opacity 0.5s ease",
+                pointerEvents: "none",
+              }}
+            />
+          )}
 
           {/* Subtle warm vignette & bottom edge blend (no heavy white washout) */}
           <div
