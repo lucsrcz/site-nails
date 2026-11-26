@@ -403,6 +403,16 @@ export default function MetroHero({
       CHAPTERS.forEach((ch, idx) => {
         const el = chapterRefs.current[idx];
         if (!el) return;
+
+        // On mobile (< 768px), show only the final brand chapter immediately (static)
+        if (isMobileViewport) {
+          el.style.opacity = ch.isFinal ? "1" : "0";
+          el.style.transform = "translate3d(0, 0, 0)";
+          el.style.filter = "none";
+          el.style.pointerEvents = ch.isFinal ? "auto" : "none";
+          return;
+        }
+
         const { opacity, translateY } = getChapterMotion(currentProgress, ch);
         const blurPx = (1 - opacity) * 5;
         el.style.opacity = String(opacity);
@@ -451,7 +461,7 @@ export default function MetroHero({
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(rafId);
     };
-  }, [activeFrames]);
+  }, [activeFrames, isMobileViewport]);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
@@ -621,15 +631,11 @@ export default function MetroHero({
       <section
         ref={wrapperRef}
         id="inicio"
-        aria-label="LOREN NAILS — Apresentação"
-        className={className}
-        style={{
-          position: "relative",
-          height: "320vh",
-          width: "100%",
-          backgroundColor: "#ffffff",
-          ...style,
-        }}
+        aria-label="Nayara Oliveira Estúdio — Apresentação"
+        className={`relative w-full bg-white ${
+          isMobileViewport ? "h-[100lvh]" : "h-[320vh]"
+        } ${className ?? ""}`}
+        style={style}
       >
         <div
           ref={stageRef}
@@ -678,12 +684,14 @@ export default function MetroHero({
                 <div
                   className={
                     ch.isFinal
-                      ? "w-full max-w-[96vw] sm:max-w-2xl md:max-w-[76vw]"
+                      ? "flex h-full w-full max-w-[96vw] flex-col items-center justify-center pt-16 pb-20 sm:max-w-2xl md:h-auto md:max-w-[76vw] md:py-0"
                       : "w-full max-w-[88vw] sm:max-w-xl md:max-w-[68vw] lg:max-w-[74vw]"
                   }
                 >
                   <span
-                    className="mb-3 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-semibold tracking-[0.2em] uppercase md:mb-4"
+                    className={`mb-3 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-semibold tracking-[0.2em] uppercase md:mb-4 ${
+                      ch.isFinal ? "mt-auto md:mt-0" : ""
+                    }`}
                     style={{
                       borderColor: COL_GOLD,
                       backgroundColor: "rgba(255,255,255,0.92)",
@@ -700,15 +708,15 @@ export default function MetroHero({
                   {ch.isFinal ? (
                     <div className="flex flex-col items-center">
                       <h1
-                        className="font-script px-5 py-3 text-[3.25rem] leading-[1.35] font-normal tracking-normal text-[#c86382] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[10rem]"
+                        className="font-script px-4 py-2 text-[3.85rem] leading-[1.3] font-normal tracking-normal text-[#c86382] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[10rem]"
                         style={{
                           filter:
-                            "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.12))",
+                            "drop-shadow(0 2px 14px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.14))",
                         }}
                       >
                         {ch.title}
                       </h1>
-                      <div className="-mt-3 flex w-56 items-center gap-3 sm:w-72 md:w-96">
+                      <div className="-mt-3 flex w-60 items-center gap-3 sm:w-72 md:w-96">
                         <span
                           className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#c86382]"
                           aria-hidden="true"
@@ -731,20 +739,8 @@ export default function MetroHero({
                     </h2>
                   )}
 
-                  {ch.subtitle && (
-                    <p
-                      className="text-metallic-gold mt-3.5 text-sm font-semibold leading-relaxed tracking-[0.14em] uppercase sm:text-base md:mt-4 md:text-lg"
-                      style={{
-                        filter:
-                          "drop-shadow(0 1px 10px rgba(255,255,255,0.92)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
-                      }}
-                    >
-                      {ch.subtitle}
-                    </p>
-                  )}
-
                   {ch.isFinal && (
-                    <div className="mt-7 flex flex-wrap justify-center gap-3.5">
+                    <div className="mt-6 flex flex-wrap justify-center gap-3.5 md:order-last md:mt-7">
                       <button
                         type="button"
                         onClick={() => scrollToSection("unhas-em-gel")}
@@ -760,6 +756,22 @@ export default function MetroHero({
                         Conhecer Cursos
                       </button>
                     </div>
+                  )}
+
+                  {ch.subtitle && (
+                    <p
+                      className={`font-serif font-light tracking-[0.18em] uppercase ${
+                        ch.isFinal
+                          ? "mt-auto max-w-xs text-[11px] leading-relaxed text-[#4d3d43] sm:max-w-lg sm:text-sm md:mt-4 md:max-w-xl md:text-base"
+                          : "text-metallic-gold mt-3.5 text-sm leading-relaxed sm:text-base md:mt-4 md:text-lg"
+                      }`}
+                      style={{
+                        filter:
+                          "drop-shadow(0 1px 10px rgba(255,255,255,0.95))",
+                      }}
+                    >
+                      {ch.subtitle}
+                    </p>
                   )}
                 </div>
               </div>
