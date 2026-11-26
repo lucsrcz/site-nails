@@ -760,14 +760,14 @@ export default function MetroHero({
 
                   {ch.subtitle && (
                     <p
-                      className={`font-serif font-light tracking-[0.18em] uppercase ${
+                      className={`text-metallic-gold font-serif font-medium tracking-[0.18em] uppercase ${
                         ch.isFinal
-                          ? "mt-auto max-w-xs text-[11px] leading-relaxed text-[#4d3d43] sm:max-w-lg sm:text-sm md:mt-4 md:max-w-xl md:text-base"
-                          : "text-metallic-gold mt-3.5 text-sm leading-relaxed sm:text-base md:mt-4 md:text-lg"
+                          ? "mt-auto max-w-xs text-[11px] leading-relaxed sm:max-w-lg sm:text-sm md:mt-4 md:max-w-xl md:text-base"
+                          : "mt-3.5 text-sm leading-relaxed sm:text-base md:mt-4 md:text-lg"
                       }`}
                       style={{
                         filter:
-                          "drop-shadow(0 1px 10px rgba(255,255,255,0.95))",
+                          "drop-shadow(0 1px 10px rgba(255,255,255,0.95)) drop-shadow(0 1px 2px rgba(28,20,23,0.18))",
                       }}
                     >
                       {ch.subtitle}
