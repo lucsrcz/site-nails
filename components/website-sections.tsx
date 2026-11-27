@@ -172,7 +172,7 @@ export default function WebsiteSections() {
 
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-semibold tracking-tight text-ink-muted sm:gap-2.5 sm:text-xs sm:tracking-wide">
+        <div className="mb-8 flex flex-nowrap items-center justify-center gap-1 text-[9.5px] font-semibold tracking-tight text-ink-muted sm:gap-2.5 sm:text-xs sm:tracking-wide">
           {GEL_SERVICES.map((srv) => {
             const isOpen = openServiceIds.includes(srv.id);
             return (
@@ -180,7 +180,7 @@ export default function WebsiteSections() {
                 key={srv.id}
                 type="button"
                 onClick={() => navigateToServiceCard(srv.id)}
-                className={`btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap sm:min-h-[40px] sm:px-4 sm:py-1.5 ${
+                className={`btn-liquid-glass min-h-[32px] shrink-0 cursor-pointer rounded-full px-2 py-1 text-center whitespace-nowrap sm:min-h-[40px] sm:px-4 sm:py-1.5 ${
                   isOpen
                     ? "!border-[#fc6998]/60 !bg-[#fff0f5]/85 text-[#fc6998]"
                     : "text-ink"
@@ -193,14 +193,14 @@ export default function WebsiteSections() {
           <button
             type="button"
             onClick={navigateToCourses}
-            className="btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
+            className="btn-liquid-glass min-h-[32px] shrink-0 cursor-pointer rounded-full px-2 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
           >
             Cursos
           </button>
           <button
             type="button"
             onClick={navigateToConsultoria}
-            className="btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
+            className="btn-liquid-glass min-h-[32px] shrink-0 cursor-pointer rounded-full px-2 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
           >
             Consultoria
           </button>
