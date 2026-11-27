@@ -85,7 +85,7 @@ const COURSES = [
     price: "R$ 1.100,00",
     paymentNote:
       "Entrada de R$ 150,00 para confirmar inscrição e restante parcelado no cartão de crédito.",
-    image: `${BASE_PATH}/curso-florescendo.png`,
+    image: `${BASE_PATH}/curso-florescendo.jpg`,
     description:
       "Um dia inteiro presencial com foco na técnica de molde F1, ensinando todo o passo a passo para desenvolver uma aplicação com segurança, técnica e excelência — para sair preparada, confiante e pronta para dar os primeiros passos na profissão.",
     schedule: [
@@ -120,6 +120,7 @@ const COURSES = [
 export default function WebsiteSections() {
   const [selectedTopic, setSelectedTopic] = useState("Unhas Simples");
   const [openServiceIds, setOpenServiceIds] = useState<string[]>([]);
+  const [openCourseIds, setOpenCourseIds] = useState<string[]>([]);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
@@ -129,6 +130,12 @@ export default function WebsiteSections() {
 
   const toggleService = (id: string) => {
     setOpenServiceIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const toggleCourse = (id: string) => {
+    setOpenCourseIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
@@ -348,91 +355,121 @@ export default function WebsiteSections() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {COURSES.map((course) => (
-              <article
-                key={course.id}
-                className="border-pink-gold flex flex-col justify-between rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
-              >
-                <div>
-                  {course.image && (
-                    <div className="mb-4 flex items-center gap-3">
-                      <img
-                        src={course.image}
-                        alt={course.name}
-                        className="h-16 w-16 rounded-xl border border-[#efb810]/50 object-cover"
-                      />
-                      <span className="text-xs font-semibold tracking-wider text-[#c86382] uppercase">
-                        Curso Completo • Com Bônus
-                      </span>
-                    </div>
-                  )}
+          <div className="grid items-start gap-6 md:grid-cols-2">
+            {COURSES.map((course) => {
+              const isOpen = openCourseIds.includes(course.id);
+              return (
+                <article
+                  key={course.id}
+                  className={`border-pink-gold flex flex-col justify-between overflow-hidden rounded-2xl bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+                    isOpen ? "ring-2 ring-[#fc6998]/30 shadow-md" : ""
+                  }`}
+                >
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => toggleCourse(course.id)}
+                      aria-expanded={isOpen}
+                      className="group w-full cursor-pointer text-left focus:outline-none"
+                    >
+                      {course.image && (
+                        <div className="relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl border border-[#efb810]/30 bg-[#fff5f8]">
+                          <img
+                            src={course.image}
+                            alt={course.name}
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
 
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-muted sm:text-sm">
-                        <Award
-                          className="h-4 w-4 text-[#fc6998]"
-                          aria-hidden="true"
-                        />
-                        {course.duration}
-                      </span>
-                      <h3 className="mt-2 font-serif text-2xl font-medium text-ink">
+                      <div className="mb-3 flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-xs font-semibold tracking-wider text-ink uppercase">
+                          <Award
+                            className="h-3.5 w-3.5 text-[#fc6998]"
+                            aria-hidden="true"
+                          />
+                          {course.duration}
+                        </span>
+                        <span className="shrink-0 rounded-full border border-[#efb810]/60 bg-[#fff7fa] px-3 py-1 text-xs font-bold text-[#fc6998]">
+                          {course.price}
+                        </span>
+                      </div>
+
+                      <h3 className="font-serif text-2xl font-medium tracking-wide text-ink uppercase">
                         {course.name}
                       </h3>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-[#fc6998] px-3.5 py-1 text-sm font-semibold text-white">
-                      {course.price}
-                    </span>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                        {course.description}
+                      </p>
+                    </button>
                   </div>
 
-                  <p className="mt-2 text-xs font-medium text-[#8c6306]">
-                    {course.paymentNote}
-                  </p>
+                  <div className="mt-5 border-t border-black/5 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleCourse(course.id)}
+                      aria-expanded={isOpen}
+                      className="inline-flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-2 text-sm font-semibold text-[#fc6998] transition hover:text-[#e34f7e]"
+                    >
+                      <span>{isOpen ? "Ocultar detalhes" : "Ver detalhes e valores"}</span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
 
-                  <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-                    {course.description}
-                  </p>
+                    {isOpen && (
+                      <div className="mt-3 space-y-3 border-t border-[#fc6998]/15 pt-3">
+                        <p className="rounded-xl bg-[#fef9e7] px-3 py-2 text-xs font-medium text-[#8c6306]">
+                          {course.paymentNote}
+                        </p>
 
-                  <ul className="mt-4 space-y-1.5 text-xs text-ink-muted sm:text-sm">
-                    {course.schedule.map((point) => (
-                      <li key={point} className="flex items-start gap-2">
-                        <Check
-                          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#fc6998]"
-                          aria-hidden="true"
-                        />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        <ul className="space-y-2">
+                          {course.schedule.map((point) => (
+                            <li
+                              key={point}
+                              className="flex items-start gap-2 rounded-xl bg-[#fff7fa] px-3 py-2 text-xs text-ink sm:text-sm"
+                            >
+                              <Check
+                                className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#fc6998]"
+                                aria-hidden="true"
+                              />
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {course.highlights.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                        <div className="flex flex-wrap gap-2">
+                          {course.highlights.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-full border border-[#efb810]/60 bg-[#fef9e7] px-3 py-1 text-xs font-medium text-ink"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
 
-                <div className="mt-5 border-t border-black/5 pt-4">
-                  <a
-                    href={buildWhatsAppUrl(
-                      `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name}.`
+                        <a
+                          href={buildWhatsAppUrl(
+                            `Oi, Nayara! Gostaria de garantir minha vaga no curso: ${course.name}.`
+                          )}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-liquid-pink mt-2 inline-flex min-h-[44px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white"
+                        >
+                          Garantir minha vaga
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                      </div>
                     )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={buttonVariants({ variant: "outline" })}
-                  >
-                    Garantir minha vaga
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
-                </div>
-              </article>
-            ))}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
