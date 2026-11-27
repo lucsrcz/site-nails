@@ -213,7 +213,11 @@ export default function WebsiteSections() {
           </button>
         </div>
 
-        <div className="grid items-start gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div
+          className={`grid gap-6 sm:grid-cols-2 md:grid-cols-3 ${
+            openServiceIds.length === 0 ? "items-stretch" : "items-start"
+          }`}
+        >
           {GEL_SERVICES.map((srv) => {
             const isOpen = openServiceIds.includes(srv.id);
             return (
@@ -341,7 +345,11 @@ export default function WebsiteSections() {
             </p>
           </div>
 
-          <div className="grid items-start gap-6 md:grid-cols-2">
+          <div
+            className={`grid gap-6 md:grid-cols-2 ${
+              openCourseIds.length === 0 ? "items-stretch" : "items-start"
+            }`}
+          >
             {COURSES.map((course) => {
               const isOpen = openCourseIds.includes(course.id);
               return (
