@@ -106,7 +106,7 @@ const COURSES = [
       "Consulte condições de reserva e parcelamento diretamente pelo WhatsApp.",
     image: `${BASE_PATH}/curso-aperfeicoamento.jpg`,
     description:
-      "Indicado para profissionais que já atendem e desejam elevar o padrão do acabamento: controle de produto, curvatura anatômica, redução do tempo em mesa, eliminação de descolamentos e naturalidade impecável.",
+      "Se você já atende e quer elevar o padrão do seu acabamento, eu te ensino na prática como dominar o controle de produto, curvatura anatômica, redução do tempo em mesa, eliminação de descolamentos e naturalidade impecável.",
     schedule: [
       "Diagnóstico individual de técnica e lixamento",
       "Prática intensiva de simetria, curvatura e naturalidade",
