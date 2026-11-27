@@ -133,6 +133,17 @@ export default function WebsiteSections() {
     );
   };
 
+  const navigateToServiceCard = (id: string) => {
+    setOpenServiceIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    const el = document.getElementById(`card-${id}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const navigateToCourses = () => {
+    const el = document.getElementById("cursos");
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const WHATSAPP_NUMBER = "5562992118416";
 
   const buildWhatsAppUrl = (text: string) =>
@@ -155,10 +166,29 @@ export default function WebsiteSections() {
 
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wide text-ink-muted md:hidden">
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Unhas Simples</span>
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Aplicação</span>
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Decoração</span>
+        <div className="mb-8 flex flex-wrap items-center gap-2.5 text-xs font-semibold tracking-wide text-ink-muted">
+          {GEL_SERVICES.map((srv) => {
+            const isOpen = openServiceIds.includes(srv.id);
+            return (
+              <button
+                key={srv.id}
+                type="button"
+                onClick={() => navigateToServiceCard(srv.id)}
+                className={`border-pink-gold min-h-[40px] cursor-pointer rounded-full px-4 py-1.5 text-ink transition hover:-translate-y-0.5 hover:shadow-sm ${
+                  isOpen ? "bg-[#fff4f7] text-[#fc6998]" : "bg-white"
+                }`}
+              >
+                {srv.name}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={navigateToCourses}
+            className="border-pink-gold min-h-[40px] cursor-pointer rounded-full bg-white px-4 py-1.5 text-ink transition hover:-translate-y-0.5 hover:bg-[#fef9e7] hover:shadow-sm"
+          >
+            Cursos
+          </button>
         </div>
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
@@ -180,8 +210,11 @@ export default function WebsiteSections() {
             const isOpen = openServiceIds.includes(srv.id);
             return (
               <article
+                id={`card-${srv.id}`}
                 key={srv.id}
-                className="border-pink-gold flex flex-col justify-between overflow-hidden rounded-2xl bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                className={`border-pink-gold flex flex-col justify-between overflow-hidden rounded-2xl bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+                  isOpen ? "ring-2 ring-[#fc6998]/30 shadow-md" : ""
+                }`}
               >
                 <div>
                   <button
