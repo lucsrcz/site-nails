@@ -104,7 +104,7 @@ const COURSES = [
     price: "R$ 800,00",
     paymentNote:
       "Consulte condições de reserva e parcelamento diretamente pelo WhatsApp.",
-    image: undefined,
+    image: `${BASE_PATH}/curso-aperfeicoamento.jpg`,
     description:
       "Indicado para profissionais que já atendem e desejam elevar o padrão do acabamento: controle de produto, curvatura anatômica, redução do tempo em mesa, eliminação de descolamentos e naturalidade impecável.",
     schedule: [
