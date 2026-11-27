@@ -676,47 +676,29 @@ export default function WebsiteSections() {
               </span>
             </div>
 
-            {/* Desktop: discreet LGPD & Meta links directly below contacts */}
+            {/* Desktop: discreet Privacy Policy link directly below contacts */}
             <div className="hidden flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] text-ink-muted/85 md:flex">
-              {POLICY_SECTIONS.map((sec) => (
-                <button
-                  key={sec.id}
-                  type="button"
-                  onClick={() => setActivePolicyId(sec.id)}
-                  className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
-                >
-                  {sec.tabLabel}
-                </button>
-              ))}
-              <Link
-                href="/privacidade"
-                className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+              <button
+                type="button"
+                onClick={() => setActivePolicyId(POLICY_SECTIONS[0]?.id ?? null)}
+                className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
               >
-                Página completa
-              </Link>
+                Política de Privacidade
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile: separate policy row below */}
+        {/* Mobile: single Privacy Policy link below */}
         <div className="mx-auto mt-5 max-w-5xl border-t border-black/5 px-5 pt-4 md:hidden">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] text-ink-muted/85">
-            {POLICY_SECTIONS.map((sec) => (
-              <button
-                key={sec.id}
-                type="button"
-                onClick={() => setActivePolicyId(sec.id)}
-                className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
-              >
-                {sec.tabLabel}
-              </button>
-            ))}
-            <Link
-              href="/privacidade"
-              className="underline-offset-4 transition hover:text-[#fc6998] hover:underline"
+            <button
+              type="button"
+              onClick={() => setActivePolicyId(POLICY_SECTIONS[0]?.id ?? null)}
+              className="cursor-pointer underline-offset-4 transition hover:text-[#fc6998] hover:underline"
             >
-              Página completa
-            </Link>
+              Política de Privacidade
+            </button>
           </div>
         </div>
       </footer>
