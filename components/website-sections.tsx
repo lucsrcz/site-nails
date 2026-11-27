@@ -166,7 +166,7 @@ export default function WebsiteSections() {
 
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-        <div className="mb-8 flex flex-wrap items-center gap-2.5 text-xs font-semibold tracking-wide text-ink-muted">
+        <div className="mb-8 flex flex-nowrap items-center justify-between gap-1.5 text-[10.5px] font-semibold tracking-tight text-ink-muted sm:flex-wrap sm:justify-start sm:gap-2.5 sm:text-xs sm:tracking-wide">
           {GEL_SERVICES.map((srv) => {
             const isOpen = openServiceIds.includes(srv.id);
             return (
@@ -174,7 +174,7 @@ export default function WebsiteSections() {
                 key={srv.id}
                 type="button"
                 onClick={() => navigateToServiceCard(srv.id)}
-                className={`border-pink-gold min-h-[40px] cursor-pointer rounded-full px-4 py-1.5 text-ink transition hover:-translate-y-0.5 hover:shadow-sm ${
+                className={`border-pink-gold min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink transition hover:-translate-y-0.5 hover:shadow-sm sm:min-h-[40px] sm:px-4 sm:py-1.5 ${
                   isOpen ? "bg-[#fff4f7] text-[#fc6998]" : "bg-white"
                 }`}
               >
@@ -185,7 +185,7 @@ export default function WebsiteSections() {
           <button
             type="button"
             onClick={navigateToCourses}
-            className="border-pink-gold min-h-[40px] cursor-pointer rounded-full bg-white px-4 py-1.5 text-ink transition hover:-translate-y-0.5 hover:bg-[#fef9e7] hover:shadow-sm"
+            className="border-pink-gold min-h-[34px] cursor-pointer rounded-full bg-white px-2.5 py-1 text-center whitespace-nowrap text-ink transition hover:-translate-y-0.5 hover:bg-[#fef9e7] hover:shadow-sm sm:min-h-[40px] sm:px-4 sm:py-1.5"
           >
             Cursos
           </button>

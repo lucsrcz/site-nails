@@ -847,7 +847,7 @@ export default function MetroHero({
         </div>
       </section>
 
-      {/* Small Floating Location Icon Button — slides in from right to left when header appears */}
+      {/* Small Floating Location Icon Button — always visible on mobile, slides in on desktop */}
       <a
         href={LOCATION_URL}
         target="_blank"
@@ -856,7 +856,7 @@ export default function MetroHero({
         title="Como chegar — Ver no Mapa"
         className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${showHeader
           ? "translate-x-0 opacity-100"
-          : "pointer-events-none translate-x-24 opacity-0"
+          : "translate-x-0 opacity-100 md:pointer-events-none md:translate-x-24 md:opacity-0"
           }`}
       >
         <MapPin className="h-5 w-5 text-[#fc6998]" aria-hidden="true" />
