@@ -312,7 +312,7 @@ export default function WebsiteSections() {
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex min-h-[44px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-full bg-[#fc6998] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#e55283]"
+                        className="btn-liquid-pink mt-2 inline-flex min-h-[44px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-white"
                       >
                         Agendar {srv.name}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />

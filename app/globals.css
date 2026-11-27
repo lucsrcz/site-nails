@@ -79,60 +79,117 @@
   background-clip: padding-box, border-box;
 }
 
-.btn-liquid-glass {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(252, 105, 152, 0.32);
-  background: linear-gradient(
-    155deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.48) 50%,
-    rgba(255, 240, 246, 0.72) 100%
-  );
-  backdrop-filter: blur(14px) saturate(165%);
-  -webkit-backdrop-filter: blur(14px) saturate(165%);
-  box-shadow:
-    0 4px 14px rgba(252, 105, 152, 0.1),
-    0 1px 3px rgba(28, 20, 23, 0.06),
-    inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
-    inset 0 -1.5px 3px rgba(239, 184, 16, 0.16);
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.28s ease,
-    border-color 0.28s ease,
-    background 0.28s ease;
-}
+@layer components {
+  .btn-liquid-glass {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(252, 105, 152, 0.34);
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.48) 50%,
+      rgba(255, 240, 246, 0.72) 100%
+    );
+    backdrop-filter: blur(14px) saturate(165%);
+    -webkit-backdrop-filter: blur(14px) saturate(165%);
+    box-shadow:
+      0 4px 14px rgba(252, 105, 152, 0.1),
+      0 1px 3px rgba(28, 20, 23, 0.06),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+      inset 0 -1.5px 3px rgba(239, 184, 16, 0.16);
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s ease,
+      border-color 0.28s ease,
+      background 0.28s ease;
+  }
 
-.btn-liquid-glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.75) 48%,
-    rgba(255, 255, 255, 0.15) 60%,
-    transparent 80%
-  );
-  transform: translateX(-120%);
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
+  .btn-liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.75) 48%,
+      rgba(255, 255, 255, 0.15) 60%,
+      transparent 80%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
 
-.btn-liquid-glass:hover {
-  transform: translateY(-1px) scale(1.02);
-  border-color: rgba(252, 105, 152, 0.55);
-  box-shadow:
-    0 8px 20px rgba(252, 105, 152, 0.16),
-    0 2px 6px rgba(239, 184, 16, 0.12),
-    inset 0 1.5px 1.5px rgba(255, 255, 255, 1),
-    inset 0 -1.5px 3px rgba(252, 105, 152, 0.15);
-}
+  .btn-liquid-glass:hover {
+    transform: translateY(-1px) scale(1.02);
+    border-color: rgba(252, 105, 152, 0.55);
+    box-shadow:
+      0 8px 20px rgba(252, 105, 152, 0.16),
+      0 2px 6px rgba(239, 184, 16, 0.12),
+      inset 0 1.5px 1.5px rgba(255, 255, 255, 1),
+      inset 0 -1.5px 3px rgba(252, 105, 152, 0.15);
+  }
 
-.btn-liquid-glass:hover::before {
-  transform: translateX(120%);
-}
+  .btn-liquid-glass:hover::before {
+    transform: translateX(120%);
+  }
 
-.btn-liquid-glass:active {
-  transform: scale(0.96);
+  .btn-liquid-glass:active {
+    transform: scale(0.96);
+  }
+
+  .btn-liquid-pink {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: linear-gradient(
+      155deg,
+      rgba(252, 105, 152, 0.94) 0%,
+      rgba(246, 92, 143, 0.84) 52%,
+      rgba(229, 78, 128, 0.95) 100%
+    );
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      0 6px 18px rgba(252, 105, 152, 0.28),
+      0 1px 3px rgba(28, 20, 23, 0.08),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.65),
+      inset 0 -1.5px 3px rgba(180, 35, 85, 0.2);
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s ease,
+      filter 0.28s ease;
+  }
+
+  .btn-liquid-pink::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.45) 48%,
+      rgba(255, 255, 255, 0.1) 60%,
+      transparent 80%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .btn-liquid-pink:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow:
+      0 10px 24px rgba(252, 105, 152, 0.36),
+      inset 0 1.5px 1.5px rgba(255, 255, 255, 0.8),
+      inset 0 -1.5px 3px rgba(180, 35, 85, 0.22);
+  }
+
+  .btn-liquid-pink:hover::before {
+    transform: translateX(120%);
+  }
+
+  .btn-liquid-pink:active {
+    transform: scale(0.96);
+  }
 }

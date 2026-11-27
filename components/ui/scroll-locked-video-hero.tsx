@@ -535,7 +535,7 @@ export default function MetroHero({
                 rel="noopener noreferrer"
                 aria-label="Instagram @nayara_designernail"
                 title="@nayara_designernail"
-                className="border-pink-gold flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105"
+                className="btn-liquid-glass flex h-10 w-10 items-center justify-center rounded-full"
               >
                 <InstagramBrandIcon className="h-5 w-5" />
               </a>
@@ -545,7 +545,7 @@ export default function MetroHero({
                 rel="noopener noreferrer"
                 aria-label="Falar no WhatsApp"
                 title="Falar no WhatsApp"
-                className="border-pink-gold flex h-10 w-10 items-center justify-center rounded-full transition hover:scale-105"
+                className="btn-liquid-glass flex h-10 w-10 items-center justify-center rounded-full"
               >
                 <WhatsAppBrandIcon className="h-5 w-5" />
               </a>
@@ -554,7 +554,7 @@ export default function MetroHero({
             <button
               type="button"
               onClick={() => scrollToSection("agendar")}
-              className="min-h-[40px] cursor-pointer rounded-full bg-[#fc6998] px-5 py-2 text-xs font-semibold tracking-[0.14em] text-white uppercase transition hover:bg-[#e65283]"
+              className="btn-liquid-pink min-h-[40px] cursor-pointer rounded-full px-5 py-2 text-xs font-semibold tracking-[0.14em] text-white uppercase"
             >
               AGENDAR
             </button>
@@ -567,7 +567,7 @@ export default function MetroHero({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram @nayara_designernail"
-              className="border-pink-gold flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition active:scale-95"
+              className="btn-liquid-glass flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
             >
               <InstagramBrandIcon className="h-5 w-5" />
             </a>
@@ -576,7 +576,7 @@ export default function MetroHero({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Falar no WhatsApp"
-              className="border-pink-gold flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition active:scale-95"
+              className="btn-liquid-glass flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
             >
               <WhatsAppBrandIcon className="h-5 w-5" />
             </a>
@@ -585,7 +585,7 @@ export default function MetroHero({
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={mobileMenuOpen}
-              className="border-pink-gold flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1c1417] transition active:scale-95"
+              className="btn-liquid-glass flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1c1417]"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -766,14 +766,14 @@ export default function MetroHero({
                         <button
                           type="button"
                           onClick={() => scrollToSection("unhas-em-gel")}
-                          className="min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-7 py-3 text-sm font-semibold tracking-wide text-white shadow-sm transition hover:bg-[#e65283] md:text-base"
+                          className="btn-liquid-pink min-h-[44px] cursor-pointer rounded-full px-7 py-3 text-sm font-semibold tracking-wide text-white md:text-base"
                         >
                           Ver Unhas em Gel
                         </button>
                         <button
                           type="button"
                           onClick={() => scrollToSection("cursos")}
-                          className="min-h-[44px] cursor-pointer rounded-full border border-[#efb810] bg-white px-7 py-3 text-sm font-semibold tracking-wide text-ink shadow-xs transition hover:bg-[#fef9e7] md:text-base"
+                          className="btn-liquid-glass min-h-[44px] cursor-pointer rounded-full border-[#efb810]/70 px-7 py-3 text-sm font-semibold tracking-wide text-ink md:text-base"
                         >
                           Conhecer Cursos
                         </button>
@@ -854,7 +854,7 @@ export default function MetroHero({
         rel="noopener noreferrer"
         aria-label="Ver localização do Estúdio Nayara Oliveira no Google Maps"
         title="Como chegar — Ver no Mapa"
-        className={`border-pink-gold fixed right-4 bottom-5 z-50 flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-out hover:scale-105 active:scale-95 sm:right-6 sm:bottom-6 ${showHeader
+        className={`btn-liquid-glass fixed right-4 bottom-5 z-50 flex h-11 w-11 items-center justify-center rounded-full sm:right-6 sm:bottom-6 ${showHeader
           ? "translate-x-0 opacity-100"
           : "translate-x-0 opacity-100 md:pointer-events-none md:translate-x-24 md:opacity-0"
           }`}
