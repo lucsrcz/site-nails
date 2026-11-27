@@ -206,12 +206,26 @@ export default function MetroHero({
   style,
 }: MetroHeroProps) {
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [mobileHeroHeight, setMobileHeroHeight] = useState<number | null>(null);
+  const lastMobileWidthRef = useRef<number>(0);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobileViewport(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const updateViewport = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobileViewport(mobile);
+      if (mobile) {
+        if (Math.abs(window.innerWidth - lastMobileWidthRef.current) > 10) {
+          lastMobileWidthRef.current = window.innerWidth;
+          setMobileHeroHeight(window.innerHeight);
+        }
+      } else {
+        lastMobileWidthRef.current = 0;
+        setMobileHeroHeight(null);
+      }
+    };
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
   }, []);
 
   const activeFrames = frames ?? (isMobileViewport ? MOBILE_FRAMES : DEFAULT_FRAMES);
@@ -638,39 +652,36 @@ export default function MetroHero({
         ref={wrapperRef}
         id="inicio"
         aria-label="Nayara Oliveira Estúdio — Apresentação"
-        className={`relative w-full bg-white ${
-          isMobileViewport ? "h-[100svh] overflow-hidden" : "h-[320vh]"
-        } ${className ?? ""}`}
-        style={style}
+        className={`relative h-[100svh] w-full overflow-hidden bg-gradient-to-b from-[#fdf2f6] via-[#fbe8ef] to-white md:h-[320vh] md:overflow-visible ${
+          className ?? ""
+        }`}
+        style={{
+          ...(mobileHeroHeight ? { height: `${mobileHeroHeight}px` } : {}),
+          ...style,
+        }}
       >
         <div
           ref={stageRef}
-          className={
-            isMobileViewport
-              ? "relative h-full w-full overflow-hidden bg-white"
-              : "sticky top-0 z-10 h-[100lvh] w-full overflow-hidden bg-white will-change-transform"
-          }
+          className="relative h-full w-full overflow-hidden bg-gradient-to-b from-[#fdf2f6] via-[#fbe8ef] to-white md:sticky md:top-0 md:z-10 md:h-[100lvh] md:will-change-transform"
         >
-          {isMobileViewport ? (
-            <img
-              src={`${BASE_PATH}/mobile-hero.jpg`}
-              alt="Nayara Oliveira Estúdio"
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-            />
-          ) : (
-            <canvas
-              ref={canvasRef}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                opacity: ready ? 1 : 0,
-                transition: "opacity 0.5s ease",
-                pointerEvents: "none",
-              }}
-            />
-          )}
+          {/* Mobile static hero image rendered directly in SSR HTML (72 KB, eager) — never zooms on scroll */}
+          <img
+            src={`${BASE_PATH}/mobile-hero.jpg`}
+            alt="Nayara Oliveira Estúdio"
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:hidden"
+          />
+          {/* Desktop scroll-locked canvas */}
+          <canvas
+            ref={canvasRef}
+            className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
+            style={{
+              opacity: ready ? 1 : 0,
+              transition: "opacity 0.5s ease",
+            }}
+          />
 
           {/* Subtle warm vignette & bottom edge blend (no heavy white washout) */}
           <div
