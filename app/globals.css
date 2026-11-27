@@ -83,20 +83,20 @@
   .btn-liquid-glass {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(252, 105, 152, 0.34);
+    border: 1px solid rgba(255, 255, 255, 0.72);
     background: linear-gradient(
-      155deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.48) 50%,
-      rgba(255, 240, 246, 0.72) 100%
+      135deg,
+      rgba(255, 255, 255, 0.46) 0%,
+      rgba(255, 240, 246, 0.22) 50%,
+      rgba(254, 246, 224, 0.36) 100%
     );
-    backdrop-filter: blur(14px) saturate(165%);
-    -webkit-backdrop-filter: blur(14px) saturate(165%);
+    backdrop-filter: blur(18px) saturate(190%);
+    -webkit-backdrop-filter: blur(18px) saturate(190%);
     box-shadow:
-      0 4px 14px rgba(252, 105, 152, 0.1),
-      0 1px 3px rgba(28, 20, 23, 0.06),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
-      inset 0 -1.5px 3px rgba(239, 184, 16, 0.16);
+      0 8px 24px rgba(252, 105, 152, 0.14),
+      0 2px 6px rgba(28, 20, 23, 0.06),
+      inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95),
+      inset 0 -1.5px 3px rgba(239, 184, 16, 0.22);
     transition:
       transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.28s ease,
@@ -110,10 +110,10 @@
     inset: 0;
     background: linear-gradient(
       115deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.75) 48%,
-      rgba(255, 255, 255, 0.15) 60%,
-      transparent 80%
+      transparent 18%,
+      rgba(255, 255, 255, 0.78) 48%,
+      rgba(255, 255, 255, 0.16) 62%,
+      transparent 82%
     );
     transform: translateX(-120%);
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -122,12 +122,12 @@
 
   .btn-liquid-glass:hover {
     transform: translateY(-1px) scale(1.02);
-    border-color: rgba(252, 105, 152, 0.55);
+    border-color: rgba(255, 255, 255, 0.92);
     box-shadow:
-      0 8px 20px rgba(252, 105, 152, 0.16),
-      0 2px 6px rgba(239, 184, 16, 0.12),
-      inset 0 1.5px 1.5px rgba(255, 255, 255, 1),
-      inset 0 -1.5px 3px rgba(252, 105, 152, 0.15);
+      0 10px 26px rgba(252, 105, 152, 0.2),
+      0 2px 8px rgba(239, 184, 16, 0.16),
+      inset 0 2px 2px rgba(255, 255, 255, 1),
+      inset 0 -1.5px 3px rgba(252, 105, 152, 0.18);
   }
 
   .btn-liquid-glass:hover::before {
@@ -141,20 +141,21 @@
   .btn-liquid-pink {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.58);
     background: linear-gradient(
-      155deg,
-      rgba(252, 105, 152, 0.94) 0%,
-      rgba(246, 92, 143, 0.84) 52%,
-      rgba(229, 78, 128, 0.95) 100%
+      135deg,
+      rgba(252, 105, 152, 0.76) 0%,
+      rgba(245, 134, 118, 0.62) 52%,
+      rgba(239, 184, 16, 0.58) 100%
     );
-    backdrop-filter: blur(14px) saturate(160%);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(190%);
+    -webkit-backdrop-filter: blur(18px) saturate(190%);
+    text-shadow: 0 1px 2px rgba(120, 20, 55, 0.25);
     box-shadow:
-      0 6px 18px rgba(252, 105, 152, 0.28),
-      0 1px 3px rgba(28, 20, 23, 0.08),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.65),
-      inset 0 -1.5px 3px rgba(180, 35, 85, 0.2);
+      0 8px 24px rgba(252, 105, 152, 0.28),
+      0 2px 6px rgba(239, 184, 16, 0.15),
+      inset 0 1.5px 1.5px rgba(255, 255, 255, 0.78),
+      inset 0 -1.5px 3px rgba(180, 35, 85, 0.22);
     transition:
       transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.28s ease,
@@ -167,10 +168,10 @@
     inset: 0;
     background: linear-gradient(
       115deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.45) 48%,
-      rgba(255, 255, 255, 0.1) 60%,
-      transparent 80%
+      transparent 18%,
+      rgba(255, 255, 255, 0.55) 48%,
+      rgba(255, 255, 255, 0.12) 62%,
+      transparent 82%
     );
     transform: translateX(-120%);
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -180,9 +181,10 @@
   .btn-liquid-pink:hover {
     transform: translateY(-1px) scale(1.02);
     box-shadow:
-      0 10px 24px rgba(252, 105, 152, 0.36),
-      inset 0 1.5px 1.5px rgba(255, 255, 255, 0.8),
-      inset 0 -1.5px 3px rgba(180, 35, 85, 0.22);
+      0 12px 28px rgba(252, 105, 152, 0.36),
+      0 3px 10px rgba(239, 184, 16, 0.2),
+      inset 0 2px 2px rgba(255, 255, 255, 0.9),
+      inset 0 -1.5px 3px rgba(180, 35, 85, 0.24);
   }
 
   .btn-liquid-pink:hover::before {

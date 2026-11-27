@@ -212,20 +212,6 @@ export default function WebsiteSections() {
             Consultoria
           </button>
         </div>
-        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#fc6998] uppercase">
-              Serviços &amp; Valores
-            </p>
-            <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-              Nossos Serviços
-            </h2>
-          </div>
-          <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
-            Toque em cada serviço para abrir a tabela completa de valores e
-            especificações.
-          </p>
-        </div>
 
         <div className="grid items-start gap-6 sm:grid-cols-2 md:grid-cols-3">
           {GEL_SERVICES.map((srv) => {

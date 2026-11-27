@@ -773,7 +773,7 @@ export default function MetroHero({
                         <button
                           type="button"
                           onClick={() => scrollToSection("cursos")}
-                          className="btn-liquid-glass min-h-[44px] cursor-pointer rounded-full border-[#efb810]/70 px-7 py-3 text-sm font-semibold tracking-wide text-ink md:text-base"
+                          className="btn-liquid-glass min-h-[44px] cursor-pointer rounded-full px-7 py-3 text-sm font-semibold tracking-wide text-ink md:text-base"
                         >
                           Conhecer Cursos
                         </button>
