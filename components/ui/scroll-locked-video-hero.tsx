@@ -490,8 +490,9 @@ export default function MetroHero({
             aria-label="Ampliar logo Nayara Oliveira Estúdio"
             className="flex min-h-[44px] cursor-pointer flex-col items-center justify-center leading-none transition hover:opacity-85"
           >
-            <span className="font-script px-2 pt-1 pb-0.5 text-[26px] leading-[1.25] font-normal tracking-normal text-[#c86382] sm:text-[32px]">
-              Nayara Oliveira
+            <span className="font-script flex items-baseline gap-1.5 px-2 pt-1 pb-0.5 leading-[1.25] font-normal tracking-normal text-[#c86382]">
+              <span className="text-[24px] sm:text-[30px]">Nayara</span>
+              <span className="text-[30px] sm:text-[37px]">Oliveira</span>
             </span>
             <span className="-mt-1 flex w-full items-center gap-2 px-1">
               <span
@@ -744,7 +745,7 @@ export default function MetroHero({
                         <span className="px-1 text-[3.75rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] xl:text-[9.5rem]">
                           Nayara
                         </span>
-                        <span className="px-1 text-[4.65rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[10rem] xl:text-[11.5rem]">
+                        <span className="px-1 text-[5.35rem] sm:text-[6.25rem] md:text-[8rem] lg:text-[11.25rem] xl:text-[12.75rem]">
                           Oliveira
                         </span>
                       </h1>
