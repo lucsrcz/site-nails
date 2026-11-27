@@ -144,6 +144,12 @@ export default function WebsiteSections() {
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const navigateToConsultoria = () => {
+    setSelectedTopic("Consultoria Personalizada");
+    const el = document.getElementById("agendar");
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const WHATSAPP_NUMBER = "5562992118416";
 
   const buildWhatsAppUrl = (text: string) =>
@@ -166,7 +172,7 @@ export default function WebsiteSections() {
 
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-        <div className="mb-8 flex flex-nowrap items-center justify-center gap-1 text-[10.5px] font-semibold tracking-tight text-ink-muted sm:flex-wrap sm:gap-2.5 sm:text-xs sm:tracking-wide">
+        <div className="mb-8 flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-semibold tracking-tight text-ink-muted sm:gap-2.5 sm:text-xs sm:tracking-wide">
           {GEL_SERVICES.map((srv) => {
             const isOpen = openServiceIds.includes(srv.id);
             return (
@@ -174,8 +180,10 @@ export default function WebsiteSections() {
                 key={srv.id}
                 type="button"
                 onClick={() => navigateToServiceCard(srv.id)}
-                className={`border-pink-gold min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink transition hover:-translate-y-0.5 hover:shadow-sm sm:min-h-[40px] sm:px-4 sm:py-1.5 ${
-                  isOpen ? "bg-[#fff4f7] text-[#fc6998]" : "bg-white"
+                className={`btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap sm:min-h-[40px] sm:px-4 sm:py-1.5 ${
+                  isOpen
+                    ? "!border-[#fc6998]/60 !bg-[#fff0f5]/85 text-[#fc6998]"
+                    : "text-ink"
                 }`}
               >
                 {srv.name}
@@ -185,9 +193,16 @@ export default function WebsiteSections() {
           <button
             type="button"
             onClick={navigateToCourses}
-            className="border-pink-gold min-h-[34px] cursor-pointer rounded-full bg-white px-2.5 py-1 text-center whitespace-nowrap text-ink transition hover:-translate-y-0.5 hover:bg-[#fef9e7] hover:shadow-sm sm:min-h-[40px] sm:px-4 sm:py-1.5"
+            className="btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
           >
             Cursos
+          </button>
+          <button
+            type="button"
+            onClick={navigateToConsultoria}
+            className="btn-liquid-glass min-h-[34px] cursor-pointer rounded-full px-2.5 py-1 text-center whitespace-nowrap text-ink sm:min-h-[40px] sm:px-4 sm:py-1.5"
+          >
+            Consultoria
           </button>
         </div>
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -533,6 +548,11 @@ export default function WebsiteSections() {
                         Curso: {c.name} — {c.price}
                       </option>
                     ))}
+                  </optgroup>
+                  <optgroup label="Consultoria">
+                    <option value="Consultoria Personalizada">
+                      Consultoria Personalizada
+                    </option>
                   </optgroup>
                 </select>
               </div>
