@@ -166,7 +166,7 @@ export default function WebsiteSections() {
 
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
-        <div className="mb-8 flex flex-nowrap items-center justify-between gap-1.5 text-[10.5px] font-semibold tracking-tight text-ink-muted sm:flex-wrap sm:justify-start sm:gap-2.5 sm:text-xs sm:tracking-wide">
+        <div className="mb-8 flex flex-nowrap items-center justify-center gap-1 text-[10.5px] font-semibold tracking-tight text-ink-muted sm:flex-wrap sm:gap-2.5 sm:text-xs sm:tracking-wide">
           {GEL_SERVICES.map((srv) => {
             const isOpen = openServiceIds.includes(srv.id);
             return (
