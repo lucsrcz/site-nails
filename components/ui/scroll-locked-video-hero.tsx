@@ -599,7 +599,7 @@ export default function MetroHero({
         {mobileMenuOpen && (
           <nav
             aria-label="Menu mobile"
-            className="bg-white px-5 py-4 shadow-md md:hidden"
+            className="bg-white/85 px-5 py-4 shadow-md backdrop-blur-lg md:hidden"
           >
             <p className="mb-3 text-xs font-medium text-[#6e5c62]">
               Especialista em fibra de vidro, método molde F1 e banho em gel.
@@ -608,7 +608,7 @@ export default function MetroHero({
               <button
                 type="button"
                 onClick={() => scrollToSection("unhas-em-gel")}
-                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
+                className="btn-liquid-glass flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
               >
                 <span>SERVIÇOS — UNHAS EM GEL</span>
                 <span className="text-[11px] font-semibold text-[#fc6998]">FIBRA &amp; GEL</span>
@@ -616,7 +616,7 @@ export default function MetroHero({
               <button
                 type="button"
                 onClick={() => scrollToSection("cursos")}
-                className="border-pink-gold flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
+                className="btn-liquid-glass flex min-h-[44px] cursor-pointer items-center justify-between rounded-xl px-4 py-2.5 text-left text-xs font-semibold tracking-wider text-[#1c1417] uppercase"
               >
                 <span>CURSOS PROFISSIONAIS</span>
                 <span className="text-[11px] font-semibold text-[#b67d03]">CERTIFICADO</span>
@@ -624,7 +624,7 @@ export default function MetroHero({
               <button
                 type="button"
                 onClick={() => scrollToSection("agendar")}
-                className="mt-1 min-h-[44px] cursor-pointer rounded-full bg-[#fc6998] px-4 py-2.5 text-center text-xs font-semibold tracking-wider text-white uppercase transition hover:bg-[#e65283]"
+                className="btn-liquid-pink mt-1 min-h-[44px] cursor-pointer rounded-full px-4 py-2.5 text-center text-xs font-semibold tracking-wider text-white uppercase"
               >
                 AGENDAR HORÁRIO
               </button>
