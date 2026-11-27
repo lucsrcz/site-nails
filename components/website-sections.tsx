@@ -12,31 +12,64 @@ import {
   ArrowRight,
   ShieldCheck,
   X,
+  ChevronDown,
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { POLICY_SECTIONS } from "@/components/privacy-content";
 
 const GEL_SERVICES = [
   {
-    id: "alongamento-gel",
-    name: "Fibra de Vidro & Molde F1",
-    tag: "Alto Padrão",
+    id: "unhas-simples",
+    name: "Unhas Simples",
+    tag: "Cuidados Essenciais",
+    image: "/servico-simples.jpg",
+    imageAlt: "Unhas amendoadas em esmaltação vinho brilhante",
     description:
-      "Alongamento com naturalidade e elegância, estrutura ultrafina e resistência impecável.",
+      "Cuidado completo para mãos e pés com cuticulagem precisa, hidratação e esmaltação impecável.",
+    items: [
+      { name: "Mão", price: "R$ 35,00", spec: "Cuticulagem, lixamento e esmaltação" },
+      { name: "Pé", price: "R$ 35,00", spec: "Cuticulagem, lixamento e esmaltação" },
+      { name: "Mão e Pé", price: "R$ 60,00", spec: "Combo completo mãos e pés" },
+    ],
   },
   {
-    id: "banho-gel",
-    name: "Blindagem & Banho em Gel",
-    tag: "Proteção",
+    id: "aplicacao",
+    name: "Aplicação",
+    tag: "Estrutura em Gel",
+    image: "/servico-aplicacao.jpg",
+    imageAlt: "Unhas quadradas vermelhas em gel com detalhe em glitter",
     description:
-      "Camada protetora sobre a unha natural para fortalecer e manter o brilho por semanas.",
+      "Alongamento e proteção em gel com naturalidade, resistência e acabamento sofisticado.",
+    items: [
+      {
+        name: "Alongamento",
+        price: "R$ 150,00",
+        spec: "Estrutura resistente com acabamento natural",
+      },
+      {
+        name: "Banho de Gel",
+        price: "R$ 120,00",
+        spec: "Camada protetora sobre a unha natural",
+      },
+    ],
   },
   {
-    id: "esmaltacao-gel",
-    name: "Esmaltação em Gel",
-    tag: "Essencial",
+    id: "decoracao",
+    name: "Decoração",
+    tag: "Nail Art",
+    image: "/servico-decoracao.jpg",
+    imageAlt: "Unhas decoradas com francesinha, glitter rosado e laços 3D",
     description:
-      "Secagem imediata em cabine LED, cor intensa e durabilidade de até 21 dias.",
+      "Técnicas artísticas e acabamentos exclusivos para personalizar suas unhas com elegância.",
+    items: [
+      { name: "Francesinha", price: "R$ 30,00" },
+      { name: "Pó Cromado", price: "R$ 30,00" },
+      { name: "Esmaltação em Gel", price: "R$ 30,00" },
+      { name: "Baby Boomer", price: "R$ 30,00" },
+      { name: "Baby Color", price: "R$ 30,00" },
+      { name: "Baby Gliter (o par)", price: "R$ 30,00" },
+      { name: "Encapsulados (o par)", price: "R$ 30,00" },
+    ],
   },
 ];
 
@@ -85,13 +118,20 @@ const COURSES = [
 ];
 
 export default function WebsiteSections() {
-  const [selectedTopic, setSelectedTopic] = useState("Fibra de Vidro & Molde F1");
+  const [selectedTopic, setSelectedTopic] = useState("Unhas Simples");
+  const [openServiceIds, setOpenServiceIds] = useState<string[]>([]);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [activePolicyId, setActivePolicyId] = useState<string | null>(null);
   const activePolicy = POLICY_SECTIONS.find((s) => s.id === activePolicyId) ?? null;
+
+  const toggleService = (id: string) => {
+    setOpenServiceIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
 
   const WHATSAPP_NUMBER = "5562992118416";
 
@@ -116,64 +156,125 @@ export default function WebsiteSections() {
       {/* Seção 1: Serviços de Unhas em Gel */}
       <section id="unhas-em-gel" className="mx-auto max-w-5xl px-5 py-14 md:py-20">
         <div className="mb-8 flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wide text-ink-muted md:hidden">
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Fibra de Vidro</span>
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Molde F1</span>
-          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Blindagem</span>
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Unhas Simples</span>
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Aplicação</span>
+          <span className="border-pink-gold rounded-full px-3 py-1 text-ink">Decoração</span>
         </div>
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-[#fc6998] uppercase">
-              Serviços Especializados
+              Serviços &amp; Valores
             </p>
             <h2 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-              Unhas em Gel
+              Nossos Serviços
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
-            Protocolos minimalistas focados na saúde da lâmina natural e brilho
-            duradouro.
+            Toque em cada serviço para abrir a tabela completa de valores e
+            especificações.
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
-          {GEL_SERVICES.map((srv) => (
-            <article
-              key={srv.id}
-              className="border-pink-gold flex flex-col justify-between rounded-2xl p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
-            >
-              <div>
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-xs font-semibold tracking-wider text-ink uppercase">
-                    {srv.tag}
-                  </span>
-                  <Sparkles
-                    className="h-4 w-4 text-[#fc6998]"
-                    aria-hidden="true"
-                  />
-                </div>
-                <h3 className="font-serif text-2xl font-medium text-ink">
-                  {srv.name}
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-ink-muted sm:text-base">
-                  {srv.description}
-                </p>
-              </div>
+        <div className="grid items-start gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {GEL_SERVICES.map((srv) => {
+            const isOpen = openServiceIds.includes(srv.id);
+            return (
+              <article
+                key={srv.id}
+                className="border-pink-gold flex flex-col justify-between overflow-hidden rounded-2xl bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => toggleService(srv.id)}
+                    aria-expanded={isOpen}
+                    className="group w-full cursor-pointer text-left focus:outline-none"
+                  >
+                    <div className="relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl border border-[#efb810]/30 bg-[#fff5f8]">
+                      <img
+                        src={`${BASE_PATH}${srv.image}`}
+                        alt={srv.imageAlt}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        loading="lazy"
+                      />
+                    </div>
 
-              <div className="mt-6 border-t border-black/5 pt-3">
-                <a
-                  href={buildWhatsAppUrl(
-                    `Oi, Nayara! Gostaria de agendar o serviço: ${srv.name}.`
+                    <div className="mb-3 flex items-center justify-between">
+                      <span className="rounded-full border border-[#efb810]/70 bg-[#fef9e7] px-3 py-1 text-xs font-semibold tracking-wider text-ink uppercase">
+                        {srv.tag}
+                      </span>
+                      <Sparkles
+                        className="h-4 w-4 text-[#fc6998]"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="font-serif text-2xl font-medium tracking-wide text-ink uppercase">
+                      {srv.name}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                      {srv.description}
+                    </p>
+                  </button>
+                </div>
+
+                <div className="mt-5 border-t border-black/5 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => toggleService(srv.id)}
+                    aria-expanded={isOpen}
+                    className="inline-flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-2 text-sm font-semibold text-[#fc6998] transition hover:text-[#e34f7e]"
+                  >
+                    <span>{isOpen ? "Ocultar valores" : "Ver valores e especificações"}</span>
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div className="mt-3 space-y-2.5 border-t border-[#fc6998]/15 pt-3">
+                      <ul className="space-y-2">
+                        {srv.items.map((item) => (
+                          <li
+                            key={item.name}
+                            className="flex items-start justify-between gap-3 rounded-xl bg-[#fff7fa] px-3 py-2"
+                          >
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-ink">
+                                {item.name}
+                              </p>
+                              {"spec" in item && item.spec && (
+                                <p className="mt-0.5 text-xs leading-snug text-ink-muted">
+                                  {item.spec}
+                                </p>
+                              )}
+                            </div>
+                            <span className="shrink-0 rounded-full border border-[#efb810]/60 bg-white px-2.5 py-0.5 text-xs font-bold text-[#fc6998]">
+                              {item.price}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <a
+                        href={buildWhatsAppUrl(
+                          `Oi, Nayara! Gostaria de agendar um serviço de ${srv.name}.`
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex min-h-[44px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-full bg-[#fc6998] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#e55283]"
+                      >
+                        Agendar {srv.name}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    </div>
                   )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm font-semibold text-[#fc6998] transition hover:underline"
-                >
-                  Agendar este serviço
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-              </div>
-            </article>
-          ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
